@@ -2,7 +2,6 @@
 
 import { gql } from "@apollo/client";
 import { getClient } from "@/libs/apollo-client";
-import getSession from "@/libs/session";
 import { ActionResponse } from "@/app/types/action";
 
 export interface SignUpFormData {
@@ -59,14 +58,14 @@ export async function signUp(
     });
 
     if (data) {
-      const session = await getSession();
-      session.accountId = data.createUser.account_id;
-      await session.save();
+      return {
+        ok: true,
+      };
+    } else {
+      return {
+        ok: false,
+      };
     }
-
-    return {
-      ok: true,
-    };
   } catch (error) {
     console.error(error);
 

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 
 interface SessionContent {
   accountId?: string;
+  jwt?: string;
 }
 
 export default async function getSession() {

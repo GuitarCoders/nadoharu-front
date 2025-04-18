@@ -11,9 +11,8 @@ export default function SignUpForm() {
   const { register, handleSubmit } = useForm<SignUpFormData>();
   const onSignUpSubmit = async (formData: SignUpFormData) => {
     const response = await signUp(formData);
-    console.log(response);
     if (response.ok) {
-      router.push("/posts");
+      router.push("/login");
     } else {
       alert("error!");
     }

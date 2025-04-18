@@ -10,7 +10,7 @@ export interface LoginFormData {
   password: string;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   login: {
     _id: string;
     name: string;
@@ -48,6 +48,7 @@ export async function login(variables: LoginFormData): Promise<ActionResponse> {
     if (data) {
       const session = await getSession();
       session.accountId = data.login.account_id;
+      session.jwt = data.login.jwt_token;
       await session.save();
     }
 
