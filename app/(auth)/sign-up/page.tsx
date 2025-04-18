@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SignUpForm from "@/components/domains/login/sign-up-form";
+import SignUpForm from "@/components/domains/auth/sign-up-form";
 
 export const metadata = {
   title: "회원가입",
