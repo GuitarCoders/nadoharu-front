@@ -19,7 +19,7 @@ interface PostPreviewProps {
     name: string;
     account_id: string;
   };
-  userAccountId?: string;
+  isUserPost: boolean;
 }
 
 export default function PostPreview({
@@ -29,12 +29,9 @@ export default function PostPreview({
   tags,
   commentsCount,
   createdAt,
-  userAccountId,
+  isUserPost,
 }: PostPreviewProps) {
   const router = useRouter();
-  // const isUserPost = Number(user.id) === userId;
-  // const isUserReposted = reposts.some((repost) => repost?.id);
-
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -89,7 +86,7 @@ export default function PostPreview({
         <PostPreviewButtons
           postId={_id}
           isUserReposted={false}
-          isUserPost={userAccountId === author.account_id}
+          isUserPost={isUserPost}
           repostCount={0}
           commentCount={commentsCount}
         />

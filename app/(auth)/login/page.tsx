@@ -1,6 +1,6 @@
 import ExternalLoginButton from "@/components/domains/auth/external-login-button";
 import Link from "next/link";
-import LoginForm from "@/components/domains/auth/form";
+import LoginForm from "@/components/domains/auth/login-form";
 
 export const metadata = {
   title: "로그인",

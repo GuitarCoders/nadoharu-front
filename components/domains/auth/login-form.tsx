@@ -5,18 +5,22 @@ import SubmitButton from "@/components/shared/buttons/submit-button";
 import TextInput from "@/components/shared/inputs/text-input";
 import { PASSWORD_MIN_LENGTH } from "@/libs/constants";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
   const router = useRouter();
+  const [pending, setPending] = useState(false);
   const { register, handleSubmit } = useForm<LoginFormData>();
 
   const onLoginSubmit = async (formData: LoginFormData) => {
+    setPending(true);
     const response = await login(formData);
     if (response.ok) {
       router.push("/posts");
     } else {
       alert("error!");
+      setPending(false);
     }
   };
 
@@ -38,7 +42,7 @@ export default function LoginForm() {
         minLength={PASSWORD_MIN_LENGTH}
         {...register("password")}
       />
-      <SubmitButton text="로그인" />
+      <SubmitButton text="로그인" pending={pending} />
     </form>
   );
 }

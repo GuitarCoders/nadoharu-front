@@ -1,6 +1,5 @@
 "use client";
 
-import { repost, unrepost } from "@/app/posts/[id]/action";
 import {
   ArrowPathRoundedSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,
@@ -8,7 +7,7 @@ import {
 import { startTransition, useOptimistic } from "react";
 
 interface PostPreviewButtonsProps {
-  postId: number;
+  postId: string;
   isUserReposted: boolean;
   isUserPost: boolean;
   repostCount: number;
@@ -29,27 +28,15 @@ export default function PostPreviewButtons({
       repostCount: prevState.isUserReposted
         ? prevState.repostCount - 1
         : prevState.repostCount + 1,
-    })
+    }),
   );
-
-  const onRepostClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    startTransition(() => reducerFn(undefined));
-    if (isUserReposted) {
-      await unrepost(postId);
-    } else {
-      await repost(postId);
-    }
-  };
 
   return (
     <div className="flex gap-2 self-end mt-4 text-neutral-600 dark:text-neutral-100">
       {!isUserPost ? (
         <button
           type="button"
-          onClick={onRepostClick}
+          // onClick={onRepostClick}
           className={`flex items-center gap-1 border py-1 px-2 rounded-md ${
             state.isUserReposted
               ? "text-white bg-violet-400 hover:bg-violet-300 border-violet-600 dark:border-violet-800"

@@ -26,7 +26,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
       case "red":
         return "bg-rose-600 focus:ring-rose-700 text-white";
       case "gray":
-        return "bg-neutral-200 focus:ring-neutral-400 text-white";
+        return "bg-neutral-300 focus:ring-neutral-400 text-white";
     }
   };
   return (
@@ -35,7 +35,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
       onClick={onClick}
       disabled={pending}
       className={`px-4 py-2 rounded-md outline-none focus:ring-2 ${buttonColor(
-        pending ? "gray" : color
+        pending ? "gray" : color,
       )} ${pending ? "opacity-50 cursor-not-allowed" : ""}`}
     >
       {pending ? pendingText : text}
