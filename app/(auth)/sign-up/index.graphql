@@ -1,0 +1,22 @@
+  mutation SignUp(
+    $name: String!
+    $account_id: String!
+    $email: String!
+    $password: String!
+  ) {
+    createUser(
+      createUserData: {
+        name: $name
+        account_id: $account_id
+        email: $email
+        password: $password
+      }
+    ) {
+      _id
+      name
+      email
+      account_id
+      about_me
+      # friends
+    }
+  }

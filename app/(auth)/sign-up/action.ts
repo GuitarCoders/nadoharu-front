@@ -1,8 +1,8 @@
 "use server";
 
-import { gql } from "@apollo/client";
 import { getClient } from "@/libs/apollo-client";
 import { ActionResponse } from "@/app/types/action";
+import { SignUpDocument } from "./index.generated";
 
 export interface SignUpFormData {
   name: string;
@@ -22,38 +22,13 @@ interface SignUpResponse {
   };
 }
 
-const mutation = gql`
-  mutation SignUp(
-    $name: String!
-    $account_id: String!
-    $email: String!
-    $password: String!
-  ) {
-    createUser(
-      createUserData: {
-        name: $name
-        account_id: $account_id
-        email: $email
-        password: $password
-      }
-    ) {
-      _id
-      name
-      email
-      account_id
-      about_me
-      # friends
-    }
-  }
-`;
-
 export async function signUp(
   variables: SignUpFormData,
 ): Promise<ActionResponse> {
   try {
-    const client = getClient();
+    const client = await getClient();
     const { data } = await client.mutate<SignUpResponse>({
-      mutation,
+      mutation: SignUpDocument,
       variables,
     });
 

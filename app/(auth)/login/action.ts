@@ -1,9 +1,9 @@
 "use server";
 
-import { gql } from "@apollo/client";
 import { getClient } from "@/libs/apollo-client";
 import getSession from "@/libs/session";
 import { ActionResponse } from "@/app/types/action";
+import { GetLoginDocument } from "./index.generated";
 
 export interface LoginFormData {
   username: string;
@@ -23,25 +23,11 @@ export interface LoginResponse {
   };
 }
 
-const query = gql`
-  query GetLogin($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      _id
-      name
-      email
-      account_id
-      about_me
-      status
-      jwt_token
-    }
-  }
-`;
-
 export async function login(variables: LoginFormData): Promise<ActionResponse> {
   try {
-    const client = getClient();
+    const client = await getClient();
     const { data } = await client.query<LoginResponse>({
-      query,
+      query: GetLoginDocument,
       variables,
     });
 
