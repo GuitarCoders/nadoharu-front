@@ -2,7 +2,7 @@
 
 import { getClient } from "@/libs/apollo-client";
 import { ActionResponse } from "@/app/types/action";
-import { SignUpDocument } from "./index.generated";
+import { SignUpDocument, SignUpMutation } from "./index.generated";
 
 export interface SignUpFormData {
   name: string;
@@ -11,23 +11,12 @@ export interface SignUpFormData {
   password: string;
 }
 
-interface SignUpResponse {
-  createUser: {
-    _id: string;
-    name: string;
-    email: string;
-    account_id: string;
-    about_me: string;
-    friends: string[];
-  };
-}
-
 export async function signUp(
-  variables: SignUpFormData,
+  variables: SignUpFormData
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate<SignUpResponse>({
+    const { data } = await client.mutate<SignUpMutation>({
       mutation: SignUpDocument,
       variables,
     });

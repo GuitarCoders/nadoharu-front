@@ -3,30 +3,17 @@
 import { getClient } from "@/libs/apollo-client";
 import getSession from "@/libs/session";
 import { ActionResponse } from "@/app/types/action";
-import { GetLoginDocument } from "./index.generated";
+import { GetLoginDocument, GetLoginQuery } from "./index.generated";
 
 export interface LoginFormData {
   username: string;
   password: string;
 }
 
-export interface LoginResponse {
-  login: {
-    _id: string;
-    name: string;
-    email: string;
-    account_id: string;
-    about_me: string;
-    friends: string[];
-    status: string;
-    jwt_token: string;
-  };
-}
-
 export async function login(variables: LoginFormData): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.query<LoginResponse>({
+    const { data } = await client.query<GetLoginQuery>({
       query: GetLoginDocument,
       variables,
     });
