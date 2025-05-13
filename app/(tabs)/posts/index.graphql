@@ -1,0 +1,19 @@
+query GetPosts($count: Int!, $filter: getPostFilter) {
+  getPosts(getPostsData: { count: $count, filter: $filter }) {
+    posts {
+      _id
+      author {
+        _id
+        name
+        account_id
+      }
+      content
+      tags
+      category
+      commentsCount
+      createdAt
+    }
+    lastDateTime
+    hasNext
+  }
+}
