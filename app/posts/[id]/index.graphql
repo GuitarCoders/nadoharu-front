@@ -1,0 +1,61 @@
+query GetPost($postId: String!) {
+  getPost(postId: $postId) {
+    _id
+    author {
+      _id
+      name
+      account_id
+    }
+    content
+    tags
+    category
+    commentsCount
+    createdAt
+  }
+}
+
+query GetPostUser($postId: String!) {
+  getPost(postId: $postId) {
+    author {
+      _id
+      name
+      account_id
+    }
+  }
+}
+
+query GetComments($postId: String!, $filter: commentFilter!) {
+  getCommentByPostId(postId: $postId, filter: $filter) {
+    comments {
+      _id
+      content
+      postId
+      Commenter {
+        _id
+        name
+        account_id
+      }
+      createdAt
+    }
+    hasNext
+  }
+}
+
+mutation AddCommentToPost($targetPostId: String!, $content: String!) {
+  addCommentToPost(targetPostId: $targetPostId, content: $content) {
+    _id
+    content
+    postId
+    Commenter {
+      _id
+      name
+    }
+    createdAt
+  }
+}
+
+mutation deleteCommentById($targetCommentId: String!) {
+  deleteCommentById(targetCommentId: $targetCommentId) {
+    success
+  }
+}

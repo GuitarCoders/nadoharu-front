@@ -5,21 +5,21 @@ import { formatRelativeTime } from "@/libs/utils";
 import PostPreviewButtons from "@/components/domains/post/preview-buttons";
 import { useRouter } from "next/navigation";
 import ProfileImage from "@/components/domains/profile/image";
-import Image from "next/image";
-import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/solid";
 
 interface PostPreviewProps {
   _id: string;
   content: string;
-  tags: string;
-  createdAt: string;
+  tags?: string | null;
+  category: string;
   commentsCount: number;
+  createdAt: string;
   author: {
     _id: string;
     name: string;
     account_id: string;
   };
   isUserPost: boolean;
+  lastDateTime?: string | null;
 }
 
 export default function PostPreview({
@@ -41,6 +41,7 @@ export default function PostPreview({
   return (
     <Link href={`/posts/${_id}`}>
       <div className="w-full p-4 text-left flex flex-col gap-3">
+        {/* TODO: '나도' 누른 글을 표시하는 경우에 대한 기능 구현 */}
         {/* {repostUser ? ( */}
         {/*   <div className="flex items-center gap-2 text-neutral-400"> */}
         {/*     <ArrowPathRoundedSquareIcon className="size-3" /> */}
@@ -66,6 +67,7 @@ export default function PostPreview({
         <p className="text-sm text-neutral-400">{tags}</p>
 
         {/* 이미지 */}
+        {/* TODO: 이미지가 있는 경우에 대한 기능 구현 */}
         {/* {photos.length ? ( */}
         {/*   <div className="grid grid-cols-2 gap-2"> */}
         {/*     {photos.map((photo) => ( */}

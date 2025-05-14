@@ -1,103 +1,19 @@
+"use server";
+
 import { getClient } from "@/libs/apollo-client";
-import getSession from "@/libs/session";
-import { gql } from "@apollo/client";
-
-interface PostDetailResponse {
-  getPost: {
-    _id: string;
-    content: string;
-    tags: string;
-    category: string;
-    commentsCount: number;
-    createdAt: string;
-    author: {
-      _id: string;
-      name: string;
-      account_id: string;
-    };
-  };
-}
-
-export const postDetailQuery = gql`
-  query GetPost($postId: String!) {
-    getPost(postId: $postId) {
-      _id
-      author {
-        _id
-        name
-        account_id
-      }
-      content
-      tags
-      category
-      commentsCount
-      createdAt
-    }
-  }
-`;
-
-interface CommentsResponse {
-  getCommentByPostId: {
-    comments: {
-      _id: string;
-      content: string;
-      postId: string;
-      Commenter: {
-        _id: string;
-        name: string;
-      };
-      createdAt: string;
-    }[];
-    hasNext: boolean;
-  };
-}
-
-const commentsQuery = gql`
-  query GetComments($postId: String!, $filter: commentFilter!) {
-    getCommentByPostId(postId: $postId, filter: $filter) {
-      comments {
-        _id
-        content
-        postId
-        Commenter {
-          _id
-          name
-        }
-        createdAt
-      }
-      hasNext
-    }
-  }
-`;
-
-interface PostUserResponse {
-  getPost: {
-    author: {
-      _id: string;
-      name: string;
-      account_id: string;
-    };
-  };
-}
-
-export const postUserQuery = gql`
-  query GetPost($postId: String!) {
-    getPost(postId: $postId) {
-      author {
-        _id
-        name
-        account_id
-      }
-    }
-  }
-`;
-
-const session = await getSession();
-const client = getClient(session.jwt);
+import {
+  GetPostDocument,
+  GetPostQuery,
+  GetPostUserQuery,
+  GetPostUserDocument,
+  GetCommentsQuery,
+  GetCommentsDocument,
+} from "./index.generated";
 
 export async function getPostDetail(postId: string) {
-  const { data } = await client.query<PostDetailResponse>({
-    query: postDetailQuery,
+  const client = await getClient();
+  const { data } = await client.query<GetPostQuery>({
+    query: GetPostDocument,
     variables: { postId },
   });
 
@@ -105,8 +21,9 @@ export async function getPostDetail(postId: string) {
 }
 
 export async function getComments(postId: string) {
-  const { data } = await client.query<CommentsResponse>({
-    query: commentsQuery,
+  const client = await getClient();
+  const { data } = await client.query<GetCommentsQuery>({
+    query: GetCommentsDocument,
     variables: { postId, filter: { skip: 0, limit: 10 } },
   });
 
@@ -114,8 +31,9 @@ export async function getComments(postId: string) {
 }
 
 export async function getPostUser(postId: string) {
-  const { data } = await client.query<PostUserResponse>({
-    query: postUserQuery,
+  const client = await getClient();
+  const { data } = await client.query<GetPostUserQuery>({
+    query: GetPostUserDocument,
     variables: { postId },
   });
 

@@ -8,8 +8,6 @@ import {
 import { notFound } from "next/navigation";
 import CommentForm from "@/components/domains/comment/form";
 import RepostForm from "@/components/domains/post/repost-form";
-import Image from "next/image";
-import Link from "next/link";
 import { getPostDetail, getComments } from "./data";
 
 export default async function PostDetail({
@@ -75,39 +73,36 @@ export default async function PostDetail({
         <div>
           {/* 나도 */}
           <div className="flex gap-4 px-4 h-16 items-center border-b">
-            {/* {!isUserPost ? ( */}
-            {/*   <RepostForm */}
-            {/*     postId={postId} */}
-            {/*     isReposted={isReposted} */}
-            {/*     repostCount={post._count.reposts} */}
-            {/*   /> */}
-            {/* ) : ( */}
-            {/*   <div className="flex items-center gap-1 border dark:border-neutral-800 shadow-sm rounded-md px-3 py-2 text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-600 cursor-not-allowed"> */}
-            {/*     <ArrowPathRoundedSquareIcon className="size-4" /> */}
-            {/*     <span>나도</span> */}
-            {/*     <span>{post._count.reposts}</span> */}
-            {/*   </div> */}
-            {/* )} */}
+            {!isUserPost ? (
+              <RepostForm postId={postId} isReposted={false} repostCount={0} />
+            ) : (
+              <div className="flex items-center gap-1 border dark:border-neutral-800 shadow-sm rounded-md px-3 py-2 text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-600 cursor-not-allowed">
+                <ArrowPathRoundedSquareIcon className="size-4" />
+                <span>나도</span>
+                <span>{0}</span>
+              </div>
+            )}
             <p className="text-sm text-neutral-400">이 글에 공감한다면 나도!</p>
           </div>
           <div className="flex flex-col divide-y">
-            {/* 댓글 */}
-            {/* {comments.map((comment) => ( */}
-            {/*   <Comment */}
-            {/*     key={comment.id} */}
-            {/*     commentId={comment.id} */}
-            {/*     postId={postId} */}
-            {/*     content={comment.content} */}
-            {/*     username={comment.user.username} */}
-            {/*     accountId={comment.user.loginId} */}
-            {/*     avatar={comment.user.avatar} */}
-            {/*     isUserComment={comment.user.id === session?.id} */}
-            {/*   /> */}
-            {/* ))} */}
+            {comments.comments.map((comment) => (
+              <Comment
+                key={comment._id}
+                commentId={comment._id}
+                postId={postId}
+                content={comment.content}
+                username={comment.Commenter.name}
+                accountId={comment.Commenter.account_id}
+                avatar={null}
+                isUserComment={
+                  comment.Commenter.account_id === session?.accountId
+                }
+              />
+            ))}
           </div>
         </div>
       </section>
-      {/* <CommentForm postId={postId} /> */}
+      <CommentForm postId={postId} />
     </>
   );
 }
