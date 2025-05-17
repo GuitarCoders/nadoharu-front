@@ -12,7 +12,10 @@ export default function TabsLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   return (
     <main className="max-w-2xl mx-auto">
-      <Header title={TABS.find((tab) => tab.link === pathname)?.name}>
+      <Header
+        title={TABS.find((tab) => tab.link === pathname)?.name}
+        author={null}
+      >
         {pathname === "/chat" ? (
           <Link
             href="/chat/new"
@@ -22,7 +25,7 @@ export default function TabsLayout({ children }: { children: ReactNode }) {
           </Link>
         ) : (
           <Link
-            href="/posts/upload"
+            href="/posts/new"
             className="text-violet-600 dark:text-violet-400"
           >
             <PencilSquareIcon className="size-6" />
