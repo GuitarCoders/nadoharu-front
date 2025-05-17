@@ -25,8 +25,10 @@ export interface Toast {
   description?: string;
   undoAction?: () => void;
   duration?: number;
+  isError?: boolean;
 }
 
 export const toastAtom = atom<Toast>({
   visible: false,
+  isError: false,
 });
