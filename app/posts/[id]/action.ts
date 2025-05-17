@@ -6,6 +6,8 @@ import {
   AddCommentToPostMutation,
   DeleteCommentByIdDocument,
   DeleteCommentByIdMutation,
+  DeletePostDocument,
+  DeletePostMutation,
 } from "./index.generated";
 import { ActionResponse } from "@/app/types/action";
 import { revalidatePath } from "next/cache";
@@ -52,6 +54,29 @@ export async function deleteCommentById({
 
     if (data) {
       revalidatePath(`/posts/${targetPostId}`);
+    }
+
+    return {
+      ok: true,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      ok: false,
+    };
+  }
+}
+
+export async function deletePost({ postId }: { postId: string }) {
+  try {
+    const client = await getClient();
+    const { data } = await client.mutate<DeletePostMutation>({
+      mutation: DeletePostDocument,
+      variables: { postId },
+    });
+
+    if (data) {
+      revalidatePath(`/posts/${postId}`);
     }
 
     return {

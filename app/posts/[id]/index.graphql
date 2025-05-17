@@ -59,3 +59,9 @@ mutation deleteCommentById($targetCommentId: String!) {
     success
   }
 }
+
+mutation deletePost($postId: String!) {
+  deletePost(deletePostData: { postId: $postId }) {
+    success
+  }
+}
