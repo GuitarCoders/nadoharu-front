@@ -20,8 +20,11 @@ export async function login(variables: LoginFormData): Promise<ActionResponse> {
 
     if (data) {
       const session = await getSession();
+
+      session._id = data.login._id;
       session.accountId = data.login.account_id;
       session.jwt = data.login.jwt_token;
+
       await session.save();
     }
 

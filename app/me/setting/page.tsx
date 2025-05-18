@@ -1,5 +1,5 @@
 import EditProfileForm from "@/components/domains/profile/edit-profile-form";
-import { getUserByAccountId } from "@/graphql/query/user";
+import { getUserByAccountId } from "./data";
 import getSession from "@/libs/session";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/solid";
 import { notFound, redirect } from "next/navigation";

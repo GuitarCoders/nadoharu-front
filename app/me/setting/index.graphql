@@ -1,3 +1,13 @@
+query getUserByAccountId($account_id: String!) {
+  userByAccountId(account_id: $account_id) {
+    _id
+    name
+    email
+    account_id
+    about_me
+  }
+}
+
 mutation updateUser($name: String!, $about_me: String!, $password: String!) {
   updateUser(
     updateUserData: { name: $name, about_me: $about_me, password: $password }
