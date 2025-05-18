@@ -11,6 +11,7 @@ import { updateUser } from "@/app/me/setting/action";
 import TextInput from "@/components/shared/inputs/text-input";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
+import * as constants from "@/libs/constants";
 
 interface EditProfileFormProps {
   name: string;
@@ -22,6 +23,7 @@ interface EditProfileForm {
   name: string;
   about_me: string;
   password: string;
+  confirm_password: string;
 }
 
 export default function EditProfileForm({
@@ -31,17 +33,36 @@ export default function EditProfileForm({
 }: EditProfileFormProps) {
   const [pending, setPending] = useState(false);
   const setToast = useSetAtom(toastAtom);
-  const { register, handleSubmit } = useForm<EditProfileForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm<EditProfileForm>();
   const router = useRouter();
+
+  const validatePassword = (confirmPassword: string) => {
+    const password = getValues("password");
+
+    if (password !== confirmPassword) {
+      return constants.PASSWORD_NOT_MATCH_MESSAGE;
+    }
+    return true;
+  };
 
   const onEditProfileSubmit = async (formData: EditProfileForm) => {
     setPending(true);
-    const response = await updateUser(formData);
+
+    const response = await updateUser({
+      name: formData.name,
+      about_me: formData.about_me,
+      password: formData.password,
+    });
     if (response.ok) {
       setToast({
         visible: true,
         isError: false,
-        title: "프로필이 성공적으로 업데이트되었습니다.",
+        title: "프로필이 성공적으로 업데이트 되었습니다.",
       });
       router.push("/me");
     } else {
@@ -81,17 +102,32 @@ export default function EditProfileForm({
           </div>
         </div>
         <TextInput
+          showLabel
           placeholder="닉네임"
           {...register("name", { value: name })}
         />
         <Textarea
-          placeholder="나를 표현할 수 있는 한마디.."
+          showLabel
+          placeholder="자기 소개"
           {...register("about_me", { value: aboutMe })}
         />
         <TextInput
+          showLabel
           placeholder="비밀번호"
           type="password"
-          {...register("password")}
+          required={true}
+          {...register("password", { required: true })}
+        />
+        <TextInput
+          showLabel
+          placeholder="비밀번호 확인"
+          type="password"
+          required={true}
+          errorMessage={errors.confirm_password?.message}
+          {...register("confirm_password", {
+            required: true,
+            validate: validatePassword,
+          })}
         />
         <SubmitButton text="프로필 업데이트" pending={pending} />
       </div>

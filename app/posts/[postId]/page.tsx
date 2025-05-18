@@ -13,9 +13,9 @@ import { getPostDetail, getComments } from "./data";
 export default async function PostDetail({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ postId: string }>;
 }) {
-  const { id: postId } = await params;
+  const { postId } = await params;
   const post = await getPostDetail(postId);
   if (!post) {
     return notFound();

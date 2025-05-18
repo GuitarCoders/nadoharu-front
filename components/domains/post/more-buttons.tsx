@@ -2,47 +2,50 @@
 
 import { ExclamationTriangleIcon, TrashIcon } from "@heroicons/react/16/solid";
 import MoreButtons, { MoreBtn } from "@/components/shared/buttons/more-buttons";
+import { useRouter } from "next/navigation";
 import { useSetAtom } from "jotai";
 import { alertAtom, toastAtom } from "@/libs/atoms";
-import { deleteCommentById } from "@/app/posts/[postId]/action";
+import { deletePost } from "@/app/posts/[postId]/action";
 
-export default function CommentMoreBtns({
-  isUserComment,
-  targetCommentId,
-  targetPostId,
+export default function PostDetailMoreBtns({
+  isUserPost,
+  postId,
 }: {
-  isUserComment: boolean;
-  targetCommentId: string;
-  targetPostId: string;
+  isUserPost: boolean;
+  postId: string;
 }) {
+  const router = useRouter();
   const setAlert = useSetAtom(alertAtom);
   const setToast = useSetAtom(toastAtom);
-  const removeComment = async () => {
-    const result = await deleteCommentById({ targetCommentId, targetPostId });
+
+  const handleDeletePost = async () => {
+    const result = await deletePost({ postId });
     if (result.ok) {
+      router.push("/posts");
       setToast({
         visible: true,
-        title: "댓글이 삭제되었습니다.",
+        title: "게시글이 삭제되었습니다.",
       });
     }
   };
-  const showRemoveAlert = () => {
+
+  const showDeletePostAlert = () => {
     setAlert({
       visible: true,
       title: "삭제",
-      description: "정말로 댓글을 삭제할까요?",
+      description: "정말로 게시글을 삭제할까요?",
       extraBtnColor: "red",
       extraBtnText: "삭제하기",
-      extraBtnAction: removeComment,
+      extraBtnAction: handleDeletePost,
     });
   };
 
   const buttons: MoreBtn[] = [
-    isUserComment
+    isUserPost
       ? {
           name: "삭제하기",
           icon: <TrashIcon className="size-5" />,
-          action: showRemoveAlert,
+          action: showDeletePostAlert,
         }
       : {
           name: "신고하기",

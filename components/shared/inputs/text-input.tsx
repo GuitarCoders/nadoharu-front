@@ -6,24 +6,35 @@ import { InputHTMLAttributes } from "react";
 
 interface TextInputProps {
   loading?: boolean;
-  errors?: string[];
+  errorMessage?: string;
   warning?: string;
+  showLabel?: boolean;
 }
 
 export default function TextInput({
-  errors = [],
+  errorMessage,
   loading,
   warning,
+  showLabel = false,
   ...attrs
 }: TextInputProps & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div className="flex flex-col gap-2">
+      {showLabel ? (
+        <label className="text-sm font-semibold" htmlFor={attrs.id}>
+          {attrs.placeholder}
+        </label>
+      ) : null}
       <input
         autoSave="off"
         autoComplete="off"
         disabled={loading}
         {...attrs}
-        className="appearance-none w-full border border-neutral-300 rounded-md shadow-sm placeholder-neutral-400 outline-none focus:ring-2 focus:ring-violet-600 focus:border-violet-600 px-4 py-2 dark:bg-neutral-700 dark:text-white"
+        className={`appearance-none w-full border border-neutral-300 rounded-md shadow-sm placeholder-neutral-400 outline-none focus:ring-2 px-4 py-2 dark:bg-neutral-700 dark:text-white ${
+          errorMessage
+            ? "ring-rose-700 border-rose-700"
+            : "focus:ring-violet-600 focus:border-violet-600"
+        }`}
       />
       {warning ? (
         <p className="font-medium flex items-center gap-2 text-sm">
@@ -31,17 +42,12 @@ export default function TextInput({
           {warning}
         </p>
       ) : null}
-      {errors?.length ? (
+      {errorMessage ? (
         <div className="flex flex-col gap-2">
-          {errors.map((error, i) => (
-            <p
-              key={i}
-              className="text-red-500 font-medium flex items-center gap-2 text-sm"
-            >
-              <ExclamationTriangleIcon className="size-4" />
-              {error}
-            </p>
-          ))}
+          <p className="text-red-500 font-medium flex items-center gap-2 text-sm">
+            <ExclamationTriangleIcon className="size-4" />
+            {errorMessage}
+          </p>
         </div>
       ) : null}
     </div>

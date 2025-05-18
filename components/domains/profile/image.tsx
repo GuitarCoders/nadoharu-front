@@ -2,11 +2,11 @@ import Image from "next/image";
 
 export default function ProfileImage({
   avatar,
-  username,
+  name,
   size = 10,
 }: {
   avatar: string | null;
-  username: string;
+  name: string;
   size?: number;
 }) {
   const width = size * 4;
@@ -17,7 +17,7 @@ export default function ProfileImage({
   return avatar ? (
     <Image
       src={imageUrl}
-      alt={username}
+      alt={name}
       width={width}
       height={height}
       className={`size-${size} rounded-md bg-neutral-200 dark:bg-neutral-600 object-cover shadow-sm`}

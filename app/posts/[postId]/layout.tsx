@@ -1,16 +1,15 @@
 import Header from "@/components/layouts/header";
-import { notFound } from "next/navigation";
 import getSession from "@/libs/session";
 import PostDetailMoreBtns from "@/components/domains/post/more-buttons";
 import { getPostUser } from "./data";
 
 interface LayoutProps {
   children: React.ReactNode;
-  params: Promise<{ id: string }>;
+  params: Promise<{ postId: string }>;
 }
 
 export default async function PostLayout({ children, params }: LayoutProps) {
-  const { id: postId } = await params;
+  const { postId } = await params;
   const session = await getSession();
   const userAccountId = session?.accountId;
 

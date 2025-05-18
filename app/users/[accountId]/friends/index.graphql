@@ -1,0 +1,23 @@
+query getUserId($account_id: String!) {
+  userByAccountId(account_id: $account_id) {
+    _id
+  }
+}
+
+query getFriends($targetUserId: String!, $limit: Int!, $skip: Int!) {
+  getFriends(
+    filter: { targetUserId: $targetUserId, limit: $limit, skip: $skip }
+  ) {
+    friends {
+      _id
+      user {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
+      createdAt
+    }
+  }
+}

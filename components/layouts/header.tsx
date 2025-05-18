@@ -41,7 +41,7 @@ export default function Header({
             href={`/users/${author.account_id}`}
             className="flex items-center gap-3"
           >
-            <ProfileImage avatar={null} username={author.name} />
+            <ProfileImage avatar={null} name={author.name} />
             <div className="flex flex-col items-start">
               <h3 className="font-semibold text-sm">{author.name}</h3>
               <p className="text-gray-400 text-xs">@{author.account_id}</p>

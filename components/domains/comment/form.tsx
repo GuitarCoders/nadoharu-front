@@ -1,6 +1,6 @@
 "use client";
 
-import { addCommentToPost } from "@/app/posts/[id]/action";
+import { addCommentToPost } from "@/app/posts/[postId]/action";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import ChatInput from "@/components/domains/chat/input";
