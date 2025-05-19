@@ -20,13 +20,12 @@ query GetMyPosts($count: Int!, $filter: getPostFilter, $accountId: String!) {
   }
 }
 
-query UserByAccountId($account_id: String!) {
-  userByAccountId(account_id: $account_id) {
+query UserWhoAmI {
+  userWhoAmI {
     _id
     name
     email
     account_id
-    # friends
     about_me
   }
 }

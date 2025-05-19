@@ -12,12 +12,10 @@ export type GetMyPostsQueryVariables = Types.Exact<{
 
 export type GetMyPostsQuery = { __typename?: 'Query', getPosts: { __typename?: 'GetPostsResult', lastDateTime?: string | null, posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category: string, commentsCount: number, createdAt: string, author: { __typename?: 'User', _id: string, name: string, account_id: string } }> } };
 
-export type UserByAccountIdQueryVariables = Types.Exact<{
-  account_id: Types.Scalars['String']['input'];
-}>;
+export type UserWhoAmIQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } };
+export type UserWhoAmIQuery = { __typename?: 'Query', userWhoAmI: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } };
 
 
 export const GetMyPostsDocument = gql`
@@ -78,9 +76,9 @@ export type GetMyPostsQueryHookResult = ReturnType<typeof useGetMyPostsQuery>;
 export type GetMyPostsLazyQueryHookResult = ReturnType<typeof useGetMyPostsLazyQuery>;
 export type GetMyPostsSuspenseQueryHookResult = ReturnType<typeof useGetMyPostsSuspenseQuery>;
 export type GetMyPostsQueryResult = Apollo.QueryResult<GetMyPostsQuery, GetMyPostsQueryVariables>;
-export const UserByAccountIdDocument = gql`
-    query UserByAccountId($account_id: String!) {
-  userByAccountId(account_id: $account_id) {
+export const UserWhoAmIDocument = gql`
+    query UserWhoAmI {
+  userWhoAmI {
     _id
     name
     email
@@ -91,34 +89,33 @@ export const UserByAccountIdDocument = gql`
     `;
 
 /**
- * __useUserByAccountIdQuery__
+ * __useUserWhoAmIQuery__
  *
- * To run a query within a React component, call `useUserByAccountIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserByAccountIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useUserWhoAmIQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserWhoAmIQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUserByAccountIdQuery({
+ * const { data, loading, error } = useUserWhoAmIQuery({
  *   variables: {
- *      account_id: // value for 'account_id'
  *   },
  * });
  */
-export function useUserByAccountIdQuery(baseOptions: Apollo.QueryHookOptions<UserByAccountIdQuery, UserByAccountIdQueryVariables> & ({ variables: UserByAccountIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useUserWhoAmIQuery(baseOptions?: Apollo.QueryHookOptions<UserWhoAmIQuery, UserWhoAmIQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserByAccountIdQuery, UserByAccountIdQueryVariables>(UserByAccountIdDocument, options);
+        return Apollo.useQuery<UserWhoAmIQuery, UserWhoAmIQueryVariables>(UserWhoAmIDocument, options);
       }
-export function useUserByAccountIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserByAccountIdQuery, UserByAccountIdQueryVariables>) {
+export function useUserWhoAmILazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserWhoAmIQuery, UserWhoAmIQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserByAccountIdQuery, UserByAccountIdQueryVariables>(UserByAccountIdDocument, options);
+          return Apollo.useLazyQuery<UserWhoAmIQuery, UserWhoAmIQueryVariables>(UserWhoAmIDocument, options);
         }
-export function useUserByAccountIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserByAccountIdQuery, UserByAccountIdQueryVariables>) {
+export function useUserWhoAmISuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserWhoAmIQuery, UserWhoAmIQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<UserByAccountIdQuery, UserByAccountIdQueryVariables>(UserByAccountIdDocument, options);
+          return Apollo.useSuspenseQuery<UserWhoAmIQuery, UserWhoAmIQueryVariables>(UserWhoAmIDocument, options);
         }
-export type UserByAccountIdQueryHookResult = ReturnType<typeof useUserByAccountIdQuery>;
-export type UserByAccountIdLazyQueryHookResult = ReturnType<typeof useUserByAccountIdLazyQuery>;
-export type UserByAccountIdSuspenseQueryHookResult = ReturnType<typeof useUserByAccountIdSuspenseQuery>;
-export type UserByAccountIdQueryResult = Apollo.QueryResult<UserByAccountIdQuery, UserByAccountIdQueryVariables>;
+export type UserWhoAmIQueryHookResult = ReturnType<typeof useUserWhoAmIQuery>;
+export type UserWhoAmILazyQueryHookResult = ReturnType<typeof useUserWhoAmILazyQuery>;
+export type UserWhoAmISuspenseQueryHookResult = ReturnType<typeof useUserWhoAmISuspenseQuery>;
+export type UserWhoAmIQueryResult = Apollo.QueryResult<UserWhoAmIQuery, UserWhoAmIQueryVariables>;

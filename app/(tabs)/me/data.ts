@@ -4,8 +4,8 @@ import { getClient } from "@/libs/apollo-client";
 import {
   GetMyPostsDocument,
   GetMyPostsQuery,
-  UserByAccountIdDocument,
-  UserByAccountIdQuery,
+  UserWhoAmIDocument,
+  UserWhoAmIQuery,
 } from "./index.generated";
 
 export async function getMyPosts(accountId: string) {
@@ -18,11 +18,10 @@ export async function getMyPosts(accountId: string) {
   return data;
 }
 
-export async function getUser(accountId: string) {
+export async function getWhoAmI() {
   const client = await getClient();
-  const { data } = await client.query<UserByAccountIdQuery>({
-    query: UserByAccountIdDocument,
-    variables: { account_id: accountId },
+  const { data } = await client.query<UserWhoAmIQuery>({
+    query: UserWhoAmIDocument,
   });
 
   return data;
