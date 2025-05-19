@@ -58,7 +58,7 @@ export default function UserInfo({
             ) : null}
             {!isMe && !isFriend && !isPending && !isPended ? (
               <Link
-                href={`/users/${profile.account_id}/send-request`}
+                href={`/users/${profile.account_id}/request`}
                 className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1"
               >
                 <UserPlusIcon className="size-4" />
@@ -66,7 +66,7 @@ export default function UserInfo({
               </Link>
             ) : null}
           </div>
-          <ProfileImage avatar={null} username={profile.name} size={20} />
+          <ProfileImage avatar={null} name={profile.name} size={20} />
           <div className="flex flex-col">
             <div className="flex items-center gap-3">
               <h5 className="font-semibold">{profile.name}</h5>

@@ -1,6 +1,6 @@
 "use server";
 
-import ReceiveRequestForm from "@/components/domains/friendship/receive-form";
+import ReceiveRequestForm from "@/components/domains/friend/receive-form";
 import Link from "next/link";
 import ProfileImage from "@/components/domains/profile/image";
 import EmptyState from "@/components/layouts/empty-state";
