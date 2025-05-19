@@ -1,0 +1,39 @@
+query GetReceiveFriendRequests {
+  getReceiveFriendRequests {
+    friendRequests {
+      _id
+      requestMessage
+      createdAt
+      requestUser {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
+      receiveUser {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
+    }
+  }
+}
+
+mutation AcceptFriendRequest($friendRequestId: String!) {
+  acceptFriendRequest(
+    acceptFriendRequestData: { friendRequestId: $friendRequestId }
+  ) {
+    success
+  }
+}
+
+mutation DeleteFriendRequest($friendRequestId: String!) {
+  deleteFriendRequest(
+    deleteFriendRequestData: { friendRequestId: $friendRequestId }
+  ) {
+    success
+  }
+}
