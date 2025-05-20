@@ -1,6 +1,11 @@
 import { ReactNode } from "react";
-import { Provider } from "jotai";
+import { Provider as JotaiProvider } from "jotai";
+import AlertDialogProvider from "./alert-dialog-provider";
 
 export default function Providers({ children }: { children: ReactNode }) {
-  return <Provider>{children}</Provider>;
+  return (
+    <JotaiProvider>
+      <AlertDialogProvider>{children}</AlertDialogProvider>
+    </JotaiProvider>
+  );
 }

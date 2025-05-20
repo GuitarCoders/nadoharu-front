@@ -8,71 +8,31 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
       keyframes: {
-        hide: {
-          from: { opacity: "1" },
-          to: { opacity: "0" },
+        // 모달이 아래에서 위로 나타나는 애니메이션
+        fadeInUp: {
+          "0%": { opacity: "0", transform: "translateY(20px)" }, // 시작: 투명하고 약간 아래에 위치
+          "100%": { opacity: "1", transform: "translateY(0)" }, // 끝: 불투명하고 제자리에 위치
         },
-        slideIn: {
-          from: {
-            transform: "translateX(calc(100% + var(--viewport-padding)))",
-          },
-          to: { transform: "translateX(0)" },
-        },
-        swipeOut: {
-          from: { transform: "translateX(var(--radix-toast-swipe-end-x))" },
-          to: { transform: "translateX(calc(100% + var(--viewport-padding)))" },
+        // 모달이 위에서 아래로 사라지는 애니메이션 (선택 사항)
+        fadeOutDown: {
+          "0%": { opacity: "1", transform: "translateY(0)" },
+          "100%": { opacity: "0", transform: "translateY(20px)" },
         },
         overlayShow: {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
-        contentShow: {
-          from: {
-            opacity: "0",
-            screenY: "30",
-            transform: "translate(-50%, -48%) scale(0.96)",
-          },
-          to: {
-            opacity: "1",
-            screenY: "0",
-            transform: "translate(-50%, -50%) scale(1)",
-          },
-        },
-        slideDownAndFade: {
-          from: { opacity: "0", transform: "translateY(-2px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
-        slideLeftAndFade: {
-          from: { opacity: "0", transform: "translateX(2px)" },
-          to: { opacity: "1", transform: "translateX(0)" },
-        },
-        slideUpAndFade: {
-          from: { opacity: "0", transform: "translateY(2px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
-        slideRightAndFade: {
-          from: { opacity: "0", transform: "translateX(-2px)" },
-          to: { opacity: "1", transform: "translateX(0)" },
+        overlayHide: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
         },
       },
       animation: {
-        overlayShow: "overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-        contentShow: "contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideDownAndFade:
-          "slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideLeftAndFade:
-          "slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideUpAndFade: "slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideRightAndFade:
-          "slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        hide: "hide 100ms ease-in",
-        slideIn: "slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-        swipeOut: "swipeOut 100ms ease-out",
+        fadeInUp: "fadeInUp 0.3s ease-out forwards", // 나타날 때 0.3초 동안 ease-out 효과
+        fadeOutDown: "fadeOutDown 0.3s ease-in forwards", // 사라질 때 0.3초 동안 ease-in 효과
+        overlayShow: "overlayShow 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        overlayHide: "overlayHide 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
       },
     },
   },
