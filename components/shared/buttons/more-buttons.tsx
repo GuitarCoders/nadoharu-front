@@ -10,7 +10,7 @@ export type MoreBtn = {
 
 export default function MoreButtons({ buttons }: { buttons: MoreBtn[] }) {
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger>
         <EllipsisVerticalIcon className="size-6" />
       </DropdownMenu.Trigger>
