@@ -28,7 +28,7 @@ export default async function Friends({
   }
 
   // TODO: 받은 친구신청 수 구현
-  const pendingFriendsCount = 0;
+  const pendingFriendsCount = 1;
 
   return (
     <section className="flex flex-col p-4 gap-4">

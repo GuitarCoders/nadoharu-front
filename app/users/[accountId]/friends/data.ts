@@ -17,9 +17,8 @@ export async function getUserId({
     const client = await getClient();
     const { data } = await client.query<GetUserIdQuery>({
       query: GetUserIdDocument,
-      variables: { accountId },
+      variables: { account_id: accountId },
     });
-    console.log("getUserId", data);
     return data;
   } catch (error) {
     console.error(error);
@@ -38,7 +37,6 @@ export async function getFriends(variables: {
       query: GetFriendsDocument,
       variables,
     });
-    console.log("getFriends", data);
     return data;
   } catch (error) {
     console.error(error);
