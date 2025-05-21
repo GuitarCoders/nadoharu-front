@@ -29,26 +29,16 @@ export default function PostDetailMoreBtns({
     }
   };
 
-  const showDeletePostAlert = () => {
-    setAlert({
-      visible: true,
-      title: "삭제",
-      description: "정말로 게시글을 삭제할까요?",
-      extraBtnColor: "red",
-      extraBtnText: "삭제하기",
-      extraBtnAction: handleDeletePost,
-    });
-  };
-
   const buttons: MoreBtn[] = [
     isUserPost
       ? {
-          name: "삭제하기",
+          name: "게시글 삭제하기",
           icon: <TrashIcon className="size-5" />,
-          action: showDeletePostAlert,
+          action: handleDeletePost,
+          color: "red",
         }
       : {
-          name: "신고하기",
+          name: "게시글 신고하기",
           icon: <ExclamationTriangleIcon className="size-5" />,
           action: () => console.log("신고하기"),
         },

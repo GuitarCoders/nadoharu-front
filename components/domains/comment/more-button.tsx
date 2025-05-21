@@ -15,7 +15,6 @@ export default function CommentMoreBtns({
   targetCommentId: string;
   targetPostId: string;
 }) {
-  const setAlert = useSetAtom(alertAtom);
   const setToast = useSetAtom(toastAtom);
   const removeComment = async () => {
     const result = await deleteCommentById({ targetCommentId, targetPostId });
@@ -26,26 +25,17 @@ export default function CommentMoreBtns({
       });
     }
   };
-  const showRemoveAlert = () => {
-    setAlert({
-      visible: true,
-      title: "삭제",
-      description: "정말로 댓글을 삭제할까요?",
-      extraBtnColor: "red",
-      extraBtnText: "삭제하기",
-      extraBtnAction: removeComment,
-    });
-  };
 
   const buttons: MoreBtn[] = [
     isUserComment
       ? {
-          name: "삭제하기",
+          name: "댓글 삭제하기",
           icon: <TrashIcon className="size-5" />,
-          action: showRemoveAlert,
+          action: removeComment,
+          color: "red",
         }
       : {
-          name: "신고하기",
+          name: "댓글 신고하기",
           icon: <ExclamationTriangleIcon className="size-5" />,
           action: () => console.log("신고하기"),
         },
