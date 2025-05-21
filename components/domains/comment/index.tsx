@@ -25,7 +25,7 @@ export default function Comment({
     <div className="flex p-4 justify-between">
       <div className="flex gap-4 align-start">
         <Link href={`/users/${accountId}`} className="flex-shrink-0">
-          <ProfileImage avatar={avatar} username={username} />
+          <ProfileImage avatar={avatar} name={username} />
         </Link>
         <div className="flex flex-col text-sm gap-1">
           <Link href={`/users/${accountId}`} className="font-semibold">

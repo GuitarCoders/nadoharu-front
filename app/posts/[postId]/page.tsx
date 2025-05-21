@@ -31,9 +31,9 @@ export default async function PostDetail({
 
   return (
     <>
-      <section className="divide-y pb-16">
+      <section className="divide-y divide-neutral-400 dark:divide-neutral-800 pb-16">
         {/* 본문 */}
-        <div className="flex flex-col p-4 gap-2 shadow-md">
+        <div className="flex flex-col p-4 gap-2">
           {/* {post.photos.length ? ( */}
           {/*   <div className="grid grid-cols-2 gap-2 mb-4"> */}
           {/*     {post.photos.map((photo) => ( */}
@@ -72,7 +72,7 @@ export default async function PostDetail({
 
         <div>
           {/* 나도 */}
-          <div className="flex gap-4 px-4 h-16 items-center border-b">
+          <div className="flex gap-4 px-4 h-16 items-center border-b border-neutral-400 dark:border-neutral-800">
             {!isUserPost ? (
               <RepostForm postId={postId} isReposted={false} repostCount={0} />
             ) : (
@@ -84,7 +84,7 @@ export default async function PostDetail({
             )}
             <p className="text-sm text-neutral-400">이 글에 공감한다면 나도!</p>
           </div>
-          <div className="flex flex-col divide-y">
+          <div className="flex flex-col divide-y divide-neutral-400 dark:divide-neutral-800">
             {comments.comments.map((comment) => (
               <Comment
                 key={comment._id}
