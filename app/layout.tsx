@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Providers from "@/components/layouts/providers";
-import GlobalAlertDialog from "@/components/layouts/alert-dialog-provider";
-import GlobalToast from "@/components/layouts/global-toast";
-import AlertDialogProvider from "@/components/layouts/alert-dialog-provider";
+import JotaiProviders from "@/components/providers/jotai-providers";
+import GlobalAlertDialog from "@/components/layouts/alert-dialog";
+import GlobalToast from "@/components/layouts/toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,15 +29,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <Providers>
+    <html lang="ko">
+      <JotaiProviders>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           {children}
+          <GlobalAlertDialog />
           <GlobalToast />
         </body>
-      </Providers>
+      </JotaiProviders>
     </html>
   );
 }

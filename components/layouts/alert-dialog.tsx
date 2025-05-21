@@ -5,11 +5,7 @@ import { alertAtom } from "@/libs/atoms";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 
-export default function AlertDialogProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function GlobalAlertDialog() {
   const router = useRouter();
   const [
     {
@@ -60,10 +56,9 @@ export default function AlertDialogProvider({
 
   return (
     <AlertDialog.Root open={visible} onOpenChange={closeDialog}>
-      {children}
       <AlertDialog.Portal>
-        <AlertDialog.Overlay className="fixed inset-0 z-50 bg-black/50 data-[state=open]:animate-overlayShow data-[state=closed]:animate-overlayHide" />
-        <AlertDialog.Content className="flex flex-col gap-2 fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-neutral-900 rounded-md p-6 shadow-md min-w-[340px] sm:min-w-[380px] data-[state=open]:animate-fadeInUp data-[state=closed]:animate-fadeOutDown">
+        <AlertDialog.Overlay className="fixed inset-0 z-50 bg-black/50" />
+        <AlertDialog.Content className="flex flex-col gap-2 fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-neutral-900 rounded-md p-6 shadow-md min-w-[340px] sm:min-w-[380px]">
           <AlertDialog.Title className="text-lg font-semibold">
             {title}
           </AlertDialog.Title>

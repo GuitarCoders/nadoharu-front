@@ -25,7 +25,7 @@ export default function GlobalToast() {
   }, [visible, setToast, duration]);
 
   return (
-    <Toast.Provider swipeDirection="up" duration={duration}>
+    <Toast.Provider duration={duration}>
       <Toast.Root
         className={`flex flex-col justify-center gap-x-4 rounded-md px-4 py-3 shadow-md transition-all duration-300 ease-out transform data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=closed]:translate-y-5 data-[state=closed]:opacity-0 ${
           isError
