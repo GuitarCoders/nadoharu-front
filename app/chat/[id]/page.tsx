@@ -19,12 +19,12 @@ export default async function ChatDetail({
         <ChatBubble
           message="lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
           avatar={null}
-          username="test"
+          name="test"
         />
         <ChatBubble
           message="lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
           avatar={null}
-          username="test2"
+          name="test2"
           reversed={true}
         />
       </div>

@@ -52,7 +52,7 @@ export default function PostPreview({
         {/* 프로필 */}
         <section className="flex justify-between items-center">
           <button onClick={goToUserPage} className="flex items-center gap-3">
-            <ProfileImage avatar={null} username={author.name} />
+            <ProfileImage avatar={null} name={author.name} />
             <div className="flex flex-col">
               <h2 className="font-semibold text-sm">{author.name}</h2>
             </div>
