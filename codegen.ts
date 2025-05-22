@@ -16,20 +16,30 @@ const config: CodegenConfig = {
       preset: "client",
       presetConfig: {
         baseTypesPath: "~@/graphql/generated/graphql",
+        fragmentMasking: false,
       },
-      plugins: ['typescript'],
     },
     "graphql/generated/schema.graphql": {
-      plugins: ['schema-ast'],
+      plugins: ["schema-ast"],
     },
     "app/": {
-      preset: 'near-operation-file-preset',
+      preset: "near-operation-file-preset",
       presetConfig: {
         baseTypesPath: "~@/graphql/generated/graphql",
+        extension: ".generated.ts",
+        importTypesNamespace: "Types",
       },
-      plugins: ['typescript-operations', 'typescript-react-apollo']
-    }
+      plugins: ["typescript-operations", "typescript-react-apollo"],
+      config: {
+        skipTypename: false,
+        withHooks: true,
+        withHOC: false,
+        withComponent: false,
+        useTypeImports: true,
+        dedupeFragments: true,
+      },
+    },
   },
-}
+};
 
 export default config;
