@@ -1,7 +1,7 @@
 // Constants for validation rules
 export const PASSWORD_MIN_LENGTH = 10;
 export const PASSWORD_REGEX = new RegExp(
-  /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{10,}$/,
+  /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{10,}$/
 );
 export const USERNAME_MIN_LENGTH = 2;
 export const USERNAME_MAX_LENGTH = 15;
@@ -59,3 +59,6 @@ export const NOTIFICATIONS_TITLE = {
   REPOST: "나도!",
   COMMENT: "댓글",
 };
+
+// Device Detection
+export const MOBILE_BREAKPOINT = 768;
