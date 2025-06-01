@@ -1,13 +1,15 @@
 "use client";
 
 import { ExclamationTriangleIcon, TrashIcon } from "@heroicons/react/16/solid";
-import MoreButtons, { MoreBtn } from "@/components/shared/buttons/more-buttons";
+import ContextualMenu, {
+  ContextualBtn,
+} from "@/components/shared/buttons/contextual-menu";
 import { useRouter } from "next/navigation";
 import { useSetAtom } from "jotai";
 import { alertAtom, toastAtom } from "@/libs/atoms";
 import { deletePost } from "@/app/posts/[postId]/action";
 
-export default function PostDetailMoreBtns({
+export default function PostHeaderMenu({
   isUserPost,
   postId,
 }: {
@@ -15,7 +17,6 @@ export default function PostDetailMoreBtns({
   postId: string;
 }) {
   const router = useRouter();
-  const setAlert = useSetAtom(alertAtom);
   const setToast = useSetAtom(toastAtom);
 
   const handleDeletePost = async () => {
@@ -29,7 +30,7 @@ export default function PostDetailMoreBtns({
     }
   };
 
-  const buttons: MoreBtn[] = [
+  const buttons: ContextualBtn[] = [
     isUserPost
       ? {
           name: "게시글 삭제하기",
@@ -44,5 +45,5 @@ export default function PostDetailMoreBtns({
         },
   ];
 
-  return <MoreButtons buttons={buttons} />;
+  return <ContextualMenu buttons={buttons} />;
 }
