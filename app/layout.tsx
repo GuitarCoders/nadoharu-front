@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import JotaiProviders from "@/components/providers/jotai-providers";
+import JotaiProvider from "@/components/providers/jotai-provider";
 import GlobalAlertDialog from "@/components/layouts/alert-dialog";
 import GlobalToast from "@/components/layouts/toast";
 
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <JotaiProviders>
+      <JotaiProvider>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
@@ -38,7 +38,7 @@ export default function RootLayout({
           <GlobalAlertDialog />
           <GlobalToast />
         </body>
-      </JotaiProviders>
+      </JotaiProvider>
     </html>
   );
 }
