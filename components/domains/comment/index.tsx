@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CommentMoreBtns from "@/components/domains/comment/more-button";
+import CommentMenu from "@/components/domains/comment/menu";
 import ProfileImage from "@/components/domains/profile/image";
 
 interface CommentProps {
@@ -35,7 +35,7 @@ export default function Comment({
         </div>
       </div>
       <div className="flex gap-2 justify-end w-6 flex-shrink-0">
-        <CommentMoreBtns
+        <CommentMenu
           isUserComment={isUserComment}
           targetCommentId={commentId}
           targetPostId={postId}

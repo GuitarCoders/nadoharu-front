@@ -1,15 +1,10 @@
-import { JSX, useState } from "react";
+import { useState } from "react";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { AnimatePresence, motion } from "framer-motion";
+import { useDeviceDetection } from "@/hooks";
+import { ContextualBtn } from "../shared/buttons/contextual-menu";
 
-export type MoreBtn = {
-  action: () => void;
-  name: string;
-  icon: JSX.Element;
-  color?: "neutral" | "red" | "green";
-};
-
-export default function MoreButtons({ buttons }: { buttons: MoreBtn[] }) {
+export default function OverlayMenu({ buttons }: { buttons: ContextualBtn[] }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openMenu = () => setIsOpen(true);

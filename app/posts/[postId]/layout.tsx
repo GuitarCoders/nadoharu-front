@@ -1,6 +1,6 @@
 import Header from "@/components/layouts/header";
 import getSession from "@/libs/session";
-import PostDetailMoreBtns from "@/components/domains/post/more-buttons";
+import PostHeaderMenu from "@/components/domains/post/header-menu";
 import { getPostUser } from "./data";
 
 interface LayoutProps {
@@ -19,7 +19,7 @@ export default async function PostLayout({ children, params }: LayoutProps) {
   return (
     <main className="max-w-2xl mx-auto">
       <Header author={postUser.author} canGoBack>
-        <PostDetailMoreBtns isUserPost={isUserPost} postId={postId} />
+        <PostHeaderMenu isUserPost={isUserPost} postId={postId} />
       </Header>
       <section className="mt-14 mb-20">{children}</section>
     </main>

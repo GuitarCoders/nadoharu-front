@@ -20,14 +20,7 @@ interface LayoutProps {
   children: ReactNode | ReactNode[];
   showNewPostBtn?: boolean;
   showNewChatBtn?: boolean;
-  moreBtns?: MoreBtns;
 }
-
-export type MoreBtns = {
-  action: (event: Event) => void;
-  name: string;
-  icon: JSX.Element;
-}[];
 
 const Layout: NextPage<LayoutProps> = ({
   title,
@@ -36,7 +29,6 @@ const Layout: NextPage<LayoutProps> = ({
   children,
   showNewPostBtn,
   showNewChatBtn,
-  moreBtns,
 }) => {
   const router = useRouter();
   return (
@@ -82,30 +74,6 @@ const Layout: NextPage<LayoutProps> = ({
             >
               <PencilSquareIcon className="size-6" />
             </Link>
-          ) : null}
-          {moreBtns ? (
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger>
-                <EllipsisVerticalIcon className="size-6" />
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content
-                  align="end"
-                  className="z-20 min-w-[180px] bg-white rounded-md p-2 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade"
-                >
-                  {moreBtns.map((button, index) => (
-                    <DropdownMenu.Item
-                      key={index}
-                      className="group leading-none rounded-md flex items-center h-8 p-3 relative select-none outline-none data-[disabled]:pointer-events-none hover:bg-gray-200 cursor-pointer"
-                      onSelect={button.action}
-                    >
-                      <div className="pr-2">{button.icon}</div>
-                      <p className="text-sm">{button.name}</p>
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
           ) : null}
         </section>
       </header>

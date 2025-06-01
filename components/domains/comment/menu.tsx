@@ -1,12 +1,14 @@
 "use client";
 
 import { ExclamationTriangleIcon, TrashIcon } from "@heroicons/react/16/solid";
-import MoreButtons, { MoreBtn } from "@/components/shared/buttons/more-buttons";
+import ContextualMenu, {
+  ContextualBtn,
+} from "@/components/shared/buttons/contextual-menu";
 import { useSetAtom } from "jotai";
 import { alertAtom, toastAtom } from "@/libs/atoms";
 import { deleteCommentById } from "@/app/posts/[postId]/action";
 
-export default function CommentMoreBtns({
+export default function CommentMenu({
   isUserComment,
   targetCommentId,
   targetPostId,
@@ -26,7 +28,7 @@ export default function CommentMoreBtns({
     }
   };
 
-  const buttons: MoreBtn[] = [
+  const buttons: ContextualBtn[] = [
     isUserComment
       ? {
           name: "댓글 삭제하기",
@@ -41,5 +43,5 @@ export default function CommentMoreBtns({
         },
   ];
 
-  return <MoreButtons buttons={buttons} />;
+  return <ContextualMenu buttons={buttons} />;
 }
