@@ -77,7 +77,7 @@ const Layout: NextPage<LayoutProps> = ({
           ) : null}
         </section>
       </header>
-      <section className={"mt-14 mb-20"}>{children}</section>
+      <section className="mt-14 mb-20">{children}</section>
       {canGoBack ? null : (
         <footer className="max-w-2xl w-full grid grid-cols-4 mx-auto h-20 bg-violet-600 dark:bg-neutral-800 fixed bottom-0 border-t-2 border-violet-800 dark:border-violet-400 z-20">
           <FooterItem title="모아보는" link="/posts" />
