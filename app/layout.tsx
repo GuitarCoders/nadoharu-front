@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import JotaiProvider from "@/components/providers/jotai-provider";
@@ -21,6 +21,31 @@ export const metadata: Metadata = {
     default: "나도하루",
   },
   description: "나도하루 소셜 미디어",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "나도하루",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "default",
+    "apple-mobile-web-app-title": "나도하루",
+    "application-name": "나도하루",
+    "msapplication-TileColor": "#000000",
+    "msapplication-tap-highlight": "no",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
