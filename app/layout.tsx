@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import JotaiProvider from "@/components/providers/jotai-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import GlobalAlertDialog from "@/components/layouts/alert-dialog";
 import GlobalToast from "@/components/layouts/toast";
 
@@ -45,7 +46,6 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -56,13 +56,15 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <JotaiProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-          <GlobalAlertDialog />
-          <GlobalToast />
-        </body>
+        <ThemeProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+            <GlobalAlertDialog />
+            <GlobalToast />
+          </body>
+        </ThemeProvider>
       </JotaiProvider>
     </html>
   );
