@@ -1,31 +1,38 @@
-query GetMyPosts($count: Int!, $filter: getPostFilter, $accountId: String!) {
-  getPosts(
-    getPostsData: { count: $count, filter: $filter }
-    targetUserId: $accountId
-  ) {
+query PostsByMe($filter: PostFilter!, $pagination: PaginationInput!) {
+  postsByMe(filter: $filter, pagination: $pagination) {
     posts {
       _id
-      author {
-        _id
-        name
-        account_id
-      }
       content
       tags
       category
-      commentsCount
       createdAt
+      author {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
     }
-    lastDateTime
+    pageInfo {
+      hasNext
+      cursor
+    }
   }
 }
 
-query UserWhoAmI {
-  userWhoAmI {
-    _id
-    name
-    email
-    account_id
-    about_me
+query Me {
+  me {
+    isFriend
+    isFriendRequested
+    friendCount
+    receivedFriendRequestCount
+    user {
+      _id
+      name
+      email
+      account_id
+      about_me
+    }
   }
 }

@@ -3,16 +3,16 @@ import type * as Types from '@/graphql/generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetUserByAccountIdQueryVariables = Types.Exact<{
+export type UserByAccountIdQueryVariables = Types.Exact<{
   account_id: Types.Scalars['String']['input'];
 }>;
 
 
-export type GetUserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } };
+export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } };
 
 
-export const GetUserByAccountIdDocument = gql`
-    query getUserByAccountId($account_id: String!) {
+export const UserByAccountIdDocument = gql`
+    query UserByAccountId($account_id: String!) {
   userByAccountId(account_id: $account_id) {
     _id
     name
@@ -24,34 +24,34 @@ export const GetUserByAccountIdDocument = gql`
     `;
 
 /**
- * __useGetUserByAccountIdQuery__
+ * __useUserByAccountIdQuery__
  *
- * To run a query within a React component, call `useGetUserByAccountIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserByAccountIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useUserByAccountIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserByAccountIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetUserByAccountIdQuery({
+ * const { data, loading, error } = useUserByAccountIdQuery({
  *   variables: {
  *      account_id: // value for 'account_id'
  *   },
  * });
  */
-export function useGetUserByAccountIdQuery(baseOptions: Apollo.QueryHookOptions<GetUserByAccountIdQuery, GetUserByAccountIdQueryVariables> & ({ variables: GetUserByAccountIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useUserByAccountIdQuery(baseOptions: Apollo.QueryHookOptions<UserByAccountIdQuery, UserByAccountIdQueryVariables> & ({ variables: UserByAccountIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserByAccountIdQuery, GetUserByAccountIdQueryVariables>(GetUserByAccountIdDocument, options);
+        return Apollo.useQuery<UserByAccountIdQuery, UserByAccountIdQueryVariables>(UserByAccountIdDocument, options);
       }
-export function useGetUserByAccountIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserByAccountIdQuery, GetUserByAccountIdQueryVariables>) {
+export function useUserByAccountIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserByAccountIdQuery, UserByAccountIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserByAccountIdQuery, GetUserByAccountIdQueryVariables>(GetUserByAccountIdDocument, options);
+          return Apollo.useLazyQuery<UserByAccountIdQuery, UserByAccountIdQueryVariables>(UserByAccountIdDocument, options);
         }
-export function useGetUserByAccountIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetUserByAccountIdQuery, GetUserByAccountIdQueryVariables>) {
+export function useUserByAccountIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserByAccountIdQuery, UserByAccountIdQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetUserByAccountIdQuery, GetUserByAccountIdQueryVariables>(GetUserByAccountIdDocument, options);
+          return Apollo.useSuspenseQuery<UserByAccountIdQuery, UserByAccountIdQueryVariables>(UserByAccountIdDocument, options);
         }
-export type GetUserByAccountIdQueryHookResult = ReturnType<typeof useGetUserByAccountIdQuery>;
-export type GetUserByAccountIdLazyQueryHookResult = ReturnType<typeof useGetUserByAccountIdLazyQuery>;
-export type GetUserByAccountIdSuspenseQueryHookResult = ReturnType<typeof useGetUserByAccountIdSuspenseQuery>;
-export type GetUserByAccountIdQueryResult = Apollo.QueryResult<GetUserByAccountIdQuery, GetUserByAccountIdQueryVariables>;
+export type UserByAccountIdQueryHookResult = ReturnType<typeof useUserByAccountIdQuery>;
+export type UserByAccountIdLazyQueryHookResult = ReturnType<typeof useUserByAccountIdLazyQuery>;
+export type UserByAccountIdSuspenseQueryHookResult = ReturnType<typeof useUserByAccountIdSuspenseQuery>;
+export type UserByAccountIdQueryResult = Apollo.QueryResult<UserByAccountIdQuery, UserByAccountIdQueryVariables>;

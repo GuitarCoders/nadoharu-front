@@ -4,12 +4,11 @@ query getUserId($account_id: String!) {
   }
 }
 
-query getFriends($targetUserId: String!, $limit: Int!, $skip: Int!) {
-  getFriends(
-    filter: { targetUserId: $targetUserId, limit: $limit, skip: $skip }
-  ) {
+query Friends($pagination: PaginationInput!, $targetUserId: String!) {
+  friends(pagination: $pagination, targetUserId: $targetUserId) {
     friends {
       _id
+      createdAt
       user {
         _id
         name
@@ -17,7 +16,10 @@ query getFriends($targetUserId: String!, $limit: Int!, $skip: Int!) {
         account_id
         about_me
       }
-      createdAt
+    }
+    pageInfo {
+      hasNext
+      cursor
     }
   }
 }

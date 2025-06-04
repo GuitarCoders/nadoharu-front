@@ -2,16 +2,16 @@
 
 import { getClient } from "@/libs/apollo-client";
 import {
-  GetMyPostsDocument,
-  GetMyPostsQuery,
-  UserWhoAmIDocument,
-  UserWhoAmIQuery,
+  MeDocument,
+  MeQuery,
+  PostsByMeDocument,
+  PostsByMeQuery,
 } from "./index.generated";
 
 export async function getMyPosts(accountId: string) {
   const client = await getClient();
-  const { data } = await client.query<GetMyPostsQuery>({
-    query: GetMyPostsDocument,
+  const { data } = await client.query<PostsByMeQuery>({
+    query: PostsByMeDocument,
     variables: { count: 5, filter: undefined, accountId },
   });
 
@@ -20,8 +20,8 @@ export async function getMyPosts(accountId: string) {
 
 export async function getWhoAmI() {
   const client = await getClient();
-  const { data } = await client.query<UserWhoAmIQuery>({
-    query: UserWhoAmIDocument,
+  const { data } = await client.query<MeQuery>({
+    query: MeDocument,
   });
 
   return data;

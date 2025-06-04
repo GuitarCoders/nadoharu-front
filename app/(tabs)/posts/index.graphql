@@ -1,19 +1,22 @@
-query GetPosts($count: Int!, $filter: getPostFilter) {
-  getPosts(getPostsData: { count: $count, filter: $filter }) {
+query PostsForTimeline($pagination: PaginationInput!) {
+  postsForTimeline(pagination: $pagination) {
     posts {
       _id
-      author {
-        _id
-        name
-        account_id
-      }
       content
       tags
       category
-      commentsCount
       createdAt
+      author {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
     }
-    lastDateTime
-    hasNext
+    pageInfo {
+      hasNext
+      cursor
+    }
   }
 }

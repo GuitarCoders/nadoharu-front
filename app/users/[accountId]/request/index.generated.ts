@@ -3,24 +3,23 @@ import type * as Types from '@/graphql/generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetReceiveUserByAccountIdQueryVariables = Types.Exact<{
+export type UserNameByAccountIdQueryVariables = Types.Exact<{
   accountId: Types.Scalars['String']['input'];
 }>;
 
 
-export type GetReceiveUserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string } };
+export type UserNameByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string } };
 
 export type CreateFriendRequestMutationVariables = Types.Exact<{
-  receiveUserId: Types.Scalars['String']['input'];
-  requestMessage: Types.Scalars['String']['input'];
+  createFriendRequestData: Types.CreateFriendRequest;
 }>;
 
 
-export type CreateFriendRequestMutation = { __typename?: 'Mutation', createFriendRequest: { __typename?: 'CreateFriendRequestResult', _id: string, requestMessage: string, createdAt: string, success: boolean, requestUser: { __typename?: 'User', _id: string, name: string }, receiveUser: { __typename?: 'User', _id: string, name: string } } };
+export type CreateFriendRequestMutation = { __typename?: 'Mutation', createFriendRequest: { __typename?: 'CreateFriendRequestResult', _id: string, requestMessage: string, createdAt: string, success: boolean, requester: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }, receiver: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } } };
 
 
-export const GetReceiveUserByAccountIdDocument = gql`
-    query GetReceiveUserByAccountId($accountId: String!) {
+export const UserNameByAccountIdDocument = gql`
+    query UserNameByAccountId($accountId: String!) {
   userByAccountId(account_id: $accountId) {
     _id
     name
@@ -29,53 +28,57 @@ export const GetReceiveUserByAccountIdDocument = gql`
     `;
 
 /**
- * __useGetReceiveUserByAccountIdQuery__
+ * __useUserNameByAccountIdQuery__
  *
- * To run a query within a React component, call `useGetReceiveUserByAccountIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetReceiveUserByAccountIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useUserNameByAccountIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserNameByAccountIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetReceiveUserByAccountIdQuery({
+ * const { data, loading, error } = useUserNameByAccountIdQuery({
  *   variables: {
  *      accountId: // value for 'accountId'
  *   },
  * });
  */
-export function useGetReceiveUserByAccountIdQuery(baseOptions: Apollo.QueryHookOptions<GetReceiveUserByAccountIdQuery, GetReceiveUserByAccountIdQueryVariables> & ({ variables: GetReceiveUserByAccountIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useUserNameByAccountIdQuery(baseOptions: Apollo.QueryHookOptions<UserNameByAccountIdQuery, UserNameByAccountIdQueryVariables> & ({ variables: UserNameByAccountIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetReceiveUserByAccountIdQuery, GetReceiveUserByAccountIdQueryVariables>(GetReceiveUserByAccountIdDocument, options);
+        return Apollo.useQuery<UserNameByAccountIdQuery, UserNameByAccountIdQueryVariables>(UserNameByAccountIdDocument, options);
       }
-export function useGetReceiveUserByAccountIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReceiveUserByAccountIdQuery, GetReceiveUserByAccountIdQueryVariables>) {
+export function useUserNameByAccountIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserNameByAccountIdQuery, UserNameByAccountIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetReceiveUserByAccountIdQuery, GetReceiveUserByAccountIdQueryVariables>(GetReceiveUserByAccountIdDocument, options);
+          return Apollo.useLazyQuery<UserNameByAccountIdQuery, UserNameByAccountIdQueryVariables>(UserNameByAccountIdDocument, options);
         }
-export function useGetReceiveUserByAccountIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetReceiveUserByAccountIdQuery, GetReceiveUserByAccountIdQueryVariables>) {
+export function useUserNameByAccountIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserNameByAccountIdQuery, UserNameByAccountIdQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetReceiveUserByAccountIdQuery, GetReceiveUserByAccountIdQueryVariables>(GetReceiveUserByAccountIdDocument, options);
+          return Apollo.useSuspenseQuery<UserNameByAccountIdQuery, UserNameByAccountIdQueryVariables>(UserNameByAccountIdDocument, options);
         }
-export type GetReceiveUserByAccountIdQueryHookResult = ReturnType<typeof useGetReceiveUserByAccountIdQuery>;
-export type GetReceiveUserByAccountIdLazyQueryHookResult = ReturnType<typeof useGetReceiveUserByAccountIdLazyQuery>;
-export type GetReceiveUserByAccountIdSuspenseQueryHookResult = ReturnType<typeof useGetReceiveUserByAccountIdSuspenseQuery>;
-export type GetReceiveUserByAccountIdQueryResult = Apollo.QueryResult<GetReceiveUserByAccountIdQuery, GetReceiveUserByAccountIdQueryVariables>;
+export type UserNameByAccountIdQueryHookResult = ReturnType<typeof useUserNameByAccountIdQuery>;
+export type UserNameByAccountIdLazyQueryHookResult = ReturnType<typeof useUserNameByAccountIdLazyQuery>;
+export type UserNameByAccountIdSuspenseQueryHookResult = ReturnType<typeof useUserNameByAccountIdSuspenseQuery>;
+export type UserNameByAccountIdQueryResult = Apollo.QueryResult<UserNameByAccountIdQuery, UserNameByAccountIdQueryVariables>;
 export const CreateFriendRequestDocument = gql`
-    mutation CreateFriendRequest($receiveUserId: String!, $requestMessage: String!) {
-  createFriendRequest(
-    createFriendRequestData: {receiveUserId: $receiveUserId, requestMessage: $requestMessage}
-  ) {
+    mutation CreateFriendRequest($createFriendRequestData: CreateFriendRequest!) {
+  createFriendRequest(createFriendRequestData: $createFriendRequestData) {
     _id
     requestMessage
     createdAt
     success
-    requestUser {
+    requester {
       _id
       name
+      email
+      account_id
+      about_me
     }
-    receiveUser {
+    receiver {
       _id
       name
+      email
+      account_id
+      about_me
     }
   }
 }
@@ -95,8 +98,7 @@ export type CreateFriendRequestMutationFn = Apollo.MutationFunction<CreateFriend
  * @example
  * const [createFriendRequestMutation, { data, loading, error }] = useCreateFriendRequestMutation({
  *   variables: {
- *      receiveUserId: // value for 'receiveUserId'
- *      requestMessage: // value for 'requestMessage'
+ *      createFriendRequestData: // value for 'createFriendRequestData'
  *   },
  * });
  */

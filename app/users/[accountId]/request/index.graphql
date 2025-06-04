@@ -1,31 +1,29 @@
-query GetReceiveUserByAccountId($accountId: String!) {
+query UserNameByAccountId($accountId: String!) {
   userByAccountId(account_id: $accountId) {
     _id
     name
   }
 }
 
-mutation CreateFriendRequest(
-  $receiveUserId: String!
-  $requestMessage: String!
-) {
-  createFriendRequest(
-    createFriendRequestData: {
-      receiveUserId: $receiveUserId
-      requestMessage: $requestMessage
-    }
-  ) {
+mutation CreateFriendRequest($createFriendRequestData: CreateFriendRequest!) {
+  createFriendRequest(createFriendRequestData: $createFriendRequestData) {
     _id
     requestMessage
     createdAt
     success
-    requestUser {
+    requester {
       _id
       name
+      email
+      account_id
+      about_me
     }
-    receiveUser {
+    receiver {
       _id
       name
+      email
+      account_id
+      about_me
     }
   }
 }

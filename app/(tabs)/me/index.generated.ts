@@ -3,119 +3,124 @@ import type * as Types from '@/graphql/generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetMyPostsQueryVariables = Types.Exact<{
-  count: Types.Scalars['Int']['input'];
-  filter?: Types.InputMaybe<Types.GetPostFilter>;
-  accountId: Types.Scalars['String']['input'];
+export type PostsByMeQueryVariables = Types.Exact<{
+  filter: Types.PostFilter;
+  pagination: Types.PaginationInput;
 }>;
 
 
-export type GetMyPostsQuery = { __typename?: 'Query', getPosts: { __typename?: 'GetPostsResult', lastDateTime?: string | null, posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category: string, commentsCount: number, createdAt: string, author: { __typename?: 'User', _id: string, name: string, account_id: string } }> } };
+export type PostsByMeQuery = { __typename?: 'Query', postsByMe: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category: string, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasNext: boolean, cursor?: string | null } } };
 
-export type UserWhoAmIQueryVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-export type UserWhoAmIQuery = { __typename?: 'Query', userWhoAmI: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } };
+export type MeQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export const GetMyPostsDocument = gql`
-    query GetMyPosts($count: Int!, $filter: getPostFilter, $accountId: String!) {
-  getPosts(
-    getPostsData: {count: $count, filter: $filter}
-    targetUserId: $accountId
-  ) {
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'AboutMe', isFriend: Types.FriendState, isFriendRequested: boolean, friendCount: number, receivedFriendRequestCount: number, user: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } } };
+
+
+export const PostsByMeDocument = gql`
+    query PostsByMe($filter: PostFilter!, $pagination: PaginationInput!) {
+  postsByMe(filter: $filter, pagination: $pagination) {
     posts {
       _id
-      author {
-        _id
-        name
-        account_id
-      }
       content
       tags
       category
-      commentsCount
       createdAt
+      author {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
     }
-    lastDateTime
+    pageInfo {
+      hasNext
+      cursor
+    }
   }
 }
     `;
 
 /**
- * __useGetMyPostsQuery__
+ * __usePostsByMeQuery__
  *
- * To run a query within a React component, call `useGetMyPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetMyPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `usePostsByMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsByMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetMyPostsQuery({
+ * const { data, loading, error } = usePostsByMeQuery({
  *   variables: {
- *      count: // value for 'count'
  *      filter: // value for 'filter'
- *      accountId: // value for 'accountId'
+ *      pagination: // value for 'pagination'
  *   },
  * });
  */
-export function useGetMyPostsQuery(baseOptions: Apollo.QueryHookOptions<GetMyPostsQuery, GetMyPostsQueryVariables> & ({ variables: GetMyPostsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function usePostsByMeQuery(baseOptions: Apollo.QueryHookOptions<PostsByMeQuery, PostsByMeQueryVariables> & ({ variables: PostsByMeQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMyPostsQuery, GetMyPostsQueryVariables>(GetMyPostsDocument, options);
+        return Apollo.useQuery<PostsByMeQuery, PostsByMeQueryVariables>(PostsByMeDocument, options);
       }
-export function useGetMyPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyPostsQuery, GetMyPostsQueryVariables>) {
+export function usePostsByMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsByMeQuery, PostsByMeQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMyPostsQuery, GetMyPostsQueryVariables>(GetMyPostsDocument, options);
+          return Apollo.useLazyQuery<PostsByMeQuery, PostsByMeQueryVariables>(PostsByMeDocument, options);
         }
-export function useGetMyPostsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMyPostsQuery, GetMyPostsQueryVariables>) {
+export function usePostsByMeSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostsByMeQuery, PostsByMeQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetMyPostsQuery, GetMyPostsQueryVariables>(GetMyPostsDocument, options);
+          return Apollo.useSuspenseQuery<PostsByMeQuery, PostsByMeQueryVariables>(PostsByMeDocument, options);
         }
-export type GetMyPostsQueryHookResult = ReturnType<typeof useGetMyPostsQuery>;
-export type GetMyPostsLazyQueryHookResult = ReturnType<typeof useGetMyPostsLazyQuery>;
-export type GetMyPostsSuspenseQueryHookResult = ReturnType<typeof useGetMyPostsSuspenseQuery>;
-export type GetMyPostsQueryResult = Apollo.QueryResult<GetMyPostsQuery, GetMyPostsQueryVariables>;
-export const UserWhoAmIDocument = gql`
-    query UserWhoAmI {
-  userWhoAmI {
-    _id
-    name
-    email
-    account_id
-    about_me
+export type PostsByMeQueryHookResult = ReturnType<typeof usePostsByMeQuery>;
+export type PostsByMeLazyQueryHookResult = ReturnType<typeof usePostsByMeLazyQuery>;
+export type PostsByMeSuspenseQueryHookResult = ReturnType<typeof usePostsByMeSuspenseQuery>;
+export type PostsByMeQueryResult = Apollo.QueryResult<PostsByMeQuery, PostsByMeQueryVariables>;
+export const MeDocument = gql`
+    query Me {
+  me {
+    isFriend
+    isFriendRequested
+    friendCount
+    receivedFriendRequestCount
+    user {
+      _id
+      name
+      email
+      account_id
+      about_me
+    }
   }
 }
     `;
 
 /**
- * __useUserWhoAmIQuery__
+ * __useMeQuery__
  *
- * To run a query within a React component, call `useUserWhoAmIQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserWhoAmIQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUserWhoAmIQuery({
+ * const { data, loading, error } = useMeQuery({
  *   variables: {
  *   },
  * });
  */
-export function useUserWhoAmIQuery(baseOptions?: Apollo.QueryHookOptions<UserWhoAmIQuery, UserWhoAmIQueryVariables>) {
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserWhoAmIQuery, UserWhoAmIQueryVariables>(UserWhoAmIDocument, options);
+        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
       }
-export function useUserWhoAmILazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserWhoAmIQuery, UserWhoAmIQueryVariables>) {
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserWhoAmIQuery, UserWhoAmIQueryVariables>(UserWhoAmIDocument, options);
+          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
         }
-export function useUserWhoAmISuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserWhoAmIQuery, UserWhoAmIQueryVariables>) {
+export function useMeSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<UserWhoAmIQuery, UserWhoAmIQueryVariables>(UserWhoAmIDocument, options);
+          return Apollo.useSuspenseQuery<MeQuery, MeQueryVariables>(MeDocument, options);
         }
-export type UserWhoAmIQueryHookResult = ReturnType<typeof useUserWhoAmIQuery>;
-export type UserWhoAmILazyQueryHookResult = ReturnType<typeof useUserWhoAmILazyQuery>;
-export type UserWhoAmISuspenseQueryHookResult = ReturnType<typeof useUserWhoAmISuspenseQuery>;
-export type UserWhoAmIQueryResult = Apollo.QueryResult<UserWhoAmIQuery, UserWhoAmIQueryVariables>;
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
+export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;

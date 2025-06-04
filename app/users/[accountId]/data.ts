@@ -2,15 +2,15 @@
 
 import { getClient } from "@/libs/apollo-client";
 import {
-  GetUserByAccountIdDocument,
-  GetUserByAccountIdQuery,
+  UserByAccountIdDocument,
+  UserByAccountIdQuery,
 } from "./index.generated";
 
 export async function getUserByAccountId(accountId: string) {
   try {
     const client = await getClient();
-    const { data } = await client.query<GetUserByAccountIdQuery>({
-      query: GetUserByAccountIdDocument,
+    const { data } = await client.query<UserByAccountIdQuery>({
+      query: UserByAccountIdDocument,
       variables: {
         account_id: accountId,
       },

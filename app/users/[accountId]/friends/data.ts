@@ -1,22 +1,13 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import {
-  GetFriendsDocument,
-  GetFriendsQuery,
-  GetUserIdDocument,
-  GetUserIdQuery,
-} from "./index.generated";
+import { FriendsDocument, FriendsQuery } from "./index.generated";
 
-export async function getUserId({
-  accountId,
-}: {
-  accountId: string;
-}): Promise<GetUserIdQuery> {
+export async function getUserId(accountId: string): Promise<FriendsQuery> {
   try {
     const client = await getClient();
-    const { data } = await client.query<GetUserIdQuery>({
-      query: GetUserIdDocument,
+    const { data } = await client.query<FriendsQuery>({
+      query: FriendsDocument,
       variables: { account_id: accountId },
     });
     return data;
@@ -30,11 +21,11 @@ export async function getFriends(variables: {
   targetUserId: string;
   limit: number;
   skip: number;
-}): Promise<GetFriendsQuery> {
+}): Promise<FriendsQuery> {
   try {
     const client = await getClient();
-    const { data } = await client.query<GetFriendsQuery>({
-      query: GetFriendsDocument,
+    const { data } = await client.query<FriendsQuery>({
+      query: FriendsDocument,
       variables,
     });
     return data;

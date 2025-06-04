@@ -1,17 +1,17 @@
-query GetReceiveFriendRequests {
-  getReceiveFriendRequests {
+query ReceivedFriendRequests($pagination: PaginationInput!) {
+  receivedFriendRequests(pagination: $pagination) {
     friendRequests {
       _id
       requestMessage
       createdAt
-      requestUser {
+      requester {
         _id
         name
         email
         account_id
         about_me
       }
-      receiveUser {
+      receiver {
         _id
         name
         email
@@ -22,18 +22,14 @@ query GetReceiveFriendRequests {
   }
 }
 
-mutation AcceptFriendRequest($friendRequestId: String!) {
-  acceptFriendRequest(
-    acceptFriendRequestData: { friendRequestId: $friendRequestId }
-  ) {
+mutation AcceptFriendRequest($acceptFriendRequestData: String!) {
+  acceptFriendRequest(acceptFriendRequestData: $acceptFriendRequestData) {
     success
   }
 }
 
 mutation DeleteFriendRequest($friendRequestId: String!) {
-  deleteFriendRequest(
-    deleteFriendRequestData: { friendRequestId: $friendRequestId }
-  ) {
+  deleteFriendRequest(friendRequestId: $friendRequestId) {
     success
   }
 }

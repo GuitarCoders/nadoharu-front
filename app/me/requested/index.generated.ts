@@ -3,13 +3,15 @@ import type * as Types from '@/graphql/generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetReceiveFriendRequestsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type ReceivedFriendRequestsQueryVariables = Types.Exact<{
+  pagination: Types.PaginationInput;
+}>;
 
 
-export type GetReceiveFriendRequestsQuery = { __typename?: 'Query', getReceiveFriendRequests: { __typename?: 'FriendRequestArray', friendRequests: Array<{ __typename?: 'FriendRequest', _id: string, requestMessage: string, createdAt: string, requestUser: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }, receiveUser: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }> } };
+export type ReceivedFriendRequestsQuery = { __typename?: 'Query', receivedFriendRequests: { __typename?: 'FriendRequestsQueryResult', friendRequests: Array<{ __typename?: 'FriendRequest', _id: string, requestMessage: string, createdAt: string, requester: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }, receiver: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }> } };
 
 export type AcceptFriendRequestMutationVariables = Types.Exact<{
-  friendRequestId: Types.Scalars['String']['input'];
+  acceptFriendRequestData: Types.Scalars['String']['input'];
 }>;
 
 
@@ -23,21 +25,21 @@ export type DeleteFriendRequestMutationVariables = Types.Exact<{
 export type DeleteFriendRequestMutation = { __typename?: 'Mutation', deleteFriendRequest: { __typename?: 'DeleteFriendRequestResult', success: boolean } };
 
 
-export const GetReceiveFriendRequestsDocument = gql`
-    query GetReceiveFriendRequests {
-  getReceiveFriendRequests {
+export const ReceivedFriendRequestsDocument = gql`
+    query ReceivedFriendRequests($pagination: PaginationInput!) {
+  receivedFriendRequests(pagination: $pagination) {
     friendRequests {
       _id
       requestMessage
       createdAt
-      requestUser {
+      requester {
         _id
         name
         email
         account_id
         about_me
       }
-      receiveUser {
+      receiver {
         _id
         name
         email
@@ -50,41 +52,40 @@ export const GetReceiveFriendRequestsDocument = gql`
     `;
 
 /**
- * __useGetReceiveFriendRequestsQuery__
+ * __useReceivedFriendRequestsQuery__
  *
- * To run a query within a React component, call `useGetReceiveFriendRequestsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetReceiveFriendRequestsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useReceivedFriendRequestsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReceivedFriendRequestsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetReceiveFriendRequestsQuery({
+ * const { data, loading, error } = useReceivedFriendRequestsQuery({
  *   variables: {
+ *      pagination: // value for 'pagination'
  *   },
  * });
  */
-export function useGetReceiveFriendRequestsQuery(baseOptions?: Apollo.QueryHookOptions<GetReceiveFriendRequestsQuery, GetReceiveFriendRequestsQueryVariables>) {
+export function useReceivedFriendRequestsQuery(baseOptions: Apollo.QueryHookOptions<ReceivedFriendRequestsQuery, ReceivedFriendRequestsQueryVariables> & ({ variables: ReceivedFriendRequestsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetReceiveFriendRequestsQuery, GetReceiveFriendRequestsQueryVariables>(GetReceiveFriendRequestsDocument, options);
+        return Apollo.useQuery<ReceivedFriendRequestsQuery, ReceivedFriendRequestsQueryVariables>(ReceivedFriendRequestsDocument, options);
       }
-export function useGetReceiveFriendRequestsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReceiveFriendRequestsQuery, GetReceiveFriendRequestsQueryVariables>) {
+export function useReceivedFriendRequestsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReceivedFriendRequestsQuery, ReceivedFriendRequestsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetReceiveFriendRequestsQuery, GetReceiveFriendRequestsQueryVariables>(GetReceiveFriendRequestsDocument, options);
+          return Apollo.useLazyQuery<ReceivedFriendRequestsQuery, ReceivedFriendRequestsQueryVariables>(ReceivedFriendRequestsDocument, options);
         }
-export function useGetReceiveFriendRequestsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetReceiveFriendRequestsQuery, GetReceiveFriendRequestsQueryVariables>) {
+export function useReceivedFriendRequestsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ReceivedFriendRequestsQuery, ReceivedFriendRequestsQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetReceiveFriendRequestsQuery, GetReceiveFriendRequestsQueryVariables>(GetReceiveFriendRequestsDocument, options);
+          return Apollo.useSuspenseQuery<ReceivedFriendRequestsQuery, ReceivedFriendRequestsQueryVariables>(ReceivedFriendRequestsDocument, options);
         }
-export type GetReceiveFriendRequestsQueryHookResult = ReturnType<typeof useGetReceiveFriendRequestsQuery>;
-export type GetReceiveFriendRequestsLazyQueryHookResult = ReturnType<typeof useGetReceiveFriendRequestsLazyQuery>;
-export type GetReceiveFriendRequestsSuspenseQueryHookResult = ReturnType<typeof useGetReceiveFriendRequestsSuspenseQuery>;
-export type GetReceiveFriendRequestsQueryResult = Apollo.QueryResult<GetReceiveFriendRequestsQuery, GetReceiveFriendRequestsQueryVariables>;
+export type ReceivedFriendRequestsQueryHookResult = ReturnType<typeof useReceivedFriendRequestsQuery>;
+export type ReceivedFriendRequestsLazyQueryHookResult = ReturnType<typeof useReceivedFriendRequestsLazyQuery>;
+export type ReceivedFriendRequestsSuspenseQueryHookResult = ReturnType<typeof useReceivedFriendRequestsSuspenseQuery>;
+export type ReceivedFriendRequestsQueryResult = Apollo.QueryResult<ReceivedFriendRequestsQuery, ReceivedFriendRequestsQueryVariables>;
 export const AcceptFriendRequestDocument = gql`
-    mutation AcceptFriendRequest($friendRequestId: String!) {
-  acceptFriendRequest(
-    acceptFriendRequestData: {friendRequestId: $friendRequestId}
-  ) {
+    mutation AcceptFriendRequest($acceptFriendRequestData: String!) {
+  acceptFriendRequest(acceptFriendRequestData: $acceptFriendRequestData) {
     success
   }
 }
@@ -104,7 +105,7 @@ export type AcceptFriendRequestMutationFn = Apollo.MutationFunction<AcceptFriend
  * @example
  * const [acceptFriendRequestMutation, { data, loading, error }] = useAcceptFriendRequestMutation({
  *   variables: {
- *      friendRequestId: // value for 'friendRequestId'
+ *      acceptFriendRequestData: // value for 'acceptFriendRequestData'
  *   },
  * });
  */
@@ -117,9 +118,7 @@ export type AcceptFriendRequestMutationResult = Apollo.MutationResult<AcceptFrie
 export type AcceptFriendRequestMutationOptions = Apollo.BaseMutationOptions<AcceptFriendRequestMutation, AcceptFriendRequestMutationVariables>;
 export const DeleteFriendRequestDocument = gql`
     mutation DeleteFriendRequest($friendRequestId: String!) {
-  deleteFriendRequest(
-    deleteFriendRequestData: {friendRequestId: $friendRequestId}
-  ) {
+  deleteFriendRequest(friendRequestId: $friendRequestId) {
     success
   }
 }

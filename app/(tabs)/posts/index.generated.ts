@@ -3,67 +3,68 @@ import type * as Types from '@/graphql/generated/graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetPostsQueryVariables = Types.Exact<{
-  count: Types.Scalars['Int']['input'];
-  filter?: Types.InputMaybe<Types.GetPostFilter>;
+export type PostsForTimelineQueryVariables = Types.Exact<{
+  pagination: Types.PaginationInput;
 }>;
 
 
-export type GetPostsQuery = { __typename?: 'Query', getPosts: { __typename?: 'GetPostsResult', lastDateTime?: string | null, hasNext: boolean, posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category: string, commentsCount: number, createdAt: string, author: { __typename?: 'User', _id: string, name: string, account_id: string } }> } };
+export type PostsForTimelineQuery = { __typename?: 'Query', postsForTimeline: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category: string, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasNext: boolean, cursor?: string | null } } };
 
 
-export const GetPostsDocument = gql`
-    query GetPosts($count: Int!, $filter: getPostFilter) {
-  getPosts(getPostsData: {count: $count, filter: $filter}) {
+export const PostsForTimelineDocument = gql`
+    query PostsForTimeline($pagination: PaginationInput!) {
+  postsForTimeline(pagination: $pagination) {
     posts {
       _id
-      author {
-        _id
-        name
-        account_id
-      }
       content
       tags
       category
-      commentsCount
       createdAt
+      author {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
     }
-    lastDateTime
-    hasNext
+    pageInfo {
+      hasNext
+      cursor
+    }
   }
 }
     `;
 
 /**
- * __useGetPostsQuery__
+ * __usePostsForTimelineQuery__
  *
- * To run a query within a React component, call `useGetPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `usePostsForTimelineQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsForTimelineQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPostsQuery({
+ * const { data, loading, error } = usePostsForTimelineQuery({
  *   variables: {
- *      count: // value for 'count'
- *      filter: // value for 'filter'
+ *      pagination: // value for 'pagination'
  *   },
  * });
  */
-export function useGetPostsQuery(baseOptions: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables> & ({ variables: GetPostsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function usePostsForTimelineQuery(baseOptions: Apollo.QueryHookOptions<PostsForTimelineQuery, PostsForTimelineQueryVariables> & ({ variables: PostsForTimelineQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+        return Apollo.useQuery<PostsForTimelineQuery, PostsForTimelineQueryVariables>(PostsForTimelineDocument, options);
       }
-export function useGetPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+export function usePostsForTimelineLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsForTimelineQuery, PostsForTimelineQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+          return Apollo.useLazyQuery<PostsForTimelineQuery, PostsForTimelineQueryVariables>(PostsForTimelineDocument, options);
         }
-export function useGetPostsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+export function usePostsForTimelineSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostsForTimelineQuery, PostsForTimelineQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
+          return Apollo.useSuspenseQuery<PostsForTimelineQuery, PostsForTimelineQueryVariables>(PostsForTimelineDocument, options);
         }
-export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
-export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
-export type GetPostsSuspenseQueryHookResult = ReturnType<typeof useGetPostsSuspenseQuery>;
-export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
+export type PostsForTimelineQueryHookResult = ReturnType<typeof usePostsForTimelineQuery>;
+export type PostsForTimelineLazyQueryHookResult = ReturnType<typeof usePostsForTimelineLazyQuery>;
+export type PostsForTimelineSuspenseQueryHookResult = ReturnType<typeof usePostsForTimelineSuspenseQuery>;
+export type PostsForTimelineQueryResult = Apollo.QueryResult<PostsForTimelineQuery, PostsForTimelineQueryVariables>;

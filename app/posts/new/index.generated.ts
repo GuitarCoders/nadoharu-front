@@ -4,32 +4,17 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type CreatePostMutationVariables = Types.Exact<{
-  content: Types.Scalars['String']['input'];
-  tags: Types.Scalars['String']['input'];
-  category: Types.Scalars['String']['input'];
+  postData: Types.CreatePostInput;
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'CreatePostResult', success: boolean, _id: string, content: string, tags?: string | null, category: string, commentsCount: number, createdAt: string, author: { __typename?: 'User', _id: string, name: string, account_id: string } } };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'CreatePostResult', success: boolean } };
 
 
 export const CreatePostDocument = gql`
-    mutation createPost($content: String!, $tags: String!, $category: String!) {
-  createPost(
-    createPostData: {content: $content, tags: $tags, category: $category}
-  ) {
+    mutation CreatePost($postData: CreatePostInput!) {
+  createPost(postData: $postData) {
     success
-    _id
-    author {
-      _id
-      name
-      account_id
-    }
-    content
-    tags
-    category
-    commentsCount
-    createdAt
   }
 }
     `;
@@ -48,9 +33,7 @@ export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, C
  * @example
  * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
  *   variables: {
- *      content: // value for 'content'
- *      tags: // value for 'tags'
- *      category: // value for 'category'
+ *      postData: // value for 'postData'
  *   },
  * });
  */

@@ -10,14 +10,13 @@ export type GetUserIdQueryVariables = Types.Exact<{
 
 export type GetUserIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string } };
 
-export type GetFriendsQueryVariables = Types.Exact<{
+export type FriendsQueryVariables = Types.Exact<{
+  pagination: Types.PaginationInput;
   targetUserId: Types.Scalars['String']['input'];
-  limit: Types.Scalars['Int']['input'];
-  skip: Types.Scalars['Int']['input'];
 }>;
 
 
-export type GetFriendsQuery = { __typename?: 'Query', getFriends: { __typename?: 'Friends', friends: Array<{ __typename?: 'Friend', _id: string, createdAt: string, user: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }> } };
+export type FriendsQuery = { __typename?: 'Query', friends: { __typename?: 'FriendsQueryResult', friends: Array<{ __typename?: 'Friend', _id: string, createdAt: string, user: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasNext: boolean, cursor?: string | null } } };
 
 
 export const GetUserIdDocument = gql`
@@ -60,11 +59,12 @@ export type GetUserIdQueryHookResult = ReturnType<typeof useGetUserIdQuery>;
 export type GetUserIdLazyQueryHookResult = ReturnType<typeof useGetUserIdLazyQuery>;
 export type GetUserIdSuspenseQueryHookResult = ReturnType<typeof useGetUserIdSuspenseQuery>;
 export type GetUserIdQueryResult = Apollo.QueryResult<GetUserIdQuery, GetUserIdQueryVariables>;
-export const GetFriendsDocument = gql`
-    query getFriends($targetUserId: String!, $limit: Int!, $skip: Int!) {
-  getFriends(filter: {targetUserId: $targetUserId, limit: $limit, skip: $skip}) {
+export const FriendsDocument = gql`
+    query Friends($pagination: PaginationInput!, $targetUserId: String!) {
+  friends(pagination: $pagination, targetUserId: $targetUserId) {
     friends {
       _id
+      createdAt
       user {
         _id
         name
@@ -72,43 +72,45 @@ export const GetFriendsDocument = gql`
         account_id
         about_me
       }
-      createdAt
+    }
+    pageInfo {
+      hasNext
+      cursor
     }
   }
 }
     `;
 
 /**
- * __useGetFriendsQuery__
+ * __useFriendsQuery__
  *
- * To run a query within a React component, call `useGetFriendsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetFriendsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFriendsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFriendsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetFriendsQuery({
+ * const { data, loading, error } = useFriendsQuery({
  *   variables: {
+ *      pagination: // value for 'pagination'
  *      targetUserId: // value for 'targetUserId'
- *      limit: // value for 'limit'
- *      skip: // value for 'skip'
  *   },
  * });
  */
-export function useGetFriendsQuery(baseOptions: Apollo.QueryHookOptions<GetFriendsQuery, GetFriendsQueryVariables> & ({ variables: GetFriendsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useFriendsQuery(baseOptions: Apollo.QueryHookOptions<FriendsQuery, FriendsQueryVariables> & ({ variables: FriendsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetFriendsQuery, GetFriendsQueryVariables>(GetFriendsDocument, options);
+        return Apollo.useQuery<FriendsQuery, FriendsQueryVariables>(FriendsDocument, options);
       }
-export function useGetFriendsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFriendsQuery, GetFriendsQueryVariables>) {
+export function useFriendsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FriendsQuery, FriendsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetFriendsQuery, GetFriendsQueryVariables>(GetFriendsDocument, options);
+          return Apollo.useLazyQuery<FriendsQuery, FriendsQueryVariables>(FriendsDocument, options);
         }
-export function useGetFriendsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetFriendsQuery, GetFriendsQueryVariables>) {
+export function useFriendsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FriendsQuery, FriendsQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetFriendsQuery, GetFriendsQueryVariables>(GetFriendsDocument, options);
+          return Apollo.useSuspenseQuery<FriendsQuery, FriendsQueryVariables>(FriendsDocument, options);
         }
-export type GetFriendsQueryHookResult = ReturnType<typeof useGetFriendsQuery>;
-export type GetFriendsLazyQueryHookResult = ReturnType<typeof useGetFriendsLazyQuery>;
-export type GetFriendsSuspenseQueryHookResult = ReturnType<typeof useGetFriendsSuspenseQuery>;
-export type GetFriendsQueryResult = Apollo.QueryResult<GetFriendsQuery, GetFriendsQueryVariables>;
+export type FriendsQueryHookResult = ReturnType<typeof useFriendsQuery>;
+export type FriendsLazyQueryHookResult = ReturnType<typeof useFriendsLazyQuery>;
+export type FriendsSuspenseQueryHookResult = ReturnType<typeof useFriendsSuspenseQuery>;
+export type FriendsQueryResult = Apollo.QueryResult<FriendsQuery, FriendsQueryVariables>;

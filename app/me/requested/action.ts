@@ -6,16 +6,16 @@ import {
   AcceptFriendRequestMutation,
   DeleteFriendRequestDocument,
   DeleteFriendRequestMutation,
-  GetReceiveFriendRequestsDocument,
-  GetReceiveFriendRequestsQuery,
+  ReceivedFriendRequestsDocument,
+  ReceivedFriendRequestsQuery,
 } from "./index.generated";
 import { ActionResponse } from "@/app/types/action";
 
 export async function getReceivedFriendRequests() {
   try {
     const client = await getClient();
-    const { data } = await client.query<GetReceiveFriendRequestsQuery>({
-      query: GetReceiveFriendRequestsDocument,
+    const { data } = await client.query<ReceivedFriendRequestsQuery>({
+      query: ReceivedFriendRequestsDocument,
     });
     return data;
   } catch (error) {

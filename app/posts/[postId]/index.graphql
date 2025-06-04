@@ -1,21 +1,10 @@
-query GetPost($postId: String!) {
-  getPost(postId: $postId) {
+query Post($postId: String!) {
+  post(postId: $postId) {
     _id
-    author {
-      _id
-      name
-      account_id
-    }
     content
     tags
     category
-    commentsCount
     createdAt
-  }
-}
-
-query GetPostUser($postId: String!) {
-  getPost(postId: $postId) {
     author {
       _id
       name
@@ -24,20 +13,33 @@ query GetPostUser($postId: String!) {
   }
 }
 
-query GetComments($postId: String!, $filter: commentFilter!) {
-  getCommentByPostId(postId: $postId, filter: $filter) {
+query PostUser($postId: String!) {
+  post(postId: $postId) {
+    author {
+      _id
+      name
+      account_id
+    }
+  }
+}
+
+query Comments($postId: String!, $pagination: PaginationInput!) {
+  comments(postId: $postId, pagination: $pagination) {
     comments {
       _id
       content
       postId
-      Commenter {
+      createdAt
+      commenter {
         _id
         name
         account_id
       }
-      createdAt
     }
-    hasNext
+    pageInfo {
+      hasNext
+      cursor
+    }
   }
 }
 
@@ -46,22 +48,23 @@ mutation AddCommentToPost($targetPostId: String!, $content: String!) {
     _id
     content
     postId
-    Commenter {
+    createdAt
+    commenter {
       _id
       name
+      account_id
     }
-    createdAt
   }
 }
 
-mutation deleteCommentById($targetCommentId: String!) {
+mutation DeleteCommentById($targetCommentId: String!) {
   deleteCommentById(targetCommentId: $targetCommentId) {
     success
   }
 }
 
-mutation deletePost($postId: String!) {
-  deletePost(deletePostData: { postId: $postId }) {
+mutation DeletePost($postId: String!) {
+  deletePost(postId: $postId) {
     success
   }
 }

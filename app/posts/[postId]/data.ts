@@ -2,40 +2,40 @@
 
 import { getClient } from "@/libs/apollo-client";
 import {
-  GetPostDocument,
-  GetPostQuery,
-  GetPostUserQuery,
-  GetPostUserDocument,
-  GetCommentsQuery,
-  GetCommentsDocument,
+  PostDocument,
+  PostQuery,
+  PostUserQuery,
+  PostUserDocument,
+  CommentsQuery,
+  CommentsDocument,
 } from "./index.generated";
 
 export async function getPostDetail(postId: string) {
   const client = await getClient();
-  const { data } = await client.query<GetPostQuery>({
-    query: GetPostDocument,
+  const { data } = await client.query<PostQuery>({
+    query: PostDocument,
     variables: { postId },
   });
 
-  return data.getPost;
+  return data.post;
 }
 
 export async function getComments(postId: string) {
   const client = await getClient();
-  const { data } = await client.query<GetCommentsQuery>({
-    query: GetCommentsDocument,
+  const { data } = await client.query<CommentsQuery>({
+    query: CommentsDocument,
     variables: { postId, filter: { skip: 0, limit: 10 } },
   });
 
-  return data.getCommentByPostId;
+  return data.comments;
 }
 
 export async function getPostUser(postId: string) {
   const client = await getClient();
-  const { data } = await client.query<GetPostUserQuery>({
-    query: GetPostUserDocument,
+  const { data } = await client.query<PostUserQuery>({
+    query: PostUserDocument,
     variables: { postId },
   });
 
-  return data.getPost;
+  return data.post;
 }

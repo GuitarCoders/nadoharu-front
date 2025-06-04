@@ -1,18 +1,5 @@
-mutation createPost($content: String!, $tags: String!, $category: String!) {
-  createPost(
-    createPostData: { content: $content, tags: $tags, category: $category }
-  ) {
+mutation CreatePost($postData: CreatePostInput!) {
+  createPost(postData: $postData) {
     success
-    _id
-    author {
-      _id
-      name
-      account_id
-    }
-    content
-    tags
-    category
-    commentsCount
-    createdAt
   }
 }
