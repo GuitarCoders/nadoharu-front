@@ -1,10 +1,7 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import {
-  PostsForTimelineDocument,
-  PostsForTimelineQuery,
-} from "./index.generated";
+import { PostsForTimelineDocument, PostsForTimelineQuery } from "./(graphql)";
 import { PaginationInput } from "@/graphql/generated/graphql";
 
 export async function getPosts(variables: {
