@@ -5,12 +5,15 @@ import {
   PostsForTimelineDocument,
   PostsForTimelineQuery,
 } from "./index.generated";
+import { PaginationInput } from "@/graphql/generated/graphql";
 
-export default async function getPosts(): Promise<PostsForTimelineQuery> {
+export async function getPosts(variables: {
+  pagination: PaginationInput;
+}): Promise<PostsForTimelineQuery> {
   const client = await getClient();
   const { data } = await client.query<PostsForTimelineQuery>({
     query: PostsForTimelineDocument,
-    variables: { count: 5, filter: undefined },
+    variables,
   });
 
   return data;

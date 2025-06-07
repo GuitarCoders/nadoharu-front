@@ -5,21 +5,11 @@ import { formatRelativeTime } from "@/libs/utils";
 import PostPreviewButtons from "@/components/domains/post/preview-buttons";
 import { useRouter } from "next/navigation";
 import ProfileImage from "@/components/domains/profile/image";
+import { Post } from "@/graphql/generated/graphql";
 
-interface PostPreviewProps {
-  _id: string;
-  content: string;
-  tags?: string | null;
-  category: string;
-  commentsCount: number;
-  createdAt: string;
-  author: {
-    _id: string;
-    name: string;
-    account_id: string;
-  };
+interface PostPreviewProps extends Post {
   isUserPost: boolean;
-  lastDateTime?: string | null;
+  commentsCount: number;
 }
 
 export default function PostPreview({
@@ -27,9 +17,9 @@ export default function PostPreview({
   author,
   content,
   tags,
-  commentsCount,
   createdAt,
   isUserPost,
+  commentsCount,
 }: PostPreviewProps) {
   const router = useRouter();
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
