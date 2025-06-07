@@ -1,0 +1,10 @@
+mutation SignUp($createUserData: UserCreate!) {
+  createUser(createUserData: $createUserData) {
+    _id
+    name
+    email
+    account_id
+    about_me
+    # friends
+  }
+}

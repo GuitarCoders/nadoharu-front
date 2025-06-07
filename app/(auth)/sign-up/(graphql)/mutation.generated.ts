@@ -4,10 +4,7 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type SignUpMutationVariables = Types.Exact<{
-  name: Types.Scalars['String']['input'];
-  account_id: Types.Scalars['String']['input'];
-  email: Types.Scalars['String']['input'];
-  password: Types.Scalars['String']['input'];
+  createUserData: Types.UserCreate;
 }>;
 
 
@@ -15,10 +12,8 @@ export type SignUpMutation = { __typename?: 'Mutation', createUser: { __typename
 
 
 export const SignUpDocument = gql`
-    mutation SignUp($name: String!, $account_id: String!, $email: String!, $password: String!) {
-  createUser(
-    createUserData: {name: $name, account_id: $account_id, email: $email, password: $password}
-  ) {
+    mutation SignUp($createUserData: UserCreate!) {
+  createUser(createUserData: $createUserData) {
     _id
     name
     email
@@ -42,10 +37,7 @@ export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMut
  * @example
  * const [signUpMutation, { data, loading, error }] = useSignUpMutation({
  *   variables: {
- *      name: // value for 'name'
- *      account_id: // value for 'account_id'
- *      email: // value for 'email'
- *      password: // value for 'password'
+ *      createUserData: // value for 'createUserData'
  *   },
  * });
  */

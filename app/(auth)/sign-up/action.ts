@@ -2,7 +2,7 @@
 
 import { getClient } from "@/libs/apollo-client";
 import { ActionResponse } from "@/app/types/action";
-import { SignUpDocument, SignUpMutation } from "./index.generated";
+import { SignUpDocument, SignUpMutation } from "./(graphql)";
 
 export interface SignUpFormData {
   name: string;
