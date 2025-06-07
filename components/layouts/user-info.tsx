@@ -4,20 +4,15 @@ import Link from "next/link";
 import { UserPlusIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import ProfileImage from "../domains/profile/image";
+import { User } from "@/graphql/generated/graphql";
 
-interface UserTemplateProps {
+interface UserInfoProps {
   isMe?: boolean;
   isFriend?: boolean;
   isPending?: boolean;
   isPended?: boolean;
   pendedCount?: number;
-  profile: {
-    _id: string;
-    name: string;
-    email: string;
-    account_id: string;
-    about_me: string;
-  };
+  profile: User;
   friendsCount: number;
 }
 
@@ -29,7 +24,7 @@ export default function UserInfo({
   pendedCount,
   profile,
   friendsCount,
-}: UserTemplateProps) {
+}: UserInfoProps) {
   return (
     <section>
       <div className="bg-neutral-100 dark:bg-neutral-800 flex flex-col justify-end p-4 gap-3 relative">

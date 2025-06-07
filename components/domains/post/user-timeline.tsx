@@ -3,10 +3,10 @@
 import { useState } from "react";
 import EmptyState from "@/components/layouts/empty-state";
 import PostPreview from "@/components/domains/post/preview";
-import { GetMyPostsQuery } from "@/graphql/generated/graphql";
+import { Post } from "@/graphql/generated/graphql";
 
 interface UserTimelineProps {
-  posts: GetMyPostsQuery;
+  posts: Post[];
   reposts: [];
   accountId: string;
 }
@@ -67,9 +67,14 @@ export default function UserTimeline({
       </div>
       {currentTab === "posts" ? (
         <div className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-600">
-          {posts.getPosts.posts.length ? (
-            posts.getPosts.posts.map((post) => (
-              <PostPreview key={post._id} isUserPost {...post} />
+          {posts.length ? (
+            posts.map((post) => (
+              <PostPreview
+                key={post._id}
+                isUserPost
+                commentsCount={0}
+                {...post}
+              />
             ))
           ) : (
             <EmptyState text="아직 글을 작성하지 않았나보네요!" userInfo />

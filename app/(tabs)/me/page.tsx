@@ -13,8 +13,10 @@ export default async function Me() {
   if (!user) {
     return notFound();
   }
-  const posts = await getMyPosts(user.userWhoAmI._id);
-  console.log(posts);
+  const posts = await getMyPosts({
+    filter: { category: null },
+    pagination: { limit: 20 },
+  });
   // const reposts = await getReposts(session.id);
   // const friendsCount = await getFriendsCount(session.id);
   // const pendedCount = await getPendedCount(session.id);
@@ -22,14 +24,14 @@ export default async function Me() {
     <>
       <UserInfo
         isMe={true}
-        profile={user.userWhoAmI}
+        profile={user.me.user}
         friendsCount={0}
         pendedCount={0}
       />
       <UserTimeline
-        posts={posts}
+        posts={posts.postsByMe.posts}
         reposts={[]}
-        accountId={user.userWhoAmI._id}
+        accountId={user.me.user._id}
       />
     </>
   );

@@ -8,7 +8,7 @@ export type PostQueryVariables = Types.Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, content: string, tags?: string | null, category: string, createdAt: string, author: { __typename?: 'User', _id: string, name: string, account_id: string } } };
+export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, createdAt: string, author: { __typename?: 'User', _id: string, name: string, account_id: string } } };
 
 export type PostUserQueryVariables = Types.Exact<{
   postId: Types.Scalars['String']['input'];

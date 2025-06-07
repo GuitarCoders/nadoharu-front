@@ -6,13 +6,17 @@ import {
   MeQuery,
   PostsByMeDocument,
   PostsByMeQuery,
-} from "./index.generated";
+} from "./(graphql)";
+import { PaginationInput, PostFilter } from "@/graphql/generated/graphql";
 
-export async function getMyPosts(accountId: string) {
+export async function getMyPosts(variables: {
+  filter: PostFilter;
+  pagination: PaginationInput;
+}): Promise<PostsByMeQuery> {
   const client = await getClient();
   const { data } = await client.query<PostsByMeQuery>({
     query: PostsByMeDocument,
-    variables: { count: 5, filter: undefined, accountId },
+    variables,
   });
 
   return data;
