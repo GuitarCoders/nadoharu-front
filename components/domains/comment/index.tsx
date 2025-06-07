@@ -3,33 +3,35 @@ import CommentMenu from "@/components/domains/comment/menu";
 import ProfileImage from "@/components/domains/profile/image";
 
 interface CommentProps {
-  avatar: string | null;
-  username: string;
+  _id: string;
   content: string;
-  accountId: string;
-  isUserComment: boolean;
-  commentId: string;
+  commenter: {
+    account_id: string;
+    name: string;
+  };
   postId: string;
+  isUserComment: boolean;
 }
 
 export default function Comment({
-  avatar,
-  username,
+  _id,
   content,
-  accountId,
-  isUserComment,
-  commentId,
+  commenter,
   postId,
+  isUserComment,
 }: CommentProps) {
   return (
     <div className="flex p-4 justify-between">
       <div className="flex gap-4 align-start">
-        <Link href={`/users/${accountId}`} className="flex-shrink-0">
-          <ProfileImage avatar={avatar} name={username} />
+        <Link href={`/users/${commenter.account_id}`} className="flex-shrink-0">
+          <ProfileImage avatar={null} name={commenter.name} />
         </Link>
         <div className="flex flex-col text-sm gap-1">
-          <Link href={`/users/${accountId}`} className="font-semibold">
-            {username}
+          <Link
+            href={`/users/${commenter.account_id}`}
+            className="font-semibold"
+          >
+            {commenter.name}
           </Link>
           <p>{content}</p>
         </div>
@@ -37,7 +39,7 @@ export default function Comment({
       <div className="flex gap-2 justify-end w-6 flex-shrink-0">
         <CommentMenu
           isUserComment={isUserComment}
-          targetCommentId={commentId}
+          targetCommentId={_id}
           targetPostId={postId}
         />
       </div>

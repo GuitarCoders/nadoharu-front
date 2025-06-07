@@ -42,29 +42,3 @@ query Comments($postId: String!, $pagination: PaginationInput!) {
     }
   }
 }
-
-mutation AddCommentToPost($targetPostId: String!, $content: String!) {
-  addCommentToPost(targetPostId: $targetPostId, content: $content) {
-    _id
-    content
-    postId
-    createdAt
-    commenter {
-      _id
-      name
-      account_id
-    }
-  }
-}
-
-mutation DeleteCommentById($targetCommentId: String!) {
-  deleteCommentById(targetCommentId: $targetCommentId) {
-    success
-  }
-}
-
-mutation DeletePost($postId: String!) {
-  deletePost(postId: $postId) {
-    success
-  }
-}

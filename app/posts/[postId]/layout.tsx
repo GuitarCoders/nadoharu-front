@@ -13,7 +13,7 @@ export default async function PostLayout({ children, params }: LayoutProps) {
   const session = await getSession();
   const userAccountId = session?.accountId;
 
-  const postUser = await getPostUser(postId);
+  const postUser = await getPostUser({ postId });
   const isUserPost = postUser.author.account_id === userAccountId;
 
   return (

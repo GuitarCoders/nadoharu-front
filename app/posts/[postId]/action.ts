@@ -8,7 +8,7 @@ import {
   DeleteCommentByIdMutation,
   DeletePostDocument,
   DeletePostMutation,
-} from "./index.generated";
+} from "./(graphql)";
 import { ActionResponse } from "@/app/types/action";
 import { revalidatePath } from "next/cache";
 

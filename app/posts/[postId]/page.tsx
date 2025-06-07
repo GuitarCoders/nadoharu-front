@@ -16,12 +16,12 @@ export default async function PostDetail({
   params: Promise<{ postId: string }>;
 }) {
   const { postId } = await params;
-  const post = await getPostDetail(postId);
+  const { post } = await getPostDetail({ postId });
   if (!post) {
     return notFound();
   }
 
-  const comments = await getComments(postId);
+  const { comments } = await getComments({ postId, pagination: { limit: 10 } });
 
   const session = await getSession();
   const isUserPost = session.accountId === post.author.account_id;
@@ -34,21 +34,21 @@ export default async function PostDetail({
       <section className="divide-y divide-neutral-400 dark:divide-neutral-800 pb-16">
         {/* 본문 */}
         <div className="flex flex-col p-4 gap-2">
-          {/* {post.photos.length ? ( */}
-          {/*   <div className="grid grid-cols-2 gap-2 mb-4"> */}
-          {/*     {post.photos.map((photo) => ( */}
-          {/*       <Link href={`${photo}/public`} key={photo}> */}
-          {/*         <Image */}
-          {/*           src={photo + "/avatar"} */}
-          {/*           alt="post-photo" */}
-          {/*           className="rounded-md aspect-video object-cover" */}
-          {/*           width={1600} */}
-          {/*           height={1000} */}
-          {/*         /> */}
-          {/*       </Link> */}
-          {/*     ))} */}
-          {/*   </div> */}
-          {/* ) : null} */}
+          {/* {post.photos.length ? (
+             <div className="grid grid-cols-2 gap-2 mb-4"> 
+               {post.photos.map((photo) => ( 
+                 <Link href={`${photo}/public`} key={photo}> 
+                   <Image 
+                     src={photo + "/avatar"} 
+                     alt="post-photo" 
+                     className="rounded-md aspect-video object-cover" 
+                     width={1600} 
+                     height={1000} 
+                   /> 
+                 </Link> 
+               ))} 
+             </div> 
+           ) : null}  */}
           <h5>{post.content}</h5>
           <p className="text-sm text-neutral-400">{post.tags}</p>
           <div className="flex justify-between pt-6 items-center">
@@ -64,7 +64,8 @@ export default async function PostDetail({
               </div>
               <div className="flex items-center gap-2">
                 <ChatBubbleOvalLeftEllipsisIcon className="text-violet-600 dark:text-violet-400 size-5" />
-                <p>{post.commentsCount}</p>
+                {/* <p>{post.commentsCount}</p> */}
+                <p>{0}</p>
               </div>
             </div>
           </div>
@@ -88,15 +89,10 @@ export default async function PostDetail({
             {comments.comments.map((comment) => (
               <Comment
                 key={comment._id}
-                commentId={comment._id}
-                postId={postId}
-                content={comment.content}
-                username={comment.Commenter.name}
-                accountId={comment.Commenter.account_id}
-                avatar={null}
                 isUserComment={
-                  comment.Commenter.account_id === session?.accountId
+                  comment.commenter.account_id === session.accountId
                 }
+                {...comment}
               />
             ))}
           </div>

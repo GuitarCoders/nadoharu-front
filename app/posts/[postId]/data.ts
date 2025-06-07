@@ -1,6 +1,7 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
+import { PaginationInput } from "@/graphql/generated/graphql";
 import {
   PostDocument,
   PostQuery,
@@ -8,33 +9,38 @@ import {
   PostUserDocument,
   CommentsQuery,
   CommentsDocument,
-} from "./index.generated";
+} from "./(graphql)";
 
-export async function getPostDetail(postId: string) {
+export async function getPostDetail(variables: {
+  postId: string;
+}): Promise<PostQuery> {
   const client = await getClient();
   const { data } = await client.query<PostQuery>({
     query: PostDocument,
-    variables: { postId },
+    variables,
   });
 
-  return data.post;
+  return data;
 }
 
-export async function getComments(postId: string) {
+export async function getComments(variables: {
+  postId: string;
+  pagination: PaginationInput;
+}): Promise<CommentsQuery> {
   const client = await getClient();
   const { data } = await client.query<CommentsQuery>({
     query: CommentsDocument,
-    variables: { postId, filter: { skip: 0, limit: 10 } },
+    variables,
   });
 
-  return data.comments;
+  return data;
 }
 
-export async function getPostUser(postId: string) {
+export async function getPostUser(variables: { postId: string }) {
   const client = await getClient();
   const { data } = await client.query<PostUserQuery>({
     query: PostUserDocument,
-    variables: { postId },
+    variables,
   });
 
   return data.post;
