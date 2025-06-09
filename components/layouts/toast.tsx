@@ -74,8 +74,10 @@ export default function GlobalToast() {
               exit="exit"
               variants={toastVariants}
             >
-              <Toast.Title className="flex items-center gap-2 font-semibold">
-                {isError ? <InformationCircleIcon className="size-5" /> : null}
+              <Toast.Title className="flex gap-2 font-semibold">
+                {isError ? (
+                  <InformationCircleIcon className="mt-[2px] flex-shrink-0 size-5" />
+                ) : null}
                 {title}
               </Toast.Title>
               {description ? (

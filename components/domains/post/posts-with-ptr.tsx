@@ -5,6 +5,8 @@ import PostPreview from "@/components/domains/post/preview";
 import EmptyState from "@/components/layouts/empty-state";
 import PullToRefresh from "@/components/layouts/pull-to-refresh";
 import { Post } from "@/graphql/generated/graphql";
+import { toastAtom } from "@/libs/atoms";
+import { useSetAtom } from "jotai";
 import { useState } from "react";
 
 interface PostsWithRefreshProps {
@@ -19,21 +21,30 @@ export default function PostsWithPtr({
   userAccountId,
 }: PostsWithRefreshProps) {
   const [posts, setPosts] = useState(initialPosts);
-  const [cursor, setCursor] = useState(initialCursor);
+  const [currentCursor, setCurrentCursor] = useState(initialCursor);
+
+  const setToast = useSetAtom(toastAtom);
 
   const handleRefresh = async () => {
-    const data = await getPosts({ pagination: { limit: 20, cursor } });
-    if (!data) {
-      return;
-    }
-    const {
-      postsForTimeline: { posts, pageInfo },
-    } = data;
+    try {
+      const data = await getPosts({
+        pagination: { limit: 20, until: currentCursor },
+      });
+      const {
+        postsForTimeline: { posts, pageInfo },
+      } = data;
 
-    if (pageInfo.hasNext) {
-      setCursor(pageInfo.cursor);
+      if (pageInfo.cursor !== currentCursor) {
+        setCurrentCursor(pageInfo.cursor);
+      }
+      setPosts((prev) => [...posts, ...prev]);
+    } catch {
+      setToast({
+        visible: true,
+        title: "데이터를 불러오는데 실패했습니다.",
+        isError: true,
+      });
     }
-    setPosts((prev) => [...posts, ...prev]);
   };
 
   return (
