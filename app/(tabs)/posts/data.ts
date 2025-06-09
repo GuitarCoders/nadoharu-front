@@ -7,11 +7,14 @@ import { PaginationInput } from "@/graphql/generated/graphql";
 export async function getPosts(variables: {
   pagination: PaginationInput;
 }): Promise<PostsForTimelineQuery> {
-  const client = await getClient();
-  const { data } = await client.query<PostsForTimelineQuery>({
-    query: PostsForTimelineDocument,
-    variables,
-  });
-
-  return data;
+  try {
+    const client = await getClient();
+    const { data } = await client.query<PostsForTimelineQuery>({
+      query: PostsForTimelineDocument,
+      variables,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
 }
