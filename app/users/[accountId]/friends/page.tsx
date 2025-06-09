@@ -22,10 +22,10 @@ export default async function Friends({
   });
 
   // TODO: 백엔드에서 친구수 0일 경우 error 반환하는 오류 있으므로 고쳐지면 재확인
-  const friends = await getFriends({ targetUserId, limit: 10, skip: 0 });
-  if (!friends) {
-    return notFound();
-  }
+  const { friends } = await getFriends({
+    targetUserId,
+    pagination: { limit: 10, until: null },
+  });
 
   // TODO: 받은 친구신청 수 구현
   const pendingFriendsCount = 1;
@@ -46,11 +46,11 @@ export default async function Friends({
           </Link>
         </div>
       ) : null}
-      {friends.getFriends.friends.length === 0 ? (
+      {friends.friends.length === 0 ? (
         <EmptyState text="친구 목록이 비었습니다" noNav />
       ) : null}
       <div className="flex flex-col gap-4">
-        {friends.getFriends.friends.map((friend) => (
+        {friends.friends.map((friend) => (
           <Link
             key={friend.user._id}
             href={`/users/${friend.user.account_id}`}

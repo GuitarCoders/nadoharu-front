@@ -4,7 +4,7 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetUserIdQueryVariables = Types.Exact<{
-  account_id: Types.Scalars['String']['input'];
+  accountId: Types.Scalars['String']['input'];
 }>;
 
 
@@ -20,8 +20,8 @@ export type FriendsQuery = { __typename?: 'Query', friends: { __typename?: 'Frie
 
 
 export const GetUserIdDocument = gql`
-    query getUserId($account_id: String!) {
-  userByAccountId(account_id: $account_id) {
+    query getUserId($accountId: String!) {
+  userByAccountId(account_id: $accountId) {
     _id
   }
 }
@@ -39,7 +39,7 @@ export const GetUserIdDocument = gql`
  * @example
  * const { data, loading, error } = useGetUserIdQuery({
  *   variables: {
- *      account_id: // value for 'account_id'
+ *      accountId: // value for 'accountId'
  *   },
  * });
  */

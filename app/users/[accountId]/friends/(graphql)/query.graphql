@@ -1,5 +1,5 @@
-query getUserId($account_id: String!) {
-  userByAccountId(account_id: $account_id) {
+query getUserId($accountId: String!) {
+  userByAccountId(account_id: $accountId) {
     _id
   }
 }
