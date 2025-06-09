@@ -20,7 +20,7 @@ interface NewPostForm {
   tags: string;
 }
 
-export default function NewPostForm() {
+export default function UploadPostForm() {
   const [previews, setPreviews] = useState<string[]>([]);
   const [pending, setPending] = useState(false);
   const {
@@ -49,6 +49,12 @@ export default function NewPostForm() {
         title: "새 게시글이 작성되었습니다",
       });
       redirect("/posts");
+    } else {
+      setToast({
+        visible: true,
+        title: response.errors,
+        isError: true,
+      });
     }
 
     setPending(false);

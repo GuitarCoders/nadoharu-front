@@ -3,9 +3,10 @@
 import { getClient } from "@/libs/apollo-client";
 import { ActionResponse } from "@/app/types/action";
 import { revalidatePath } from "next/cache";
-import { CreatePostDocument, CreatePostMutation } from "./index.generated";
+import { CreatePostDocument, CreatePostMutation } from "./(graphql)";
+import { ApolloError } from "@apollo/client";
 
-export async function createPost(variables: {
+export async function createPost(postData: {
   content: string;
   tags: string;
   category: string;
@@ -14,7 +15,7 @@ export async function createPost(variables: {
     const client = await getClient();
     const { data } = await client.mutate<CreatePostMutation>({
       mutation: CreatePostDocument,
-      variables,
+      variables: { postData },
     });
 
     if (data) {
@@ -25,9 +26,18 @@ export async function createPost(variables: {
       ok: true,
     };
   } catch (error) {
-    console.error(error);
+    if (error instanceof ApolloError) {
+      return {
+        ok: false,
+        errors: error.message,
+      };
+    }
     return {
       ok: false,
+      errors:
+        error instanceof Error
+          ? error.message
+          : "알 수 없는 오류가 발생했습니다.",
     };
   }
 }
