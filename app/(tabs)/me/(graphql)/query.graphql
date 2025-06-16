@@ -15,8 +15,11 @@ query PostsByMe($filter: PostFilter!, $pagination: PaginationInput!) {
       }
     }
     pageInfo {
+      hasOverStart
+      hasOverEnd
       hasNext
-      cursor
+      startCursor
+      endCursor
     }
   }
 }

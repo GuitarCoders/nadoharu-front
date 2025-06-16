@@ -8,7 +8,7 @@ export type PostsForTimelineQueryVariables = Types.Exact<{
 }>;
 
 
-export type PostsForTimelineQuery = { __typename?: 'Query', postsForTimeline: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasNext: boolean, cursor?: string | null } } };
+export type PostsForTimelineQuery = { __typename?: 'Query', postsForTimeline: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
 export const PostsForTimelineDocument = gql`
@@ -29,8 +29,11 @@ export const PostsForTimelineDocument = gql`
       }
     }
     pageInfo {
+      hasOverStart
+      hasOverEnd
       hasNext
-      cursor
+      startCursor
+      endCursor
     }
   }
 }

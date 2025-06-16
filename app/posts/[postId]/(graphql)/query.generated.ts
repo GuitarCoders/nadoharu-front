@@ -23,7 +23,7 @@ export type CommentsQueryVariables = Types.Exact<{
 }>;
 
 
-export type CommentsQuery = { __typename?: 'Query', comments: { __typename?: 'CommentsQueryResult', comments: Array<{ __typename?: 'Comment', _id: string, content: string, postId: string, createdAt: string, commenter: { __typename?: 'User', _id: string, name: string, account_id: string } }>, pageInfo: { __typename?: 'PageInfo', hasNext: boolean, cursor?: string | null } } };
+export type CommentsQuery = { __typename?: 'Query', comments: { __typename?: 'CommentsQueryResult', comments: Array<{ __typename?: 'Comment', _id: string, content: string, postId: string, createdAt: string, commenter: { __typename?: 'User', _id: string, name: string, account_id: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
 export const PostDocument = gql`
@@ -134,8 +134,11 @@ export const CommentsDocument = gql`
       }
     }
     pageInfo {
+      hasOverStart
+      hasOverEnd
       hasNext
-      cursor
+      startCursor
+      endCursor
     }
   }
 }

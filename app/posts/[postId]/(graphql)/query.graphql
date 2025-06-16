@@ -37,8 +37,11 @@ query Comments($postId: String!, $pagination: PaginationInput!) {
       }
     }
     pageInfo {
+      hasOverStart
+      hasOverEnd
       hasNext
-      cursor
+      startCursor
+      endCursor
     }
   }
 }

@@ -21,15 +21,3 @@ query ReceivedFriendRequests($pagination: PaginationInput!) {
     }
   }
 }
-
-mutation AcceptFriendRequest($acceptFriendRequestData: String!) {
-  acceptFriendRequest(acceptFriendRequestData: $acceptFriendRequestData) {
-    success
-  }
-}
-
-mutation DeleteFriendRequest($friendRequestId: String!) {
-  deleteFriendRequest(friendRequestId: $friendRequestId) {
-    success
-  }
-}
