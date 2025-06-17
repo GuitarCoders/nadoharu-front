@@ -13,10 +13,7 @@ export default async function Me() {
   if (!user) {
     return notFound();
   }
-  const posts = await getMyPosts({
-    filter: { category: null },
-    pagination: { limit: 20 },
-  });
+  const posts = await getMyPosts({ limit: 20 });
   // const reposts = await getReposts(session.id);
   // const friendsCount = await getFriendsCount(session.id);
   // const pendedCount = await getPendedCount(session.id);

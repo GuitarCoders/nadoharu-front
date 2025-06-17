@@ -2,7 +2,10 @@
 
 import { getClient } from "@/libs/apollo-client";
 import { PostsForTimelineDocument, PostsForTimelineQuery } from "./(graphql)";
-import { PaginationFrom } from "@/graphql/generated/graphql";
+import {
+  PaginationFrom,
+  PostsForTimelineQueryVariables,
+} from "@/graphql/generated/graphql";
 
 export async function getNewerPosts({
   limit,
@@ -13,7 +16,10 @@ export async function getNewerPosts({
 }): Promise<PostsForTimelineQuery> {
   try {
     const client = await getClient();
-    const { data } = await client.query<PostsForTimelineQuery>({
+    const { data } = await client.query<
+      PostsForTimelineQuery,
+      PostsForTimelineQueryVariables
+    >({
       query: PostsForTimelineDocument,
       variables: {
         pagination: {
@@ -38,7 +44,10 @@ export async function getOlderPosts({
 }): Promise<PostsForTimelineQuery> {
   try {
     const client = await getClient();
-    const { data } = await client.query<PostsForTimelineQuery>({
+    const { data } = await client.query<
+      PostsForTimelineQuery,
+      PostsForTimelineQueryVariables
+    >({
       query: PostsForTimelineDocument,
       variables: {
         pagination: {

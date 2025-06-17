@@ -7,24 +7,49 @@ import {
   PostsByMeDocument,
   PostsByMeQuery,
 } from "./(graphql)";
-import { PaginationInput, PostFilter } from "@/graphql/generated/graphql";
+import {
+  MeQueryVariables,
+  PaginationFrom,
+  PostsByMeQueryVariables,
+} from "@/graphql/generated/graphql";
 
-export async function getMyPosts(variables: {
-  filter: PostFilter;
-  pagination: PaginationInput;
+export async function getMyPosts({
+  category,
+  limit,
+  until,
+}: {
+  category?: string;
+  limit: number;
+  until?: string;
 }): Promise<PostsByMeQuery> {
-  const client = await getClient();
-  const { data } = await client.query<PostsByMeQuery>({
-    query: PostsByMeDocument,
-    variables,
-  });
+  try {
+    const client = await getClient();
+    const { data } = await client.query<
+      PostsByMeQuery,
+      PostsByMeQueryVariables
+    >({
+      query: PostsByMeDocument,
+      variables: {
+        filter: {
+          category,
+        },
+        pagination: {
+          limit,
+          until,
+          from: PaginationFrom.End,
+        },
+      },
+    });
 
-  return data;
+    return data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function getWhoAmI() {
   const client = await getClient();
-  const { data } = await client.query<MeQuery>({
+  const { data } = await client.query<MeQuery, MeQueryVariables>({
     query: MeDocument,
   });
 
