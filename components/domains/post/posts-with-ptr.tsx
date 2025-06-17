@@ -1,41 +1,46 @@
 "use client";
 
-import { getPosts } from "@/app/(tabs)/posts/data";
+import { getNewerPosts } from "@/app/(tabs)/posts/data";
 import PostPreview from "@/components/domains/post/preview";
 import EmptyState from "@/components/layouts/empty-state";
 import PullToRefresh from "@/components/layouts/pull-to-refresh";
-import { Post } from "@/graphql/generated/graphql";
+import { PaginationFrom, Post } from "@/graphql/generated/graphql";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
 import { useState } from "react";
 
 interface PostsWithRefreshProps {
   initialPosts: Post[];
-  initialCursor?: string | null;
+  initialStartCursor?: string | null;
+  initialEndCursor?: string | null;
   userAccountId: string | undefined;
 }
 
 export default function PostsWithPtr({
   initialPosts,
-  initialCursor,
+  initialStartCursor,
+  initialEndCursor,
   userAccountId,
 }: PostsWithRefreshProps) {
   const [posts, setPosts] = useState(initialPosts);
-  const [currentCursor, setCurrentCursor] = useState(initialCursor);
+  const [currentStartCursor, setCurrentStartCursor] =
+    useState(initialStartCursor);
+  const [currentEndCursor, setCurrentEndCursor] = useState(initialEndCursor);
 
   const setToast = useSetAtom(toastAtom);
 
   const handleRefresh = async () => {
     try {
-      const data = await getPosts({
-        pagination: { limit: 20, until: currentCursor },
+      const data = await getNewerPosts({
+        limit: 20,
+        cursor: currentStartCursor,
       });
       const {
         postsForTimeline: { posts, pageInfo },
       } = data;
 
-      if (pageInfo.cursor !== currentCursor) {
-        setCurrentCursor(pageInfo.cursor);
+      if (pageInfo.startCursor && pageInfo.startCursor !== currentStartCursor) {
+        setCurrentStartCursor(pageInfo.startCursor);
       }
       setPosts((prev) => [...posts, ...prev]);
     } catch {
