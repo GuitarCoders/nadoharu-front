@@ -18,6 +18,10 @@ export default function CommentForm({ postId }: { postId: string }) {
   const { register, handleSubmit, reset } = useForm<CommentForm>();
 
   const onCommentSubmit = async ({ content }: CommentForm) => {
+    if (content.trim() === "") {
+      return;
+    }
+
     setPending(true);
     const response = await addCommentToPost({
       targetPostId: postId,
