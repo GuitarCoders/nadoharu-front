@@ -25,15 +25,19 @@ export async function addCommentToPost(variables: {
 
     if (data) {
       revalidatePath(`/posts/${variables.targetPostId}`);
+      return {
+        success: true,
+      };
+    } else {
+      throw new Error("댓글을 추가하는데 실패했습니다.");
     }
-
-    return {
-      ok: true,
-    };
   } catch (error) {
-    console.error(error);
     return {
-      ok: false,
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : "댓글을 추가하는데 실패했습니다.",
     };
   }
 }
@@ -54,15 +58,19 @@ export async function deleteCommentById({
 
     if (data) {
       revalidatePath(`/posts/${targetPostId}`);
+      return {
+        success: true,
+      };
+    } else {
+      throw new Error("댓글을 삭제하는데 실패했습니다.");
     }
-
-    return {
-      ok: true,
-    };
   } catch (error) {
-    console.error(error);
     return {
-      ok: false,
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : "댓글을 삭제하는데 실패했습니다.",
     };
   }
 }
@@ -77,15 +85,19 @@ export async function deletePost({ postId }: { postId: string }) {
 
     if (data) {
       revalidatePath(`/posts/${postId}`);
+      return {
+        success: true,
+      };
+    } else {
+      throw new Error("게시글을 삭제하는데 실패했습니다.");
     }
-
-    return {
-      ok: true,
-    };
   } catch (error) {
-    console.error(error);
     return {
-      ok: false,
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : "게시글을 삭제하는데 실패했습니다.",
     };
   }
 }

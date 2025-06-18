@@ -1,7 +1,5 @@
-import getSession from "@/libs/session";
-import { notFound, redirect } from "next/navigation";
-import SendRequestForm from "@/components/domains/friend/send-form";
 import { getReceiveUserByAccountId } from "./data";
+import SendRequestForm from "@/components/domains/friend/send-form";
 
 export default async function SendRequest({
   params,
@@ -9,7 +7,9 @@ export default async function SendRequest({
   params: Promise<{ accountId: string }>;
 }) {
   const { accountId: receiveUserAccountId } = await params;
-  const receiveUser = await getReceiveUserByAccountId(receiveUserAccountId);
+  const receiveUser = await getReceiveUserByAccountId({
+    accountId: receiveUserAccountId,
+  });
 
   return (
     <SendRequestForm

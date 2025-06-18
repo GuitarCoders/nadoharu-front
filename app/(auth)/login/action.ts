@@ -29,12 +29,13 @@ export async function login(variables: LoginFormData): Promise<ActionResponse> {
     }
 
     return {
-      ok: true,
+      success: true,
     };
   } catch (error) {
-    console.error("Error during login:", error);
     return {
-      ok: false,
+      success: false,
+      errorMessage:
+        error instanceof Error ? error.message : "로그인에 실패했습니다.",
     };
   }
 }

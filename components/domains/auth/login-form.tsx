@@ -19,13 +19,13 @@ export default function LoginForm() {
     setPending(true);
 
     const response = await login(formData);
-    if (response.ok) {
+    if (response.success) {
       router.push("/posts");
     } else {
       setToast({
         visible: true,
         isError: true,
-        title: "로그인에 실패했습니다.",
+        title: response.errorMessage,
       });
 
       setPending(false);

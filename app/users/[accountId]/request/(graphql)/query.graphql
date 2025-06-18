@@ -1,0 +1,6 @@
+query UserNameByAccountId($accountId: String!) {
+  userByAccountId(account_id: $accountId) {
+    _id
+    name
+  }
+}

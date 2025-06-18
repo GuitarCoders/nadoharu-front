@@ -23,19 +23,16 @@ export async function signUp(
 
     if (data) {
       return {
-        ok: true,
+        success: true,
       };
     } else {
-      return {
-        ok: false,
-      };
+      throw new Error("회원가입에 실패했습니다.");
     }
   } catch (error) {
-    console.error(error);
-
     return {
-      ok: false,
-      errors: error,
+      success: false,
+      errorMessage:
+        error instanceof Error ? error.message : "회원가입에 실패했습니다.",
     };
   }
 }

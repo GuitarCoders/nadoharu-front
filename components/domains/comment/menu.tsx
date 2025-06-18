@@ -20,10 +20,16 @@ export default function CommentMenu({
   const setToast = useSetAtom(toastAtom);
   const removeComment = async () => {
     const result = await deleteCommentById({ targetCommentId, targetPostId });
-    if (result.ok) {
+    if (result.success) {
       setToast({
         visible: true,
         title: "댓글이 삭제되었습니다.",
+      });
+    } else {
+      setToast({
+        visible: true,
+        title: result.errorMessage,
+        isError: true,
       });
     }
   };

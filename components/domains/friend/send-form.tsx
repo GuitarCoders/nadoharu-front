@@ -37,19 +37,29 @@ export default function FriendshipSendForm({
     requestMessage,
   }: SendFriendRequestForm) => {
     setPending(true);
+
     const result = await sendFriendRequest({
-      receiveUserId,
-      requestMessage,
+      createFriendRequestData: {
+        receiver: receiveUserId,
+        requestMessage,
+      },
     });
-    setPending(false);
-    if (result?.createFriendRequest?.success) {
+
+    if (result.success) {
       setToast({
         visible: true,
         title: "친구 신청을 보냈습니다.",
       });
-
-      router.push(`/users/${receiveUserAccountId}`);
+    } else {
+      setToast({
+        visible: true,
+        title: result.errorMessage,
+        isError: true,
+      });
     }
+
+    setPending(false);
+    router.push(`/users/${receiveUserAccountId}`);
   };
 
   return (

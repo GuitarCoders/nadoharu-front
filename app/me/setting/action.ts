@@ -18,17 +18,18 @@ export async function updateUser(variables: {
 
     if (data) {
       return {
-        ok: true,
+        success: true,
       };
     } else {
-      return {
-        ok: false,
-      };
+      throw new Error("유저 정보를 업데이트하는데 실패했습니다.");
     }
   } catch (error) {
-    console.error(error);
     return {
-      ok: false,
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : "유저 정보를 업데이트하는데 실패했습니다.",
     };
   }
 }

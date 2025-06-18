@@ -21,17 +21,18 @@ export async function acceptFriendRequest(variables: {
 
     if (data?.acceptFriendRequest.success) {
       return {
-        ok: true,
+        success: true,
       };
     } else {
-      return {
-        ok: false,
-      };
+      throw new Error("친구 신청을 수락하는데 실패했습니다.");
     }
   } catch (error) {
-    console.error(error);
     return {
-      ok: false,
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : "친구 신청을 수락하는데 실패했습니다.",
     };
   }
 }
@@ -48,17 +49,18 @@ export async function deleteFriendRequest(variables: {
 
     if (data?.deleteFriendRequest.success) {
       return {
-        ok: true,
+        success: true,
       };
     } else {
-      return {
-        ok: false,
-      };
+      throw new Error("친구 신청을 삭제하는데 실패했습니다.");
     }
   } catch (error) {
-    console.error(error);
     return {
-      ok: false,
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : "친구 신청을 삭제하는데 실패했습니다.",
     };
   }
 }

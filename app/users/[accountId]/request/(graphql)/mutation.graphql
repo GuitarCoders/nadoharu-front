@@ -1,0 +1,5 @@
+mutation CreateFriendRequest($createFriendRequestData: CreateFriendRequest!) {
+  createFriendRequest(createFriendRequestData: $createFriendRequestData) {
+    success
+  }
+}

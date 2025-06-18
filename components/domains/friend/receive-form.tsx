@@ -37,7 +37,7 @@ export default function FriendshipReceiveForm({
     const result = await deleteFriendRequest({
       friendRequestId: requestUser._id,
     });
-    if (result.ok) {
+    if (result.success) {
       setToast({
         visible: true,
         isError: false,
@@ -48,7 +48,7 @@ export default function FriendshipReceiveForm({
       setToast({
         visible: true,
         isError: true,
-        title: "친구 신청을 삭제하지 못했습니다",
+        title: result.errorMessage,
       });
     }
   };
@@ -58,7 +58,7 @@ export default function FriendshipReceiveForm({
     const result = await acceptFriendRequest({
       acceptFriendRequestData: requestUser._id,
     });
-    if (result.ok) {
+    if (result.success) {
       setToast({
         visible: true,
         isError: false,
@@ -69,7 +69,7 @@ export default function FriendshipReceiveForm({
       setToast({
         visible: true,
         isError: true,
-        title: "친구 신청을 수락하지 못했습니다",
+        title: result.errorMessage,
       });
     }
   };

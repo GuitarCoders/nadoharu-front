@@ -4,21 +4,37 @@ import { getClient } from "@/libs/apollo-client";
 import {
   CreateFriendRequestDocument,
   CreateFriendRequestMutation,
-} from "./index.generated";
+  CreateFriendRequestMutationVariables,
+} from "./(graphql)";
+import { ActionResponse } from "@/app/types/action";
 
-export async function sendFriendRequest(variables: {
-  receiveUserId: string;
-  requestMessage: string;
-}) {
+export async function sendFriendRequest(
+  variables: CreateFriendRequestMutationVariables
+): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate<CreateFriendRequestMutation>({
+    const { data } = await client.mutate<
+      CreateFriendRequestMutation,
+      CreateFriendRequestMutationVariables
+    >({
       mutation: CreateFriendRequestDocument,
       variables,
     });
-    return data;
+
+    if (data?.createFriendRequest.success) {
+      return {
+        success: true,
+      };
+    } else {
+      throw new Error("친구 신청을 보내는데 실패했습니다.");
+    }
   } catch (error) {
-    console.error(error);
-    throw error;
+    return {
+      success: false,
+      errorMessage:
+        error instanceof Error
+          ? error.message
+          : "친구 신청을 보내는데 실패했습니다.",
+    };
   }
 }

@@ -4,20 +4,23 @@ import { getClient } from "@/libs/apollo-client";
 import {
   UserNameByAccountIdDocument,
   UserNameByAccountIdQuery,
-} from "./index.generated";
+  UserNameByAccountIdQueryVariables,
+} from "./(graphql)";
 
-export async function getReceiveUserByAccountId(accountId: string) {
+export async function getReceiveUserByAccountId(
+  variables: UserNameByAccountIdQueryVariables
+) {
   try {
     const client = await getClient();
-    const { data } = await client.query<UserNameByAccountIdQuery>({
+    const { data } = await client.query<
+      UserNameByAccountIdQuery,
+      UserNameByAccountIdQueryVariables
+    >({
       query: UserNameByAccountIdDocument,
-      variables: {
-        accountId,
-      },
+      variables,
     });
     return data;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 }

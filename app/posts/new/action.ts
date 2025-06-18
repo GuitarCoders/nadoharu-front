@@ -20,24 +20,19 @@ export async function createPost(postData: {
 
     if (data) {
       revalidatePath(`/posts`);
-    }
-
-    return {
-      ok: true,
-    };
-  } catch (error) {
-    if (error instanceof ApolloError) {
       return {
-        ok: false,
-        errors: error.message,
+        success: true,
       };
+    } else {
+      throw new Error("게시글을 생성하는데 실패했습니다.");
     }
+  } catch (error) {
     return {
-      ok: false,
-      errors:
+      success: false,
+      errorMessage:
         error instanceof Error
           ? error.message
-          : "알 수 없는 오류가 발생했습니다.",
+          : "게시글을 생성하는데 실패했습니다.",
     };
   }
 }

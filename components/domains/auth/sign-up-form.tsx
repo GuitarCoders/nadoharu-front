@@ -5,16 +5,24 @@ import TextInput from "@/components/shared/inputs/text-input";
 import { useForm } from "react-hook-form";
 import { signUp, SignUpFormData } from "@/app/(auth)/sign-up/action";
 import { useRouter } from "next/navigation";
+import { useSetAtom } from "jotai";
+import { toastAtom } from "@/libs/atoms";
 
 export default function SignUpForm() {
   const router = useRouter();
+  const setToast = useSetAtom(toastAtom);
   const { register, handleSubmit } = useForm<SignUpFormData>();
+
   const onSignUpSubmit = async (formData: SignUpFormData) => {
     const response = await signUp(formData);
-    if (response.ok) {
+    if (response.success) {
       router.push("/login");
     } else {
-      alert("error!");
+      setToast({
+        visible: true,
+        title: response.errorMessage,
+        isError: true,
+      });
     }
   };
 
