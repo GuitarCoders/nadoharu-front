@@ -21,7 +21,7 @@ export default async function PostDetail({
     return notFound();
   }
 
-  const { comments } = await getComments({ postId, pagination: { limit: 10 } });
+  const { comments } = await getComments({ postId, limit: 10 });
 
   const session = await getSession();
   const isUserPost = session.accountId === post.author.account_id;

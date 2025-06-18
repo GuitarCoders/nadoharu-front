@@ -1,7 +1,7 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import { PaginationInput } from "@/graphql/generated/graphql";
+import { PaginationFrom, PaginationInput } from "@/graphql/generated/graphql";
 import {
   PostDocument,
   PostQuery,
@@ -23,14 +23,26 @@ export async function getPostDetail(variables: {
   return data;
 }
 
-export async function getComments(variables: {
+export async function getComments({
+  postId,
+  limit,
+  cursor,
+}: {
   postId: string;
-  pagination: PaginationInput;
+  limit: number;
+  cursor?: string;
 }): Promise<CommentsQuery> {
   const client = await getClient();
   const { data } = await client.query<CommentsQuery>({
     query: CommentsDocument,
-    variables,
+    variables: {
+      postId,
+      pagination: {
+        limit,
+        cursor,
+        from: PaginationFrom.End,
+      },
+    },
   });
 
   return data;
