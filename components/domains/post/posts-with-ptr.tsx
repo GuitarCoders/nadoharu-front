@@ -1,10 +1,10 @@
 "use client";
 
-import { getNewerPosts } from "@/app/(tabs)/posts/data";
+import { getNewerPosts, getOlderPosts } from "@/app/(tabs)/posts/data";
 import PostPreview from "@/components/domains/post/preview";
 import EmptyState from "@/components/layouts/empty-state";
 import PullToRefresh from "@/components/layouts/pull-to-refresh";
-import { PaginationFrom, Post } from "@/graphql/generated/graphql";
+import { Post } from "@/graphql/generated/graphql";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
 import { useState } from "react";
@@ -26,8 +26,36 @@ export default function PostsWithPtr({
   const [currentStartCursor, setCurrentStartCursor] =
     useState(initialStartCursor);
   const [currentEndCursor, setCurrentEndCursor] = useState(initialEndCursor);
+  const [isLoadingOlder, setIsLoadingOlder] = useState(false);
 
   const setToast = useSetAtom(toastAtom);
+
+  const fetchOlderPosts = async () => {
+    if (isLoadingOlder || !currentEndCursor) return;
+    setIsLoadingOlder(true);
+    try {
+      const data = await getOlderPosts({
+        limit: 20,
+        until: currentEndCursor,
+      });
+      const {
+        postsForTimeline: { posts, pageInfo },
+      } = data;
+
+      if (posts.length > 0) {
+        setPosts((prev) => [...prev, ...posts]);
+        setCurrentEndCursor(pageInfo.endCursor);
+      }
+    } catch {
+      setToast({
+        visible: true,
+        title: "오래된 글을 불러오는데 실패했습니다.",
+        isError: true,
+      });
+    } finally {
+      setIsLoadingOlder(false);
+    }
+  };
 
   const handleRefresh = async () => {
     try {
@@ -53,7 +81,10 @@ export default function PostsWithPtr({
   };
 
   return (
-    <PullToRefresh onRefresh={handleRefresh} className="flex flex-col">
+    <PullToRefresh
+      onRefresh={handleRefresh}
+      className="flex flex-col ptr-posts"
+    >
       {posts.length ? (
         posts.map((post) => (
           <PostPreview

@@ -1,12 +1,14 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import { PaginationInput } from "@/graphql/generated/graphql";
+import { PaginationFrom, PaginationInput } from "@/graphql/generated/graphql";
 import {
   FriendsDocument,
   FriendsQuery,
+  FriendsQueryVariables,
   GetUserIdDocument,
   GetUserIdQuery,
+  GetUserIdQueryVariables,
 } from "./(graphql)";
 
 export async function getUserId(variables: {
@@ -14,7 +16,10 @@ export async function getUserId(variables: {
 }): Promise<GetUserIdQuery> {
   try {
     const client = await getClient();
-    const { data } = await client.query<GetUserIdQuery>({
+    const { data } = await client.query<
+      GetUserIdQuery,
+      GetUserIdQueryVariables
+    >({
       query: GetUserIdDocument,
       variables,
     });
@@ -25,15 +30,24 @@ export async function getUserId(variables: {
   }
 }
 
-export async function getFriends(variables: {
+export async function getFriends({
+  targetUserId,
+  limit,
+}: {
   targetUserId: string;
-  pagination: PaginationInput;
+  limit: number;
 }): Promise<FriendsQuery> {
   try {
     const client = await getClient();
-    const { data } = await client.query<FriendsQuery>({
+    const { data } = await client.query<FriendsQuery, FriendsQueryVariables>({
       query: FriendsDocument,
-      variables,
+      variables: {
+        targetUserId,
+        pagination: {
+          limit,
+          from: PaginationFrom.End,
+        },
+      },
     });
     return data;
   } catch (error) {

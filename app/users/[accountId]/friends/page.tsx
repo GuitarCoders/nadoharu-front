@@ -5,6 +5,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { getFriends, getUserId } from "./data";
 import { notFound } from "next/navigation";
+import { PaginationFrom } from "@/graphql/generated/graphql";
 
 export default async function Friends({
   params,
@@ -24,7 +25,7 @@ export default async function Friends({
   // TODO: 백엔드에서 친구수 0일 경우 error 반환하는 오류 있으므로 고쳐지면 재확인
   const { friends } = await getFriends({
     targetUserId,
-    pagination: { limit: 10, until: null },
+    limit: 20,
   });
 
   // TODO: 받은 친구신청 수 구현

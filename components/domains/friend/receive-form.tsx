@@ -34,7 +34,9 @@ export default function FriendshipReceiveForm({
 
   // 모달의 삭제 버튼을 눌렀을 때
   const onDeleteClick = async () => {
-    const result = await deleteFriendRequest(requestUser._id);
+    const result = await deleteFriendRequest({
+      friendRequestId: requestUser._id,
+    });
     if (result.ok) {
       setToast({
         visible: true,
@@ -53,7 +55,9 @@ export default function FriendshipReceiveForm({
 
   // 모달의 친구하기 버튼을 눌렀을 때
   const onAcceptClick = async () => {
-    const result = await acceptFriendRequest(requestUser._id);
+    const result = await acceptFriendRequest({
+      acceptFriendRequestData: requestUser._id,
+    });
     if (result.ok) {
       setToast({
         visible: true,

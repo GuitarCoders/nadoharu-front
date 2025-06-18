@@ -94,7 +94,7 @@ export default function GlobalAlertDialog() {
             </motion.div>
 
             <motion.div
-              className="fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-neutral-900 rounded-md p-6 shadow-md min-w-[340px] sm:min-w-[380px]"
+              className="fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-neutral-900 rounded-md p-6 shadow-md min-w-[80vw] sm:min-w-[380px] sm:max-w-[80vw]"
               initial="hidden"
               animate="visible"
               exit="exit"

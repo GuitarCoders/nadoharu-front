@@ -6,32 +6,17 @@ import {
   AcceptFriendRequestMutation,
   DeleteFriendRequestDocument,
   DeleteFriendRequestMutation,
-  ReceivedFriendRequestsDocument,
-  ReceivedFriendRequestsQuery,
-} from "./index.generated";
+} from "./(graphql)";
 import { ActionResponse } from "@/app/types/action";
 
-export async function getReceivedFriendRequests() {
-  try {
-    const client = await getClient();
-    const { data } = await client.query<ReceivedFriendRequestsQuery>({
-      query: ReceivedFriendRequestsDocument,
-    });
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}
-
-export async function acceptFriendRequest(
-  friendRequestId: string
-): Promise<ActionResponse> {
+export async function acceptFriendRequest(variables: {
+  acceptFriendRequestData: string;
+}): Promise<ActionResponse> {
   try {
     const client = await getClient();
     const { data } = await client.mutate<AcceptFriendRequestMutation>({
       mutation: AcceptFriendRequestDocument,
-      variables: { friendRequestId },
+      variables,
     });
 
     if (data?.acceptFriendRequest.success) {
@@ -51,14 +36,14 @@ export async function acceptFriendRequest(
   }
 }
 
-export async function deleteFriendRequest(
-  friendRequestId: string
-): Promise<ActionResponse> {
+export async function deleteFriendRequest(variables: {
+  friendRequestId: string;
+}): Promise<ActionResponse> {
   try {
     const client = await getClient();
     const { data } = await client.mutate<DeleteFriendRequestMutation>({
       mutation: DeleteFriendRequestDocument,
-      variables: { friendRequestId },
+      variables,
     });
 
     if (data?.deleteFriendRequest.success) {

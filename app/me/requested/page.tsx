@@ -4,30 +4,30 @@ import ReceiveRequestForm from "@/components/domains/friend/receive-form";
 import Link from "next/link";
 import ProfileImage from "@/components/domains/profile/image";
 import EmptyState from "@/components/layouts/empty-state";
-import { getReceivedFriendRequests } from "./action";
+import { getReceivedFriendRequests } from "./data";
 
 export default async function Requested() {
-  const requests = await getReceivedFriendRequests();
+  const requests = await getReceivedFriendRequests({ limit: 20 });
 
   return (
     <section className="flex flex-col gap-4 p-4">
-      {requests?.getReceiveFriendRequests?.friendRequests.length === 0 ? (
+      {requests?.receivedFriendRequests.friendRequests.length === 0 ? (
         <EmptyState text="받은 친구 신청이 없어요!" noNav />
       ) : null}
-      {requests?.getReceiveFriendRequests?.friendRequests.map((request) => (
+      {requests?.receivedFriendRequests.friendRequests.map((request) => (
         <div
           key={request._id}
           className="flex flex-col gap-4 p-4 bg-neutral-50 dark:bg-neutral-800 shadow-md rounded-md"
         >
           <Link
-            href={`/users/${request.requestUser.account_id}`}
+            href={`/users/${request.requester.account_id}`}
             className="flex items-center gap-4"
           >
-            <ProfileImage avatar={null} name={request.requestUser.name} />
+            <ProfileImage avatar={null} name={request.requester.name} />
             <div className="flex flex-col">
-              <span className="font-medium">{request.requestUser.name}</span>
+              <span className="font-medium">{request.requester.name}</span>
               <span className="text-xs text-neutral-500">
-                @{request.requestUser.account_id}
+                @{request.requester.account_id}
               </span>
             </div>
           </Link>
@@ -41,9 +41,9 @@ export default async function Requested() {
           <ReceiveRequestForm
             id={request._id}
             createdAt={new Date(request.createdAt)}
-            requestUser={request.requestUser}
-            receiveUserId={request.receiveUser._id}
-            requestUserId={request.requestUser._id}
+            requestUser={request.requester}
+            receiveUserId={request.receiver._id}
+            requestUserId={request.requester._id}
             requestMessage={request.requestMessage}
           />
         </div>
