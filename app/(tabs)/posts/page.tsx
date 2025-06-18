@@ -12,7 +12,7 @@ export default async function Posts() {
   const session = await getSession();
   const userAccountId = session.accountId;
 
-  const data = await getNewerPosts({ limit: 20 });
+  const data = await getNewerPosts({ limit: 5 });
   if (!data) {
     return notFound();
   }

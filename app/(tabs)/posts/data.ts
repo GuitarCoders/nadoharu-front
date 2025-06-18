@@ -53,7 +53,7 @@ export async function getOlderPosts({
         pagination: {
           limit,
           cursor,
-          from: PaginationFrom.Start,
+          from: PaginationFrom.End,
         },
       },
     });
