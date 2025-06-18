@@ -4,12 +4,16 @@ import { addCommentToPost } from "@/app/posts/[postId]/action";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import ChatInput from "@/components/domains/chat/input";
+import { toastAtom } from "@/libs/atoms";
+import { useSetAtom } from "jotai";
 
 export interface CommentForm {
   content: string;
 }
 
 export default function CommentForm({ postId }: { postId: string }) {
+  const setToast = useSetAtom(toastAtom);
+
   const [pending, setPending] = useState(false);
   const { register, handleSubmit, reset } = useForm<CommentForm>();
 
@@ -20,10 +24,14 @@ export default function CommentForm({ postId }: { postId: string }) {
       content,
     });
 
-    if (response.ok) {
+    if (response.success) {
       reset();
     } else {
-      alert("error!");
+      setToast({
+        visible: true,
+        title: response.errorMessage,
+        isError: true,
+      });
     }
 
     setPending(false);
