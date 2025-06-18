@@ -6,7 +6,7 @@ import ContextualMenu, {
 } from "@/components/shared/buttons/contextual-menu";
 import { useRouter } from "next/navigation";
 import { useSetAtom } from "jotai";
-import { alertAtom, toastAtom } from "@/libs/atoms";
+import { toastAtom } from "@/libs/atoms";
 import { deletePost } from "@/app/posts/[postId]/action";
 
 export default function PostHeaderMenu({
@@ -21,11 +21,17 @@ export default function PostHeaderMenu({
 
   const handleDeletePost = async () => {
     const result = await deletePost({ postId });
-    if (result.ok) {
+    if (result.success) {
       router.push("/posts");
       setToast({
         visible: true,
         title: "게시글이 삭제되었습니다.",
+      });
+    } else {
+      setToast({
+        visible: true,
+        title: result.errorMessage,
+        isError: true,
       });
     }
   };

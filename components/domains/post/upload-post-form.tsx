@@ -41,7 +41,7 @@ export default function UploadPostForm() {
       category: "",
     });
 
-    if (response.ok) {
+    if (response.success) {
       reset();
       setPreviews([]);
       setToast({
@@ -52,7 +52,7 @@ export default function UploadPostForm() {
     } else {
       setToast({
         visible: true,
-        title: response.errors,
+        title: response.errorMessage,
         isError: true,
       });
     }

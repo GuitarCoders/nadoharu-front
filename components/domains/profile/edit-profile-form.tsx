@@ -58,7 +58,7 @@ export default function EditProfileForm({
       about_me: formData.about_me,
       password: formData.password,
     });
-    if (response.ok) {
+    if (response.success) {
       setToast({
         visible: true,
         isError: false,
@@ -69,7 +69,7 @@ export default function EditProfileForm({
       setToast({
         visible: true,
         isError: true,
-        title: "프로필 업데이트에 실패했습니다.",
+        title: response.errorMessage,
       });
       setPending(false);
     }
