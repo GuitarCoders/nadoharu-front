@@ -9,34 +9,6 @@ import {
 
 export async function getNewerPosts({
   limit,
-  cursor,
-}: {
-  limit: number;
-  cursor?: string | null;
-}): Promise<PostsForTimelineQuery> {
-  try {
-    const client = await getClient();
-    const { data } = await client.query<
-      PostsForTimelineQuery,
-      PostsForTimelineQueryVariables
-    >({
-      query: PostsForTimelineDocument,
-      variables: {
-        pagination: {
-          limit,
-          cursor,
-          from: PaginationFrom.Start,
-        },
-      },
-    });
-    return data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function getOlderPosts({
-  limit,
   until,
 }: {
   limit: number;
@@ -54,6 +26,34 @@ export async function getOlderPosts({
           limit,
           until,
           from: PaginationFrom.End,
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getOlderPosts({
+  limit,
+  cursor,
+}: {
+  limit: number;
+  cursor?: string | null;
+}): Promise<PostsForTimelineQuery> {
+  try {
+    const client = await getClient();
+    const { data } = await client.query<
+      PostsForTimelineQuery,
+      PostsForTimelineQueryVariables
+    >({
+      query: PostsForTimelineDocument,
+      variables: {
+        pagination: {
+          limit,
+          cursor,
+          from: PaginationFrom.Start,
         },
       },
     });
