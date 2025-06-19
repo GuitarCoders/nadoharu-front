@@ -2,31 +2,41 @@
 
 import { getNewerPosts, getOlderPosts } from "@/app/(tabs)/posts/data";
 import PostPreview from "@/components/domains/post/preview";
-import EmptyState from "@/components/layouts/empty-state";
-import PullToRefresh from "@/components/layouts/pull-to-refresh";
+import EmptyState from "@/components/shared/layouts/empty-state";
+import PullToRefresh from "@/components/shared/layouts/pull-to-refresh";
+import Spinner from "@/components/shared/layouts/spinner";
 import { Post } from "@/graphql/generated/graphql";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, forwardRef } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 
 interface PostsWithRefreshProps {
+  initialItemCount: number;
   initialPosts: Post[];
   initialStartCursor?: string | null;
   initialEndCursor?: string | null;
   userAccountId: string | undefined;
 }
 
-const DEFAULT_LIMIT = 3;
+const DEFAULT_LIMIT = 10;
 
-// EmptyPlaceholder 컴포넌트 정의
-const EmptyPlaceholder = () => (
-  <div className="flex items-center justify-center h-64">
-    <EmptyState text="조금 허전한데요" />
-  </div>
+const DividedList = forwardRef<HTMLDivElement, any>(
+  ({ style, children, ...props }, ref) => (
+    <div
+      ref={ref}
+      {...props}
+      style={style}
+      className="divide-y divide-neutral-200 dark:divide-neutral-600"
+    >
+      {children}
+    </div>
+  )
 );
+DividedList.displayName = "DividedList";
 
 export default function PostsWithPtr({
+  initialItemCount,
   initialPosts,
   initialStartCursor,
   initialEndCursor,
@@ -42,10 +52,6 @@ export default function PostsWithPtr({
   const setToast = useSetAtom(toastAtom);
 
   const fetchOlderPosts = async () => {
-    console.log("🚀 fetchOlderPosts 호출됨", {
-      isLoadingOlder,
-      currentEndCursor,
-    });
     if (isLoadingOlder || !currentEndCursor) return;
     setIsLoadingOlder(true);
     try {
@@ -57,19 +63,15 @@ export default function PostsWithPtr({
         postsForTimeline: { posts: olderPosts, pageInfo },
       } = data;
 
-      console.log("📥 새로운 오래된 글", {
-        count: olderPosts.length,
-        pageInfo,
-      });
-
       if (olderPosts.length > 0) {
         setPosts((prev) => [...prev, ...olderPosts]);
       }
-      if (pageInfo.endCursor && pageInfo.hasOverEnd) {
+      if (pageInfo.endCursor && pageInfo.hasNext) {
         setCurrentEndCursor(pageInfo.endCursor);
+      } else {
+        setCurrentEndCursor(null);
       }
-    } catch (error) {
-      console.error("❌ fetchOlderPosts 에러:", error);
+    } catch {
       setToast({
         visible: true,
         title: "데이터를 불러오는데 실패했습니다",
@@ -128,13 +130,10 @@ export default function PostsWithPtr({
         ref={virtuosoRef}
         useWindowScroll
         data={posts}
-        increaseViewportBy={800}
-        defaultItemHeight={300} // 예상 포스트 높이
-        initialItemCount={Math.max(1, initialPosts.length)} // 초기 아이템 수
-        endReached={() => {
-          console.log("🔄 endReached 콜백 호출됨");
-          fetchOlderPosts();
-        }}
+        initialItemCount={initialItemCount - 1}
+        increaseViewportBy={400}
+        defaultItemHeight={178}
+        endReached={fetchOlderPosts}
         itemContent={(_, post) => (
           <PostPreview
             key={post._id}
@@ -145,9 +144,11 @@ export default function PostsWithPtr({
         )}
         computeItemKey={(_, post) => post._id}
         components={{
-          EmptyPlaceholder,
+          List: DividedList,
         }}
       />
+      {isLoadingOlder && <Spinner className="mx-auto my-6" />}
+      {posts.length === 0 && <EmptyState text="조금 허전한데요" />}
     </PullToRefresh>
   );
 }

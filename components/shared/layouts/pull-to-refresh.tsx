@@ -245,7 +245,6 @@ export default function PullToRefresh({
   // COMPUTED VALUES
   // ========================================================================================
 
-  const backgroundOpacity = Math.min(pullState.distance / PULL_THRESHOLD, 1);
   const iconRotation = pullState.isRefreshing
     ? [0, 360]
     : pullState.distance > PULL_THRESHOLD
