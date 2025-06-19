@@ -1,7 +1,7 @@
 import { JSX } from "react";
 import { useDeviceDetection } from "@/hooks";
-import DropdownMenu from "@/components/layouts/dropdown-menu";
-import OverlayMenu from "@/components/layouts/overlay-menu";
+import DropdownMenu from "@/components/shared/layouts/dropdown-menu";
+import OverlayMenu from "@/components/shared/layouts/overlay-menu";
 
 export type ContextualBtn = {
   action: () => void;

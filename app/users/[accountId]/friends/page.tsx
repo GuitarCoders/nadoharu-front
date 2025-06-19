@@ -1,4 +1,4 @@
-import EmptyState from "@/components/layouts/empty-state";
+import EmptyState from "@/components/shared/layouts/empty-state";
 import ProfileImage from "@/components/domains/profile/image";
 import getSession from "@/libs/session";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";

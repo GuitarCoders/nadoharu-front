@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import EmptyState from "@/components/layouts/empty-state";
+import EmptyState from "@/components/shared/layouts/empty-state";
 import PostPreview from "@/components/domains/post/preview";
 import { Post } from "@/graphql/generated/graphql";
 

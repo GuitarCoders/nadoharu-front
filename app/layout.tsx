@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import JotaiProvider from "@/components/providers/jotai-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import GlobalAlertDialog from "@/components/layouts/alert-dialog";
-import GlobalToast from "@/components/layouts/toast";
+import GlobalAlertDialog from "@/components/shared/layouts/alert-dialog";
+import GlobalToast from "@/components/shared/layouts/toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

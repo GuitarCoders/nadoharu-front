@@ -1,4 +1,4 @@
-import EmptyState from "@/components/layouts/empty-state";
+import EmptyState from "@/components/shared/layouts/empty-state";
 
 export default async function Chats() {
   return (

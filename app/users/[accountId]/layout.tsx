@@ -1,4 +1,4 @@
-import Header from "@/components/layouts/header";
+import Header from "@/components/shared/layouts/header";
 import { notFound } from "next/navigation";
 import { getUserByAccountId } from "./data";
 

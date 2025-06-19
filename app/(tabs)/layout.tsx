@@ -4,8 +4,8 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PencilSquareIcon, PlusIcon } from "@heroicons/react/24/solid";
-import Footer from "@/components/layouts/footer";
-import Header from "@/components/layouts/header";
+import Footer from "@/components/shared/layouts/footer";
+import Header from "@/components/shared/layouts/header";
 import { TABS } from "@/libs/constants";
 
 export default function TabsLayout({ children }: { children: ReactNode }) {

@@ -3,7 +3,7 @@
 import ReceiveRequestForm from "@/components/domains/friend/receive-form";
 import Link from "next/link";
 import ProfileImage from "@/components/domains/profile/image";
-import EmptyState from "@/components/layouts/empty-state";
+import EmptyState from "@/components/shared/layouts/empty-state";
 import { getReceivedFriendRequests } from "./data";
 
 export default async function Requested() {

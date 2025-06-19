@@ -1,4 +1,4 @@
-import Header from "@/components/layouts/header";
+import Header from "@/components/shared/layouts/header";
 
 export default async function EditLayout({
   children,

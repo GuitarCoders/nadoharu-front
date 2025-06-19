@@ -1,4 +1,4 @@
-import Header from "@/components/layouts/header";
+import Header from "@/components/shared/layouts/header";
 import getSession from "@/libs/session";
 import PostHeaderMenu from "@/components/domains/post/header-menu";
 import { getPostUser } from "./data";

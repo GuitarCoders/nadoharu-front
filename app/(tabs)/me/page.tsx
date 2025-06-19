@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import getSession from "@/libs/session";
 import UserTimeline from "@/components/domains/post/user-timeline";
-import UserInfo from "@/components/layouts/user-info";
+import UserInfo from "@/components/shared/layouts/user-info";
 import { getMyPosts, getWhoAmI } from "./data";
 
 export const metadata = {

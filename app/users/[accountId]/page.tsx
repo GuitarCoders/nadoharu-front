@@ -1,4 +1,4 @@
-import UserInfo from "@/components/layouts/user-info";
+import UserInfo from "@/components/shared/layouts/user-info";
 import UserTimeline from "@/components/domains/post/user-timeline";
 import getSession from "@/libs/session";
 import { notFound } from "next/navigation";

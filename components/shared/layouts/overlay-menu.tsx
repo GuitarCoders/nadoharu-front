@@ -2,7 +2,7 @@ import { useState } from "react";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDeviceDetection } from "@/hooks";
-import { ContextualBtn } from "../shared/buttons/contextual-menu";
+import { ContextualBtn } from "../buttons/contextual-menu";
 
 export default function OverlayMenu({ buttons }: { buttons: ContextualBtn[] }) {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,6 +1,6 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
-import { ContextualBtn } from "../shared/buttons/contextual-menu";
+import { ContextualBtn } from "../buttons/contextual-menu";
 
 export default function Dropdown({ buttons }: { buttons: ContextualBtn[] }) {
   return (
