@@ -4,24 +4,18 @@ import {
   acceptFriendRequest,
   deleteFriendRequest,
 } from "@/app/me/requested/action";
+import { User } from "@/graphql/generated/graphql";
 import { alertAtom, toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 
 interface FriendshipReceiveFormProps {
-  id: string;
-  requestUserId: string;
-  receiveUserId: string;
-  requestMessage: string | null;
-  createdAt: Date;
-  requestUser: {
-    _id: string;
-    name: string;
-    account_id: string;
-  };
+  friendRequestId: string;
+  requestUser: User;
 }
 
 export default function FriendshipReceiveForm({
+  friendRequestId,
   requestUser,
 }: FriendshipReceiveFormProps) {
   const router = useRouter();
@@ -34,9 +28,7 @@ export default function FriendshipReceiveForm({
 
   // 모달의 삭제 버튼을 눌렀을 때
   const onDeleteClick = async () => {
-    const result = await deleteFriendRequest({
-      friendRequestId: requestUser._id,
-    });
+    const result = await deleteFriendRequest({ friendRequestId });
     if (result.success) {
       setToast({
         visible: true,
@@ -56,7 +48,7 @@ export default function FriendshipReceiveForm({
   // 모달의 친구하기 버튼을 눌렀을 때
   const onAcceptClick = async () => {
     const result = await acceptFriendRequest({
-      acceptFriendRequestData: requestUser._id,
+      acceptFriendRequestData: friendRequestId,
     });
     if (result.success) {
       setToast({

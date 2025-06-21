@@ -39,12 +39,8 @@ export default async function Requested() {
             <p className="text-sm">{request.requestMessage}</p>
           )}
           <ReceiveRequestForm
-            id={request._id}
-            createdAt={new Date(request.createdAt)}
+            friendRequestId={request._id}
             requestUser={request.requester}
-            receiveUserId={request.receiver._id}
-            requestUserId={request.requester._id}
-            requestMessage={request.requestMessage}
           />
         </div>
       ))}
