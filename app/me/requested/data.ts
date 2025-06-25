@@ -1,4 +1,4 @@
-import { PaginationFrom, PaginationInput } from "@/graphql/generated/graphql";
+import { PaginationFrom } from "@/graphql/generated/graphql";
 import { getClient } from "@/libs/apollo-client";
 import {
   ReceivedFriendRequestsDocument,
