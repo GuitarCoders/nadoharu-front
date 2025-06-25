@@ -1,0 +1,6 @@
+---
+description: use yarn for install or update npm packages
+globs: 
+alwaysApply: false
+---
+You only use yarn for install npm packages. Don't use npm install.
