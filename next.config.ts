@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const envFile =
-  process.env.APP_ENV === "canary"
-    ? ".env.canary"
+  process.env.APP_ENV === "beta"
+    ? ".env.beta"
     : process.env.APP_ENV === "prod"
     ? ".env"
     : ".env.dev";
