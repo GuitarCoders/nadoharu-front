@@ -4,7 +4,7 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type AcceptFriendRequestMutationVariables = Types.Exact<{
-  acceptFriendRequestData: Types.Scalars['String']['input'];
+  friendRequestId: Types.Scalars['String']['input'];
 }>;
 
 
@@ -19,8 +19,8 @@ export type DeleteFriendRequestMutation = { __typename?: 'Mutation', deleteFrien
 
 
 export const AcceptFriendRequestDocument = gql`
-    mutation AcceptFriendRequest($acceptFriendRequestData: String!) {
-  acceptFriendRequest(acceptFriendRequestData: $acceptFriendRequestData) {
+    mutation AcceptFriendRequest($friendRequestId: String!) {
+  acceptFriendRequest(friendRequestId: $friendRequestId) {
     success
   }
 }
@@ -40,7 +40,7 @@ export type AcceptFriendRequestMutationFn = Apollo.MutationFunction<AcceptFriend
  * @example
  * const [acceptFriendRequestMutation, { data, loading, error }] = useAcceptFriendRequestMutation({
  *   variables: {
- *      acceptFriendRequestData: // value for 'acceptFriendRequestData'
+ *      friendRequestId: // value for 'friendRequestId'
  *   },
  * });
  */

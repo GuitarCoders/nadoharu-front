@@ -1,5 +1,5 @@
-mutation AcceptFriendRequest($acceptFriendRequestData: String!) {
-  acceptFriendRequest(acceptFriendRequestData: $acceptFriendRequestData) {
+mutation AcceptFriendRequest($friendRequestId: String!) {
+  acceptFriendRequest(friendRequestId: $friendRequestId) {
     success
   }
 }
