@@ -1,0 +1,43 @@
+query UserByAccountId($account_id: String!) {
+  userByAccountId(account_id: $account_id) {
+    _id
+    name
+    email
+    account_id
+    about_me
+  }
+}
+
+query PostsByUserId(
+  $targetUserId: String!
+  $filter: PostFilter!
+  $pagination: PaginationInput!
+) {
+  postsByUserId(
+    targetUserId: $targetUserId
+    filter: $filter
+    pagination: $pagination
+  ) {
+    posts {
+      _id
+      content
+      tags
+      category
+      createdAt
+      author {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
+    }
+    pageInfo {
+      hasOverStart
+      hasOverEnd
+      hasNext
+      startCursor
+      endCursor
+    }
+  }
+}
