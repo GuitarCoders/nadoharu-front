@@ -4,8 +4,6 @@ import getSession from "@/libs/session";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { getFriends, getUserId } from "./data";
-import { notFound } from "next/navigation";
-import { PaginationFrom } from "@/graphql/generated/graphql";
 
 export default async function Friends({
   params,
