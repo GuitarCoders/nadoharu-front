@@ -10,6 +10,7 @@ import {
 import {
   MeQueryVariables,
   PaginationFrom,
+  PaginationSort,
   PostsByMeQueryVariables,
 } from "@/graphql/generated/graphql";
 
@@ -37,6 +38,7 @@ export async function getMyPosts({
           limit,
           until,
           from: PaginationFrom.End,
+          sort: PaginationSort.Desc,
         },
       },
     });

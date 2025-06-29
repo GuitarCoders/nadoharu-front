@@ -3,19 +3,23 @@
 import { getClient } from "@/libs/apollo-client";
 import { ActionResponse } from "@/app/types/action";
 import { revalidatePath } from "next/cache";
-import { CreatePostDocument, CreatePostMutation } from "./(graphql)";
-import { ApolloError } from "@apollo/client";
+import {
+  CreatePostDocument,
+  CreatePostMutation,
+  CreatePostMutationVariables,
+} from "./(graphql)";
 
-export async function createPost(postData: {
-  content: string;
-  tags: string;
-  category: string;
-}): Promise<ActionResponse> {
+export async function createPost(
+  variables: CreatePostMutationVariables
+): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate<CreatePostMutation>({
+    const { data } = await client.mutate<
+      CreatePostMutation,
+      CreatePostMutationVariables
+    >({
       mutation: CreatePostDocument,
-      variables: { postData },
+      variables,
     });
 
     if (data) {

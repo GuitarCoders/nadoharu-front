@@ -1,7 +1,11 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import { PaginationFrom, PaginationInput } from "@/graphql/generated/graphql";
+import {
+  PaginationFrom,
+  PaginationInput,
+  PaginationSort,
+} from "@/graphql/generated/graphql";
 import {
   PostDocument,
   PostQuery,
@@ -9,13 +13,16 @@ import {
   PostUserDocument,
   CommentsQuery,
   CommentsDocument,
+  PostQueryVariables,
+  PostUserQueryVariables,
+  CommentsQueryVariables,
 } from "./(graphql)";
 
-export async function getPostDetail(variables: {
-  postId: string;
-}): Promise<PostQuery> {
+export async function getPostDetail(
+  variables: PostQueryVariables
+): Promise<PostQuery> {
   const client = await getClient();
-  const { data } = await client.query<PostQuery>({
+  const { data } = await client.query<PostQuery, PostQueryVariables>({
     query: PostDocument,
     variables,
   });
@@ -33,7 +40,7 @@ export async function getComments({
   cursor?: string;
 }): Promise<CommentsQuery> {
   const client = await getClient();
-  const { data } = await client.query<CommentsQuery>({
+  const { data } = await client.query<CommentsQuery, CommentsQueryVariables>({
     query: CommentsDocument,
     variables: {
       postId,
@@ -41,6 +48,7 @@ export async function getComments({
         limit,
         cursor,
         from: PaginationFrom.End,
+        sort: PaginationSort.Asc,
       },
     },
   });
@@ -48,9 +56,9 @@ export async function getComments({
   return data;
 }
 
-export async function getPostUser(variables: { postId: string }) {
+export async function getPostUser(variables: PostUserQueryVariables) {
   const client = await getClient();
-  const { data } = await client.query<PostUserQuery>({
+  const { data } = await client.query<PostUserQuery, PostUserQueryVariables>({
     query: PostUserDocument,
     variables,
   });

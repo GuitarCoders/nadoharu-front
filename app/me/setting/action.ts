@@ -1,16 +1,22 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import { UpdateUserDocument } from "./index.generated";
+import {
+  UpdateUserDocument,
+  UpdateUserMutation,
+  UpdateUserMutationVariables,
+} from "./index.generated";
 import { ActionResponse } from "@/app/types/action";
 
-export async function updateUser(variables: {
-  name: string;
-  about_me: string;
-}): Promise<ActionResponse> {
+export async function updateUser(
+  variables: UpdateUserMutationVariables
+): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate({
+    const { data } = await client.mutate<
+      UpdateUserMutation,
+      UpdateUserMutationVariables
+    >({
       mutation: UpdateUserDocument,
       variables,
     });

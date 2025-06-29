@@ -6,8 +6,10 @@ import {
   AddCommentToPostMutation,
   DeleteCommentByIdDocument,
   DeleteCommentByIdMutation,
+  DeleteCommentByIdMutationVariables,
   DeletePostDocument,
   DeletePostMutation,
+  DeletePostMutationVariables,
 } from "./(graphql)";
 import { ActionResponse } from "@/app/types/action";
 import { revalidatePath } from "next/cache";
@@ -51,7 +53,10 @@ export async function deleteCommentById({
 }): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate<DeleteCommentByIdMutation>({
+    const { data } = await client.mutate<
+      DeleteCommentByIdMutation,
+      DeleteCommentByIdMutationVariables
+    >({
       mutation: DeleteCommentByIdDocument,
       variables: { targetCommentId },
     });
@@ -75,16 +80,21 @@ export async function deleteCommentById({
   }
 }
 
-export async function deletePost({ postId }: { postId: string }) {
+export async function deletePost(
+  variables: DeletePostMutationVariables
+): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate<DeletePostMutation>({
+    const { data } = await client.mutate<
+      DeletePostMutation,
+      DeletePostMutationVariables
+    >({
       mutation: DeletePostDocument,
-      variables: { postId },
+      variables,
     });
 
     if (data) {
-      revalidatePath(`/posts/${postId}`);
+      revalidatePath(`/posts/${variables.postId}`);
       return {
         success: true,
       };

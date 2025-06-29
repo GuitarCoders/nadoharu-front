@@ -1,7 +1,7 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import { PaginationFrom, PaginationInput } from "@/graphql/generated/graphql";
+import { PaginationFrom, PaginationSort } from "@/graphql/generated/graphql";
 import {
   FriendsDocument,
   FriendsQuery,
@@ -11,9 +11,9 @@ import {
   GetUserIdQueryVariables,
 } from "./(graphql)";
 
-export async function getUserId(variables: {
-  accountId: string;
-}): Promise<GetUserIdQuery> {
+export async function getUserId(
+  variables: GetUserIdQueryVariables
+): Promise<GetUserIdQuery> {
   try {
     const client = await getClient();
     const { data } = await client.query<
@@ -46,6 +46,7 @@ export async function getFriends({
         pagination: {
           limit,
           from: PaginationFrom.End,
+          sort: PaginationSort.Desc,
         },
       },
     });

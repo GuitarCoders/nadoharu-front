@@ -4,17 +4,22 @@ import { getClient } from "@/libs/apollo-client";
 import {
   AcceptFriendRequestDocument,
   AcceptFriendRequestMutation,
+  AcceptFriendRequestMutationVariables,
   DeleteFriendRequestDocument,
   DeleteFriendRequestMutation,
+  DeleteFriendRequestMutationVariables,
 } from "./(graphql)";
 import { ActionResponse } from "@/app/types/action";
 
 export async function acceptFriendRequest(variables: {
-  acceptFriendRequestData: string;
+  friendRequestId: string;
 }): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate<AcceptFriendRequestMutation>({
+    const { data } = await client.mutate<
+      AcceptFriendRequestMutation,
+      AcceptFriendRequestMutationVariables
+    >({
       mutation: AcceptFriendRequestDocument,
       variables,
     });
@@ -42,7 +47,10 @@ export async function deleteFriendRequest(variables: {
 }): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate<DeleteFriendRequestMutation>({
+    const { data } = await client.mutate<
+      DeleteFriendRequestMutation,
+      DeleteFriendRequestMutationVariables
+    >({
       mutation: DeleteFriendRequestDocument,
       variables,
     });

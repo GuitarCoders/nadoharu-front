@@ -4,15 +4,19 @@ import { getClient } from "@/libs/apollo-client";
 import {
   UserByAccountIdDocument,
   UserByAccountIdQuery,
+  UserByAccountIdQueryVariables,
 } from "./index.generated";
 
 export async function getUserByAccountId(
-  accountId: string
+  variables: UserByAccountIdQueryVariables
 ): Promise<UserByAccountIdQuery> {
   const client = await getClient();
-  const { data } = await client.query<UserByAccountIdQuery>({
+  const { data } = await client.query<
+    UserByAccountIdQuery,
+    UserByAccountIdQueryVariables
+  >({
     query: UserByAccountIdDocument,
-    variables: { account_id: accountId },
+    variables,
   });
 
   return data;

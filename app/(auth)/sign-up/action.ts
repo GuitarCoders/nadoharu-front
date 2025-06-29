@@ -2,21 +2,21 @@
 
 import { getClient } from "@/libs/apollo-client";
 import { ActionResponse } from "@/app/types/action";
-import { SignUpDocument, SignUpMutation } from "./(graphql)";
-
-export interface SignUpFormData {
-  name: string;
-  account_id: string;
-  email: string;
-  password: string;
-}
+import {
+  SignUpDocument,
+  SignUpMutation,
+  SignUpMutationVariables,
+} from "./(graphql)";
 
 export async function signUp(
-  variables: SignUpFormData
+  variables: SignUpMutationVariables
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.mutate<SignUpMutation>({
+    const { data } = await client.mutate<
+      SignUpMutation,
+      SignUpMutationVariables
+    >({
       mutation: SignUpDocument,
       variables,
     });

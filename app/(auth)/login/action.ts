@@ -3,17 +3,14 @@
 import { getClient } from "@/libs/apollo-client";
 import getSession from "@/libs/session";
 import { ActionResponse } from "@/app/types/action";
-import { LoginDocument, LoginQuery } from "./(graphql)";
+import { LoginDocument, LoginQuery, LoginQueryVariables } from "./(graphql)";
 
-export interface LoginFormData {
-  username: string;
-  password: string;
-}
-
-export async function login(variables: LoginFormData): Promise<ActionResponse> {
+export async function login(
+  variables: LoginQueryVariables
+): Promise<ActionResponse> {
   try {
     const client = await getClient();
-    const { data } = await client.query<LoginQuery>({
+    const { data } = await client.query<LoginQuery, LoginQueryVariables>({
       query: LoginDocument,
       variables,
     });

@@ -4,6 +4,7 @@ import { getClient } from "@/libs/apollo-client";
 import { PostsForTimelineDocument, PostsForTimelineQuery } from "./(graphql)";
 import {
   PaginationFrom,
+  PaginationSort,
   PostsForTimelineQueryVariables,
 } from "@/graphql/generated/graphql";
 
@@ -26,6 +27,7 @@ export async function getNewerPosts({
           limit,
           until,
           from: PaginationFrom.End,
+          sort: PaginationSort.Desc,
         },
       },
     });
@@ -54,6 +56,7 @@ export async function getOlderPosts({
           limit,
           cursor,
           from: PaginationFrom.End,
+          sort: PaginationSort.Desc,
         },
       },
     });

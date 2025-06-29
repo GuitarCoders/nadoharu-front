@@ -1,5 +1,5 @@
-import { PaginationFrom } from "@/graphql/generated/graphql";
 import { getClient } from "@/libs/apollo-client";
+import { PaginationFrom, PaginationSort } from "@/graphql/generated/graphql";
 import {
   ReceivedFriendRequestsDocument,
   ReceivedFriendRequestsQuery,
@@ -25,6 +25,7 @@ export async function getReceivedFriendRequests({
           from: PaginationFrom.End,
           limit,
           cursor,
+          sort: PaginationSort.Desc,
         },
       },
     });
