@@ -1,6 +1,6 @@
 "use client";
 
-import { login, LoginFormData } from "@/app/(auth)/login/action";
+import { login } from "@/app/(auth)/login/action";
 import SubmitButton from "@/components/shared/buttons/submit-button";
 import TextInput from "@/components/shared/inputs/text-input";
 import { toastAtom } from "@/libs/atoms";
@@ -8,17 +8,18 @@ import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { LoginQueryVariables } from "@/graphql/generated/graphql";
 
 export default function LoginForm() {
   const router = useRouter();
   const setToast = useSetAtom(toastAtom);
   const [pending, setPending] = useState(false);
-  const { register, handleSubmit } = useForm<LoginFormData>();
+  const { register, handleSubmit } = useForm<LoginQueryVariables>();
 
-  const onLoginSubmit = async (formData: LoginFormData) => {
+  const onLoginSubmit = async (loginData: LoginQueryVariables) => {
     setPending(true);
 
-    const response = await login(formData);
+    const response = await login(loginData);
     if (response.success) {
       router.push("/posts");
     } else {

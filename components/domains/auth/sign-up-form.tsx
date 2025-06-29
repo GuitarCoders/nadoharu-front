@@ -3,18 +3,21 @@
 import SubmitButton from "@/components/shared/buttons/submit-button";
 import TextInput from "@/components/shared/inputs/text-input";
 import { useForm } from "react-hook-form";
-import { signUp, SignUpFormData } from "@/app/(auth)/sign-up/action";
+import { signUp } from "@/app/(auth)/sign-up/action";
 import { useRouter } from "next/navigation";
 import { useSetAtom } from "jotai";
 import { toastAtom } from "@/libs/atoms";
+import { UserCreate } from "@/graphql/generated/graphql";
 
 export default function SignUpForm() {
   const router = useRouter();
   const setToast = useSetAtom(toastAtom);
-  const { register, handleSubmit } = useForm<SignUpFormData>();
+  const { register, handleSubmit } = useForm<UserCreate>();
 
-  const onSignUpSubmit = async (formData: SignUpFormData) => {
-    const response = await signUp(formData);
+  const onSignUpSubmit = async (createUserData: UserCreate) => {
+    const response = await signUp({
+      createUserData,
+    });
     if (response.success) {
       router.push("/login");
     } else {

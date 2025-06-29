@@ -11,7 +11,7 @@ import { updateUser } from "@/app/me/setting/action";
 import TextInput from "@/components/shared/inputs/text-input";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
-import * as constants from "@/libs/constants";
+import { UserUpdate } from "@/graphql/generated/graphql";
 
 interface EditProfileFormProps {
   name: string;
@@ -36,13 +36,10 @@ export default function EditProfileForm({
   const setToast = useSetAtom(toastAtom);
   const router = useRouter();
 
-  const onEditProfileSubmit = async (formData: EditProfileForm) => {
+  const onEditProfileSubmit = async (updateUserData: UserUpdate) => {
     setPending(true);
 
-    const response = await updateUser({
-      name: formData.name,
-      about_me: formData.about_me,
-    });
+    const response = await updateUser({ updateUserData });
     if (response.success) {
       setToast({
         visible: true,

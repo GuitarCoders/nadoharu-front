@@ -9,6 +9,7 @@ interface SubmitButtonProps {
   color?: "violet" | "red" | "gray";
   pending?: boolean;
   pendingText?: string;
+  className?: string;
 }
 
 const SubmitButton: NextPage<SubmitButtonProps> = ({
@@ -18,6 +19,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
   color = "violet",
   pending,
   pendingText = "로딩 중...",
+  className,
 }) => {
   const buttonColor = (color: "violet" | "red" | "gray") => {
     switch (color) {
@@ -35,8 +37,8 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
       onClick={onClick}
       disabled={pending}
       className={`px-4 py-2 rounded-md outline-none focus:ring-2 ${buttonColor(
-        pending ? "gray" : color,
-      )} ${pending ? "opacity-50 cursor-not-allowed" : ""}`}
+        pending ? "gray" : color
+      )} ${pending ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
     >
       {pending ? pendingText : text}
     </button>

@@ -6,19 +6,14 @@ import TextInput from "@/components/shared/inputs/text-input";
 import Textarea from "@/components/shared/inputs/textarea";
 import { useState } from "react";
 import { useSetAtom } from "jotai";
-import { alertAtom, toastAtom } from "@/libs/atoms";
+import { toastAtom } from "@/libs/atoms";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { createPost } from "@/app/posts/new/action";
 import { redirect } from "next/navigation";
+import { CreatePostInput } from "@/graphql/generated/graphql";
 
-const maxImageSizeMb = 20;
 const maxImages = 4;
-
-interface NewPostForm {
-  content: string;
-  tags: string;
-}
 
 export default function UploadPostForm() {
   const [previews, setPreviews] = useState<string[]>([]);
@@ -28,17 +23,18 @@ export default function UploadPostForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<NewPostForm>();
-  const setAlert = useSetAtom(alertAtom);
+  } = useForm<CreatePostInput>();
   const setToast = useSetAtom(toastAtom);
 
-  const onNewPostFormSubmit = async (formData: NewPostForm) => {
+  const onNewPostFormSubmit = async (postData: CreatePostInput) => {
     setPending(true);
 
     const response = await createPost({
-      ...formData,
-      // TODO: category 선택 혹은 생성하는 기능 구현
-      category: "",
+      postData: {
+        ...postData,
+        // TODO: category 선택 혹은 생성하는 기능 구현
+        category: "",
+      },
     });
 
     if (response.success) {

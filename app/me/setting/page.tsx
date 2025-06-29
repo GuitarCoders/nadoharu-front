@@ -20,7 +20,9 @@ export default async function EditProfile() {
   if (!session.accountId) {
     return notFound();
   }
-  const user = await getUserByAccountId(session.accountId);
+  const user = await getUserByAccountId({
+    account_id: session.accountId,
+  });
   if (!user) {
     return notFound();
   }

@@ -10,7 +10,9 @@ export default async function UserLayout({
   params: Promise<{ accountId: string }>;
 }) {
   const { accountId } = await params;
-  const user = await getUserByAccountId(accountId);
+  const user = await getUserByAccountId({
+    account_id: accountId,
+  });
   if (!user) {
     return notFound();
   }

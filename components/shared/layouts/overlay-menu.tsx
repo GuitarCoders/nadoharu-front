@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
-import { AnimatePresence, motion } from "framer-motion";
-import { useDeviceDetection } from "@/hooks";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ContextualBtn } from "../buttons/contextual-menu";
 
 export default function OverlayMenu({ buttons }: { buttons: ContextualBtn[] }) {
@@ -79,7 +78,7 @@ export default function OverlayMenu({ buttons }: { buttons: ContextualBtn[] }) {
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={menuVariants}
+              variants={menuVariants as Variants}
             >
               {/* 메뉴 항목들 */}
               <div className="flex flex-col w-full py-2">
