@@ -3,7 +3,13 @@ import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ContextualBtn } from "../buttons/contextual-menu";
 
-export default function OverlayMenu({ buttons }: { buttons: ContextualBtn[] }) {
+export default function OverlayMenu({
+  title,
+  buttons,
+}: {
+  title?: string;
+  buttons: ContextualBtn[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openMenu = () => setIsOpen(true);
@@ -80,6 +86,12 @@ export default function OverlayMenu({ buttons }: { buttons: ContextualBtn[] }) {
               exit="exit"
               variants={menuVariants as Variants}
             >
+              {title ? (
+                <div className="flex pt-6 pl-6">
+                  <h5 className="text-lg font-semibold">{title}</h5>
+                </div>
+              ) : null}
+
               {/* 메뉴 항목들 */}
               <div className="flex flex-col w-full py-2">
                 {buttons.map((button) => (
@@ -102,7 +114,7 @@ export default function OverlayMenu({ buttons }: { buttons: ContextualBtn[] }) {
               </div>
 
               {/* 취소 버튼 */}
-              <div className="p-4 border-t border-neutral-200 dark:border-neutral-800">
+              <div className="p-4 pb-8 border-t border-neutral-200 dark:border-neutral-800">
                 <button
                   onClick={closeMenu}
                   className="w-full py-3 bg-white dark:bg-neutral-800 rounded-full border border-neutral-300 dark:border-neutral-700 font-medium"

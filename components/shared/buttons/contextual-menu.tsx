@@ -11,13 +11,15 @@ export type ContextualBtn = {
 };
 
 export default function ContextualMenu({
+  title,
   buttons,
 }: {
   buttons: ContextualBtn[];
+  title?: string;
 }) {
   const { isMobile } = useDeviceDetection();
   return isMobile ? (
-    <OverlayMenu buttons={buttons} />
+    <OverlayMenu title={title} buttons={buttons} />
   ) : (
     <DropdownMenu buttons={buttons} />
   );
