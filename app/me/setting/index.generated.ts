@@ -11,9 +11,7 @@ export type UserByAccountIdQueryVariables = Types.Exact<{
 export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } };
 
 export type UpdateUserMutationVariables = Types.Exact<{
-  name: Types.Scalars['String']['input'];
-  about_me: Types.Scalars['String']['input'];
-  password: Types.Scalars['String']['input'];
+  updateUserData: Types.UserUpdate;
 }>;
 
 
@@ -65,10 +63,8 @@ export type UserByAccountIdLazyQueryHookResult = ReturnType<typeof useUserByAcco
 export type UserByAccountIdSuspenseQueryHookResult = ReturnType<typeof useUserByAccountIdSuspenseQuery>;
 export type UserByAccountIdQueryResult = Apollo.QueryResult<UserByAccountIdQuery, UserByAccountIdQueryVariables>;
 export const UpdateUserDocument = gql`
-    mutation updateUser($name: String!, $about_me: String!, $password: String!) {
-  updateUser(
-    updateUserData: {name: $name, about_me: $about_me, password: $password}
-  ) {
+    mutation updateUser($updateUserData: UserUpdate!) {
+  updateUser(updateUserData: $updateUserData) {
     _id
     name
     email
@@ -93,9 +89,7 @@ export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, U
  * @example
  * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
  *   variables: {
- *      name: // value for 'name'
- *      about_me: // value for 'about_me'
- *      password: // value for 'password'
+ *      updateUserData: // value for 'updateUserData'
  *   },
  * });
  */

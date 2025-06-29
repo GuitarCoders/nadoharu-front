@@ -32,23 +32,9 @@ export default function EditProfileForm({
   accountId,
 }: EditProfileFormProps) {
   const [pending, setPending] = useState(false);
+  const { register, handleSubmit } = useForm<EditProfileForm>();
   const setToast = useSetAtom(toastAtom);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<EditProfileForm>();
   const router = useRouter();
-
-  const validatePassword = (confirmPassword: string) => {
-    const password = getValues("password");
-
-    if (password !== confirmPassword) {
-      return constants.PASSWORD_NOT_MATCH_MESSAGE;
-    }
-    return true;
-  };
 
   const onEditProfileSubmit = async (formData: EditProfileForm) => {
     setPending(true);
@@ -56,7 +42,6 @@ export default function EditProfileForm({
     const response = await updateUser({
       name: formData.name,
       about_me: formData.about_me,
-      password: formData.password,
     });
     if (response.success) {
       setToast({
@@ -110,24 +95,6 @@ export default function EditProfileForm({
           showLabel
           placeholder="자기 소개"
           {...register("about_me", { value: aboutMe })}
-        />
-        <TextInput
-          showLabel
-          placeholder="비밀번호"
-          type="password"
-          required={true}
-          {...register("password", { required: true })}
-        />
-        <TextInput
-          showLabel
-          placeholder="비밀번호 확인"
-          type="password"
-          required={true}
-          errorMessage={errors.confirm_password?.message}
-          {...register("confirm_password", {
-            required: true,
-            validate: validatePassword,
-          })}
         />
         <SubmitButton text="프로필 업데이트" pending={pending} />
       </div>

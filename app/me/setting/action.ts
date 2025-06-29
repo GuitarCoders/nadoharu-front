@@ -7,7 +7,6 @@ import { ActionResponse } from "@/app/types/action";
 export async function updateUser(variables: {
   name: string;
   about_me: string;
-  password: string;
 }): Promise<ActionResponse> {
   try {
     const client = await getClient();

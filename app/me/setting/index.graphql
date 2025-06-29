@@ -8,10 +8,8 @@ query UserByAccountId($account_id: String!) {
   }
 }
 
-mutation updateUser($name: String!, $about_me: String!, $password: String!) {
-  updateUser(
-    updateUserData: { name: $name, about_me: $about_me, password: $password }
-  ) {
+mutation updateUser($updateUserData: UserUpdate!) {
+  updateUser(updateUserData: $updateUserData) {
     _id
     name
     email

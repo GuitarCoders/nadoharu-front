@@ -1,8 +1,12 @@
 import EditProfileForm from "@/components/domains/profile/edit-profile-form";
 import { getUserByAccountId } from "./data";
 import getSession from "@/libs/session";
-import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowLeftStartOnRectangleIcon,
+  LockClosedIcon,
+} from "@heroicons/react/24/outline";
 import { notFound, redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function EditProfile() {
   async function logout() {
@@ -28,10 +32,17 @@ export default async function EditProfile() {
         aboutMe={user.userByAccountId.about_me}
         accountId={user.userByAccountId.account_id}
       />
-      <form action={logout} className="p-4">
-        <button className="flex items-center justify-center gap-2 border-2 border-violet-400 dark:border-violet-600 focus:ring-violet-600 w-full py-2 rounded-md outline-none focus:ring-2">
-          다른 계정으로 로그인
+      <form action={logout} className="flex flex-col gap-4 p-4">
+        <Link
+          href="/me/setting/password"
+          className="flex gap-2 justify-center items-center py-2 w-full rounded-md border-2 border-violet-400 outline-none dark:border-violet-600 focus:ring-violet-600 focus:ring-2"
+        >
+          <LockClosedIcon className="size-5" />
+          비밀번호 변경
+        </Link>
+        <button className="flex gap-2 justify-center items-center py-2 w-full rounded-md border-2 border-violet-400 outline-none dark:border-violet-600 focus:ring-violet-600 focus:ring-2">
           <ArrowLeftStartOnRectangleIcon className="size-5" />
+          로그아웃
         </button>
       </form>
     </div>
