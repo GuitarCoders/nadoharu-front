@@ -10,9 +10,15 @@ const publicOnlyUrls: Routes = {
   "/sign-up": true,
 };
 
+const bypassPaths = ["/sw.js", "/manifest.json", "/favicon.ico"];
+
 export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  if (pathname.startsWith("/_next") || pathname.startsWith("/static")) {
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/static") ||
+    bypassPaths.includes(pathname)
+  ) {
     return NextResponse.next();
   }
 
