@@ -9,7 +9,6 @@ import { Post } from "@/graphql/generated/graphql";
 
 interface PostPreviewProps extends Post {
   isUserPost: boolean;
-  commentsCount: number;
 }
 
 export default function PostPreview({
@@ -19,7 +18,8 @@ export default function PostPreview({
   tags,
   createdAt,
   isUserPost,
-  commentsCount,
+  commentCount,
+  nadoCount,
 }: PostPreviewProps) {
   const router = useRouter();
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,8 +79,8 @@ export default function PostPreview({
           postId={_id}
           isUserReposted={false}
           isUserPost={isUserPost}
-          repostCount={0}
-          commentCount={commentsCount}
+          nadoCount={nadoCount}
+          commentCount={commentCount}
         />
       </div>
     </Link>

@@ -138,7 +138,6 @@ export default function PostsWithPtr({
           <PostPreview
             key={post._id}
             isUserPost={post.author.account_id === userAccountId}
-            commentsCount={0}
             {...post}
           />
         )}

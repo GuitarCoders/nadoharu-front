@@ -6,21 +6,19 @@ import { startTransition, useOptimistic } from "react";
 interface RepostFormProps {
   postId: string;
   isReposted: boolean;
-  repostCount: number;
+  nadoCount: number;
 }
 
 export default function RepostForm({
   // postId,
   isReposted,
-  repostCount,
+  nadoCount,
 }: RepostFormProps) {
   const [state, reducerFn] = useOptimistic(
-    { isReposted, repostCount },
+    { isReposted, nadoCount },
     (prev) => ({
       isReposted: !prev.isReposted,
-      repostCount: prev.isReposted
-        ? prev.repostCount - 1
-        : prev.repostCount + 1,
+      nadoCount: prev.isReposted ? prev.nadoCount - 1 : prev.nadoCount + 1,
     })
   );
 
@@ -44,7 +42,7 @@ export default function RepostForm({
       >
         <ArrowPathRoundedSquareIcon className="size-4" />
         <span>나도</span>
-        <span>{state.repostCount}</span>
+        <span>{state.nadoCount}</span>
       </button>
     </form>
   );

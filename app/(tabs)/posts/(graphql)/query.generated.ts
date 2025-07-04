@@ -8,7 +8,7 @@ export type PostsForTimelineQueryVariables = Types.Exact<{
 }>;
 
 
-export type PostsForTimelineQuery = { __typename?: 'Query', postsForTimeline: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type PostsForTimelineQuery = { __typename?: 'Query', postsForTimeline: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, commentCount: number, nadoCount: number, isNadoPost: boolean, createdAt: string, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } | null, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
 export const PostsForTimelineDocument = gql`
@@ -19,7 +19,17 @@ export const PostsForTimelineDocument = gql`
       content
       tags
       category
+      commentCount
+      nadoCount
+      isNadoPost
       createdAt
+      nadoer {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
       author {
         _id
         name

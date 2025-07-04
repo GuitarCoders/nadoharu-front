@@ -5,7 +5,17 @@ query PostsForTimeline($pagination: PaginationInput!) {
       content
       tags
       category
+      commentCount
+      nadoCount
+      isNadoPost
       createdAt
+      nadoer {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
       author {
         _id
         name

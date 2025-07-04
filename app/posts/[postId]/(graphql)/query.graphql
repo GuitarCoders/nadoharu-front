@@ -5,6 +5,14 @@ query Post($postId: String!) {
     tags
     category
     createdAt
+    commentCount
+    nadoCount
+    isNadoPost
+    nadoer {
+      _id
+      name
+      account_id
+    }
     author {
       _id
       name
