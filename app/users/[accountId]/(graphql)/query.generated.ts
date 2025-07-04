@@ -17,7 +17,7 @@ export type PostsByUserIdQueryVariables = Types.Exact<{
 }>;
 
 
-export type PostsByUserIdQuery = { __typename?: 'Query', postsByUserId: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type PostsByUserIdQuery = { __typename?: 'Query', postsByUserId: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, createdAt: string, commentCount: number, nadoCount: number, isNadoPost: boolean, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } | null, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
 export const UserByAccountIdDocument = gql`
@@ -77,6 +77,16 @@ export const PostsByUserIdDocument = gql`
       tags
       category
       createdAt
+      commentCount
+      nadoCount
+      isNadoPost
+      nadoer {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
       author {
         _id
         name

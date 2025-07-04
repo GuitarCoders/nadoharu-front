@@ -6,6 +6,16 @@ query PostsByMe($filter: PostFilter!, $pagination: PaginationInput!) {
       tags
       category
       createdAt
+      commentCount
+      nadoCount
+      isNadoPost
+      nadoer {
+        _id
+        name
+        email
+        account_id
+        about_me
+      }
       author {
         _id
         name

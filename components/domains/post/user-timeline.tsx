@@ -69,12 +69,7 @@ export default function UserTimeline({
         <div className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-600">
           {posts.length ? (
             posts.map((post) => (
-              <PostPreview
-                key={post._id}
-                isUserPost
-                commentsCount={0}
-                {...post}
-              />
+              <PostPreview key={post._id} isUserPost {...post} />
             ))
           ) : (
             <EmptyState text="아직 글을 작성하지 않았나보네요!" userInfo />
