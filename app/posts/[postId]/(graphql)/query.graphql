@@ -1,32 +1,13 @@
 query Post($postId: String!) {
   post(postId: $postId) {
-    _id
-    content
-    tags
-    category
-    createdAt
-    commentCount
-    nadoCount
-    isNadoPost
-    nadoer {
-      _id
-      name
-      account_id
-    }
-    author {
-      _id
-      name
-      account_id
-    }
+    ...Post
   }
 }
 
 query PostUser($postId: String!) {
   post(postId: $postId) {
     author {
-      _id
-      name
-      account_id
+      ...User
     }
   }
 }
@@ -34,22 +15,10 @@ query PostUser($postId: String!) {
 query Comments($postId: String!, $pagination: PaginationInput!) {
   comments(postId: $postId, pagination: $pagination) {
     comments {
-      _id
-      content
-      postId
-      createdAt
-      commenter {
-        _id
-        name
-        account_id
-      }
+      ...Comment
     }
     pageInfo {
-      hasOverStart
-      hasOverEnd
-      hasNext
-      startCursor
-      endCursor
+      ...PageInfo
     }
   }
 }

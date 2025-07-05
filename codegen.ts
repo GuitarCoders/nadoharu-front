@@ -18,7 +18,7 @@ if (!process.env.NEXT_PUBLIC_GRAPHQL_API) {
 const config: CodegenConfig = {
   overwrite: true,
   schema: process.env.NEXT_PUBLIC_GRAPHQL_API,
-  documents: "app/**/*.graphql",
+  documents: ["app/**/*.graphql", "graphql/**/*.graphql"],
   generates: {
     "graphql/generated/": {
       preset: "client",

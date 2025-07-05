@@ -1,6 +1,7 @@
 import type * as Types from '@/graphql/generated/graphql';
 
 import { gql } from '@apollo/client';
+import { CommentFragmentDoc, UserFragmentDoc } from '../../../../graphql/fragments/global.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type AddCommentToPostMutationVariables = Types.Exact<{
@@ -9,7 +10,7 @@ export type AddCommentToPostMutationVariables = Types.Exact<{
 }>;
 
 
-export type AddCommentToPostMutation = { __typename?: 'Mutation', addCommentToPost: { __typename?: 'Comment', _id: string, content: string, postId: string, createdAt: string, commenter: { __typename?: 'User', _id: string, name: string, account_id: string } } };
+export type AddCommentToPostMutation = { __typename?: 'Mutation', addCommentToPost: { __typename?: 'Comment', _id: string, content: string, postId: string, createdAt: string, commenter: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } } };
 
 export type DeleteCommentByIdMutationVariables = Types.Exact<{
   targetCommentId: Types.Scalars['String']['input'];
@@ -29,18 +30,11 @@ export type DeletePostMutation = { __typename?: 'Mutation', deletePost: { __type
 export const AddCommentToPostDocument = gql`
     mutation AddCommentToPost($targetPostId: String!, $content: String!) {
   addCommentToPost(targetPostId: $targetPostId, content: $content) {
-    _id
-    content
-    postId
-    createdAt
-    commenter {
-      _id
-      name
-      account_id
-    }
+    ...Comment
   }
 }
-    `;
+    ${CommentFragmentDoc}
+${UserFragmentDoc}`;
 export type AddCommentToPostMutationFn = Apollo.MutationFunction<AddCommentToPostMutation, AddCommentToPostMutationVariables>;
 
 /**

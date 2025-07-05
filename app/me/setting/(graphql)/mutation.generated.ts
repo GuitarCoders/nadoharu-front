@@ -8,17 +8,12 @@ export type UpdateUserMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'UserUpdateResult', _id: string, name: string, email: string, account_id: string, about_me: string, status: string } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'UserUpdateResult', status: string } };
 
 
 export const UpdateUserDocument = gql`
     mutation updateUser($updateUserData: UserUpdate!) {
   updateUser(updateUserData: $updateUserData) {
-    _id
-    name
-    email
-    account_id
-    about_me
     status
   }
 }

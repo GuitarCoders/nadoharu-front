@@ -1,6 +1,7 @@
 import type * as Types from '@/graphql/generated/graphql';
 
 import { gql } from '@apollo/client';
+import { UserFragmentDoc } from '../../../../graphql/fragments/global.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type UserByAccountIdQueryVariables = Types.Exact<{
@@ -14,14 +15,10 @@ export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __
 export const UserByAccountIdDocument = gql`
     query UserByAccountId($account_id: String!) {
   userByAccountId(account_id: $account_id) {
-    _id
-    name
-    email
-    account_id
-    about_me
+    ...User
   }
 }
-    `;
+    ${UserFragmentDoc}`;
 
 /**
  * __useUserByAccountIdQuery__

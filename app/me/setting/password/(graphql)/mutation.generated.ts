@@ -8,13 +8,13 @@ export type UpdateUserPasswordMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdateUserPasswordMutation = { __typename?: 'Mutation', updateUserPassword: { __typename?: 'UserUpdateResult', _id: string } };
+export type UpdateUserPasswordMutation = { __typename?: 'Mutation', updateUserPassword: { __typename?: 'UserUpdateResult', status: string } };
 
 
 export const UpdateUserPasswordDocument = gql`
     mutation UpdateUserPassword($updatePasswordData: UserUpdatePasswordInput!) {
   updateUserPassword(updatePasswordData: $updatePasswordData) {
-    _id
+    status
   }
 }
     `;

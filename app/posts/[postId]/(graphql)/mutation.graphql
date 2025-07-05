@@ -1,14 +1,6 @@
 mutation AddCommentToPost($targetPostId: String!, $content: String!) {
   addCommentToPost(targetPostId: $targetPostId, content: $content) {
-    _id
-    content
-    postId
-    createdAt
-    commenter {
-      _id
-      name
-      account_id
-    }
+    ...Comment
   }
 }
 

@@ -10,19 +10,11 @@ query Friends($pagination: PaginationInput!, $targetUserId: String!) {
       _id
       createdAt
       user {
-        _id
-        name
-        email
-        account_id
-        about_me
+        ...User
       }
     }
     pageInfo {
-      hasOverStart
-      hasOverEnd
-      hasNext
-      startCursor
-      endCursor
+      ...PageInfo
     }
   }
 }

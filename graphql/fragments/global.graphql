@@ -1,0 +1,43 @@
+fragment User on User {
+  _id
+  name
+  email
+  account_id
+  about_me
+}
+
+fragment Post on Post {
+  _id
+  content
+  tags
+  category
+  commentCount
+  nadoCount
+  isNadoed
+  isNadoPost
+  createdAt
+  author {
+    ...User
+  }
+  nadoer {
+    ...User
+  }
+}
+
+fragment Comment on Comment {
+  _id
+  content
+  postId
+  createdAt
+  commenter {
+    ...User
+  }
+}
+
+fragment PageInfo on PageInfo {
+  hasOverStart
+  hasOverEnd
+  hasNext
+  startCursor
+  endCursor
+}

@@ -21,7 +21,7 @@ export async function updateUser(
       variables,
     });
 
-    if (data) {
+    if (data?.updateUser.status === "success") {
       return {
         success: true,
       };

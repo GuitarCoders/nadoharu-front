@@ -1,6 +1,7 @@
 import type * as Types from '@/graphql/generated/graphql';
 
 import { gql } from '@apollo/client';
+import { PostFragmentDoc, UserFragmentDoc, CommentFragmentDoc, PageInfoFragmentDoc } from '../../../../graphql/fragments/global.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type PostQueryVariables = Types.Exact<{
@@ -8,14 +9,14 @@ export type PostQueryVariables = Types.Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, createdAt: string, commentCount: number, nadoCount: number, isNadoPost: boolean, nadoer?: { __typename?: 'User', _id: string, name: string, account_id: string } | null, author: { __typename?: 'User', _id: string, name: string, account_id: string } } };
+export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, commentCount: number, nadoCount: number, isNadoed: boolean, isNadoPost: boolean, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } | null } };
 
 export type PostUserQueryVariables = Types.Exact<{
   postId: Types.Scalars['String']['input'];
 }>;
 
 
-export type PostUserQuery = { __typename?: 'Query', post: { __typename?: 'Post', author: { __typename?: 'User', _id: string, name: string, account_id: string } } };
+export type PostUserQuery = { __typename?: 'Query', post: { __typename?: 'Post', author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } } };
 
 export type CommentsQueryVariables = Types.Exact<{
   postId: Types.Scalars['String']['input'];
@@ -23,33 +24,17 @@ export type CommentsQueryVariables = Types.Exact<{
 }>;
 
 
-export type CommentsQuery = { __typename?: 'Query', comments: { __typename?: 'CommentsQueryResult', comments: Array<{ __typename?: 'Comment', _id: string, content: string, postId: string, createdAt: string, commenter: { __typename?: 'User', _id: string, name: string, account_id: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type CommentsQuery = { __typename?: 'Query', comments: { __typename?: 'CommentsQueryResult', comments: Array<{ __typename?: 'Comment', _id: string, content: string, postId: string, createdAt: string, commenter: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
 export const PostDocument = gql`
     query Post($postId: String!) {
   post(postId: $postId) {
-    _id
-    content
-    tags
-    category
-    createdAt
-    commentCount
-    nadoCount
-    isNadoPost
-    nadoer {
-      _id
-      name
-      account_id
-    }
-    author {
-      _id
-      name
-      account_id
-    }
+    ...Post
   }
 }
-    `;
+    ${PostFragmentDoc}
+${UserFragmentDoc}`;
 
 /**
  * __usePostQuery__
@@ -87,13 +72,11 @@ export const PostUserDocument = gql`
     query PostUser($postId: String!) {
   post(postId: $postId) {
     author {
-      _id
-      name
-      account_id
+      ...User
     }
   }
 }
-    `;
+    ${UserFragmentDoc}`;
 
 /**
  * __usePostUserQuery__
@@ -131,26 +114,16 @@ export const CommentsDocument = gql`
     query Comments($postId: String!, $pagination: PaginationInput!) {
   comments(postId: $postId, pagination: $pagination) {
     comments {
-      _id
-      content
-      postId
-      createdAt
-      commenter {
-        _id
-        name
-        account_id
-      }
+      ...Comment
     }
     pageInfo {
-      hasOverStart
-      hasOverEnd
-      hasNext
-      startCursor
-      endCursor
+      ...PageInfo
     }
   }
 }
-    `;
+    ${CommentFragmentDoc}
+${UserFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useCommentsQuery__

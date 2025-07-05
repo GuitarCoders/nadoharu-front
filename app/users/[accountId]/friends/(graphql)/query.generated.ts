@@ -1,6 +1,7 @@
 import type * as Types from '@/graphql/generated/graphql';
 
 import { gql } from '@apollo/client';
+import { UserFragmentDoc, PageInfoFragmentDoc } from '../../../../../graphql/fragments/global.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetUserIdQueryVariables = Types.Exact<{
@@ -66,23 +67,16 @@ export const FriendsDocument = gql`
       _id
       createdAt
       user {
-        _id
-        name
-        email
-        account_id
-        about_me
+        ...User
       }
     }
     pageInfo {
-      hasOverStart
-      hasOverEnd
-      hasNext
-      startCursor
-      endCursor
+      ...PageInfo
     }
   }
 }
-    `;
+    ${UserFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useFriendsQuery__

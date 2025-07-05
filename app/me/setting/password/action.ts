@@ -22,7 +22,7 @@ export async function updatePassword(
       variables,
     });
 
-    if (data?.updateUserPassword?._id) {
+    if (data?.updateUserPassword.status === "success") {
       return {
         success: true,
       };

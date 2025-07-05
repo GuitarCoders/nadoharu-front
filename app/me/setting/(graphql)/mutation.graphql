@@ -1,10 +1,5 @@
 mutation updateUser($updateUserData: UserUpdate!) {
   updateUser(updateUserData: $updateUserData) {
-    _id
-    name
-    email
-    account_id
-    about_me
     status
   }
 }
