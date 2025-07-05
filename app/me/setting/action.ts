@@ -5,7 +5,7 @@ import {
   UpdateUserDocument,
   UpdateUserMutation,
   UpdateUserMutationVariables,
-} from "./index.generated";
+} from "./(graphql)";
 import { ActionResponse } from "@/app/types/action";
 
 export async function updateUser(

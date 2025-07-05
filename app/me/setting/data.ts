@@ -5,7 +5,7 @@ import {
   UserByAccountIdDocument,
   UserByAccountIdQuery,
   UserByAccountIdQueryVariables,
-} from "./index.generated";
+} from "./(graphql)";
 
 export async function getUserByAccountId(
   variables: UserByAccountIdQueryVariables
