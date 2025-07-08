@@ -60,7 +60,7 @@ export default async function PostDetail({
             <div className="flex gap-4 items-center">
               <div className="flex items-center gap-2">
                 <ArrowPathRoundedSquareIcon className="text-violet-600 dark:text-violet-400 size-5" />
-                <p>{0}</p>
+                <p>{post.nadoCount}</p>
               </div>
               <div className="flex items-center gap-2">
                 <ChatBubbleOvalLeftEllipsisIcon className="text-violet-600 dark:text-violet-400 size-5" />
@@ -73,19 +73,11 @@ export default async function PostDetail({
         <div>
           {/* 나도 */}
           <div className="flex gap-4 px-4 h-16 items-center border-b border-neutral-400 dark:border-neutral-800">
-            {!isUserPost ? (
-              <RepostForm
-                postId={postId}
-                isReposted={false}
-                nadoCount={post.nadoCount}
-              />
-            ) : (
-              <div className="flex items-center gap-1 border dark:border-neutral-800 shadow-sm rounded-md px-3 py-2 text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-600 cursor-not-allowed">
-                <ArrowPathRoundedSquareIcon className="size-4" />
-                <span>나도</span>
-                <span>{post.nadoCount}</span>
-              </div>
-            )}
+            <RepostForm
+              postId={postId}
+              isReposted={post.isNadoed}
+              nadoCount={post.nadoCount}
+            />
             <p className="text-sm text-neutral-400">이 글에 공감한다면 나도!</p>
           </div>
           <div className="flex flex-col divide-y divide-neutral-400 dark:divide-neutral-800">

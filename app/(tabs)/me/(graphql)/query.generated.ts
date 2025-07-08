@@ -1,6 +1,7 @@
 import type * as Types from '@/graphql/generated/graphql';
 
 import { gql } from '@apollo/client';
+import { PostFragmentDoc, UserFragmentDoc, PageInfoFragmentDoc } from '../../../../graphql/fragments/global.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type PostsByMeQueryVariables = Types.Exact<{
@@ -9,7 +10,7 @@ export type PostsByMeQueryVariables = Types.Exact<{
 }>;
 
 
-export type PostsByMeQuery = { __typename?: 'Query', postsByMe: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, createdAt: string, commentCount: number, nadoCount: number, isNadoPost: boolean, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } | null, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type PostsByMeQuery = { __typename?: 'Query', postsByMe: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, commentCount: number, nadoCount: number, isNadoed: boolean, isNadoPost: boolean, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } | null }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 export type MeQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
@@ -21,39 +22,16 @@ export const PostsByMeDocument = gql`
     query PostsByMe($filter: PostFilter!, $pagination: PaginationInput!) {
   postsByMe(filter: $filter, pagination: $pagination) {
     posts {
-      _id
-      content
-      tags
-      category
-      createdAt
-      commentCount
-      nadoCount
-      isNadoPost
-      nadoer {
-        _id
-        name
-        email
-        account_id
-        about_me
-      }
-      author {
-        _id
-        name
-        email
-        account_id
-        about_me
-      }
+      ...Post
     }
     pageInfo {
-      hasOverStart
-      hasOverEnd
-      hasNext
-      startCursor
-      endCursor
+      ...PageInfo
     }
   }
 }
-    `;
+    ${PostFragmentDoc}
+${UserFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __usePostsByMeQuery__
@@ -96,15 +74,11 @@ export const MeDocument = gql`
     friendCount
     receivedFriendRequestCount
     user {
-      _id
-      name
-      email
-      account_id
-      about_me
+      ...User
     }
   }
 }
-    `;
+    ${UserFragmentDoc}`;
 
 /**
  * __useMeQuery__

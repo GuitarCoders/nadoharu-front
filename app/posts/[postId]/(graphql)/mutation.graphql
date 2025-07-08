@@ -15,3 +15,15 @@ mutation DeletePost($postId: String!) {
     success
   }
 }
+
+mutation AddNado($targetPostId: String!) {
+  addNado(targetPostId: $targetPostId) {
+    originPostId
+  }
+}
+
+mutation CancelNado($targetPostId: String!) {
+  cancelNado(targetPostId: $targetPostId) {
+    success
+  }
+}

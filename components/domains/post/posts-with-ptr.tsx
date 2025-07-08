@@ -136,12 +136,12 @@ export default function PostsWithPtr({
         endReached={fetchOlderPosts}
         itemContent={(_, post) => (
           <PostPreview
-            key={post._id}
+            key={post._id + post.nadoer?._id}
             isUserPost={post.author.account_id === userAccountId}
             {...post}
           />
         )}
-        computeItemKey={(_, post) => post._id}
+        computeItemKey={(_, post) => post._id + post.nadoer?._id}
         components={{
           List: DividedList,
         }}

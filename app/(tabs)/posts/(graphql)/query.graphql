@@ -1,35 +1,16 @@
 query PostsForTimeline($pagination: PaginationInput!) {
   postsForTimeline(pagination: $pagination) {
     posts {
-      _id
-      content
-      tags
-      category
-      commentCount
-      nadoCount
-      isNadoPost
-      createdAt
+      ...Post
       nadoer {
-        _id
-        name
-        email
-        account_id
-        about_me
+        ...User
       }
       author {
-        _id
-        name
-        email
-        account_id
-        about_me
+        ...User
       }
     }
     pageInfo {
-      hasOverStart
-      hasOverEnd
-      hasNext
-      startCursor
-      endCursor
+      ...PageInfo
     }
   }
 }

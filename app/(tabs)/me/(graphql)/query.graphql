@@ -1,35 +1,10 @@
 query PostsByMe($filter: PostFilter!, $pagination: PaginationInput!) {
   postsByMe(filter: $filter, pagination: $pagination) {
     posts {
-      _id
-      content
-      tags
-      category
-      createdAt
-      commentCount
-      nadoCount
-      isNadoPost
-      nadoer {
-        _id
-        name
-        email
-        account_id
-        about_me
-      }
-      author {
-        _id
-        name
-        email
-        account_id
-        about_me
-      }
+      ...Post
     }
     pageInfo {
-      hasOverStart
-      hasOverEnd
-      hasNext
-      startCursor
-      endCursor
+      ...PageInfo
     }
   }
 }
@@ -41,11 +16,7 @@ query Me {
     friendCount
     receivedFriendRequestCount
     user {
-      _id
-      name
-      email
-      account_id
-      about_me
+      ...User
     }
   }
 }

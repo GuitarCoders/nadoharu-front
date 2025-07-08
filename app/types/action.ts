@@ -1,4 +1,3 @@
-export interface ActionResponse {
-  success: boolean;
-  errorMessage?: string;
-}
+export type ActionResponse =
+  | { success: true }
+  | { success: false; errorMessage: string };

@@ -6,6 +6,7 @@ import PostPreviewButtons from "@/components/domains/post/preview-buttons";
 import { useRouter } from "next/navigation";
 import ProfileImage from "@/components/domains/profile/image";
 import { Post } from "@/graphql/generated/graphql";
+import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
 
 interface PostPreviewProps extends Post {
   isUserPost: boolean;
@@ -20,6 +21,9 @@ export default function PostPreview({
   isUserPost,
   commentCount,
   nadoCount,
+  isNadoPost,
+  isNadoed,
+  nadoer,
 }: PostPreviewProps) {
   const router = useRouter();
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,12 +36,12 @@ export default function PostPreview({
     <Link href={`/posts/${_id}`}>
       <div className="w-full p-4 text-left flex flex-col gap-3">
         {/* TODO: '나도' 누른 글을 표시하는 경우에 대한 기능 구현 */}
-        {/* {repostUser ? ( */}
-        {/*   <div className="flex items-center gap-2 text-neutral-400"> */}
-        {/*     <ArrowPathRoundedSquareIcon className="size-3" /> */}
-        {/*     <p className="text-xs">{repostUser.username} 님이 공감했어요</p> */}
-        {/*   </div> */}
-        {/* ) : null} */}
+        {isNadoPost ? (
+          <div className="flex items-center gap-2 text-neutral-400">
+            <ArrowPathRoundedSquareIcon className="size-3" />
+            <p className="text-xs">{nadoer?.name} 님의 나도!</p>
+          </div>
+        ) : null}
 
         {/* 프로필 */}
         <section className="flex justify-between items-center">
@@ -77,7 +81,7 @@ export default function PostPreview({
         {/* 버튼부 */}
         <PostPreviewButtons
           postId={_id}
-          isUserReposted={false}
+          isUserReposted={isNadoed}
           isUserPost={isUserPost}
           nadoCount={nadoCount}
           commentCount={commentCount}
