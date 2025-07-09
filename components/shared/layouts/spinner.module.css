@@ -1,0 +1,33 @@
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+  --dot-solid: #333; /* light mode solid */
+  --dot-faded: #3332; /* light mode faded */
+}
+@media (prefers-color-scheme: dark) {
+  .loader {
+    --dot-solid: #fff; /* dark mode solid */
+    --dot-faded: #fff2; /* dark mode faded */
+  }
+}
+@keyframes l5 {
+  0% {
+    box-shadow: 20px 0 var(--dot-solid), -20px 0 var(--dot-faded);
+    background: var(--dot-solid);
+  }
+  33% {
+    box-shadow: 20px 0 var(--dot-solid), -20px 0 var(--dot-faded);
+    background: var(--dot-faded);
+  }
+  66% {
+    box-shadow: 20px 0 var(--dot-faded), -20px 0 var(--dot-solid);
+    background: var(--dot-faded);
+  }
+  100% {
+    box-shadow: 20px 0 var(--dot-faded), -20px 0 var(--dot-solid);
+    background: var(--dot-solid);
+  }
+}
