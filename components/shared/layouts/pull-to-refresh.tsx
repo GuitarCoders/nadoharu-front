@@ -62,6 +62,12 @@ export default function PullToRefresh({
   const contentRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
 
+  // 마운트 여부를 추적하여 controls.start 호출 시점을 보장
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   // ========================================================================================
   // UTILITY FUNCTIONS
   // ========================================================================================
@@ -122,21 +128,32 @@ export default function PullToRefresh({
     );
 
     // Phase 2: Animate content and distance to zero simultaneously
-    await Promise.all([
-      controls.start({
-        y: 0,
-        transition: {
-          type: "spring",
-          stiffness: 300,
-          damping: 30,
-        },
-      }),
-      animateDistanceToZero(),
-    ]);
+    const animations = [animateDistanceToZero()];
+    // 컴포넌트가 마운트된 이후에만 controls.start 호출
+    if (hasMounted) {
+      animations.unshift(
+        controls.start({
+          y: 0,
+          transition: {
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+          },
+        })
+      );
+    }
+
+    await Promise.all(animations);
 
     // Phase 3: Reset all state
     resetPullState();
-  }, [controls, animateDistanceToZero, resetPullState, updatePullState]);
+  }, [
+    controls,
+    animateDistanceToZero,
+    resetPullState,
+    updatePullState,
+    hasMounted,
+  ]);
 
   // ========================================================================================
   // TOUCH EVENT HANDLERS

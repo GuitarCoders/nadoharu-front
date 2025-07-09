@@ -8,7 +8,9 @@ import Spinner from "@/components/shared/layouts/spinner";
 import { Post } from "@/graphql/generated/graphql";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
-import { useState, forwardRef, useRef } from "react";
+import { useState, useRef } from "react";
+import { AnimatePresence } from "framer-motion";
+import NewPostBanner from "@/components/domains/post/new-post-banner";
 import { VList, VListHandle } from "virtua";
 
 interface PostWithPtrProps {
@@ -16,7 +18,6 @@ interface PostWithPtrProps {
   initialPosts: Post[];
   initialStartCursor?: string | null;
   initialEndCursor?: string | null;
-  initialHasOverStart?: boolean;
   initialHasOverEnd?: boolean;
   userAccountId: string | undefined;
 }
@@ -28,18 +29,20 @@ export default function PostWithPtr({
   initialPosts,
   initialStartCursor,
   initialEndCursor,
-  initialHasOverStart,
   initialHasOverEnd,
   userAccountId,
 }: PostWithPtrProps) {
+  const scrollContainerRef = useRef<VListHandle>(null);
+
   const [posts, setPosts] = useState(initialPosts);
   const [currentStartCursor, setCurrentStartCursor] =
     useState(initialStartCursor);
   const [currentEndCursor, setCurrentEndCursor] = useState(initialEndCursor);
   const [isLoadingOlder, setIsLoadingOlder] = useState(false);
-  const [hasOverStart, setHasOverStart] = useState(initialHasOverStart);
   const [hasOverEnd, setHasOverEnd] = useState(initialHasOverEnd);
-
+  const [newPostLoaded, setNewPostLoaded] = useState(false);
+  const [newPostCount, setNewPostCount] = useState(0);
+  const [shift, setShift] = useState(false);
   const setToast = useSetAtom(toastAtom);
 
   const fetchOlderPosts = async () => {
@@ -75,6 +78,8 @@ export default function PostWithPtr({
   };
 
   const handleRefresh = async () => {
+    setShift(true);
+
     try {
       const data = await getNewerPosts({
         limit: DEFAULT_LIMIT,
@@ -84,13 +89,14 @@ export default function PostWithPtr({
         postsForTimeline: { posts: newPosts, pageInfo },
       } = data;
 
-      setHasOverStart(pageInfo.hasOverStart);
       if (pageInfo.startCursor && pageInfo.startCursor !== currentStartCursor) {
         setCurrentStartCursor(pageInfo.startCursor);
       }
 
       if (newPosts.length > 0) {
         setPosts((prev) => [...newPosts, ...prev]);
+        setNewPostLoaded(true);
+        setNewPostCount(newPosts.length);
       }
     } catch {
       setToast({
@@ -98,23 +104,22 @@ export default function PostWithPtr({
         title: "데이터를 불러오는데 실패했습니다",
         isError: true,
       });
+    } finally {
+      requestAnimationFrame(() => setShift(false));
     }
   };
 
-  const scrollContainerRef = useRef<VListHandle>(null);
-  const [shift, setShift] = useState(false);
-
   const onScroll = () => {
     if (!scrollContainerRef.current) return;
-    if (hasOverStart && scrollContainerRef.current.findStartIndex() < 2) {
-      setShift(true);
+    if (scrollContainerRef.current.findStartIndex() < newPostCount) {
+      setNewPostLoaded(false);
     }
     if (
       hasOverEnd &&
       scrollContainerRef.current.findEndIndex() >= posts.length - 2
     ) {
-      fetchOlderPosts();
       setShift(false);
+      fetchOlderPosts();
     }
   };
 
@@ -126,11 +131,15 @@ export default function PostWithPtr({
         scrollContainerRef.current ? scrollContainerRef.current.scrollOffset : 0
       }
     >
+      <AnimatePresence>
+        {newPostLoaded && <NewPostBanner count={newPostCount} />}
+      </AnimatePresence>
       <VList
         ref={scrollContainerRef}
         onScroll={onScroll}
         shift={shift}
         style={{ height: "calc(100vh - 152px)" }}
+        ssrCount={hasOverEnd ? initialItemCount + 1 : initialItemCount}
         className="relative h-full"
       >
         {posts.map((post, i) => (
@@ -143,7 +152,7 @@ export default function PostWithPtr({
             {...post}
           />
         ))}
-        {isLoadingOlder && <Spinner className="mx-auto my-6" />}
+        {hasOverEnd && <Spinner className="mx-auto my-6" />}
         {posts.length === 0 && <EmptyState text="조금 허전한데요" />}
       </VList>
     </PullToRefresh>

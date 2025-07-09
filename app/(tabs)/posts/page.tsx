@@ -27,7 +27,6 @@ export default async function Posts() {
       initialPosts={posts}
       initialStartCursor={data.postsForTimeline.pageInfo.startCursor}
       initialEndCursor={data.postsForTimeline.pageInfo.endCursor}
-      initialHasOverStart={data.postsForTimeline.pageInfo.hasOverStart}
       initialHasOverEnd={data.postsForTimeline.pageInfo.hasOverEnd}
       userAccountId={userAccountId}
     />
