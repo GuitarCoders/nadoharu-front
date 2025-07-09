@@ -12,6 +12,11 @@ interface PullToRefreshProps {
   children: ReactNode;
   onRefresh: () => Promise<void>;
   className?: string;
+  /**
+   * 현재 스크롤 오프셋을 반환하는 함수. 전달되지 않으면 window.scrollY 를 사용한다.
+   * VList 등 내부 스크롤 컨테이너와 함께 사용할 때 유용하다.
+   */
+  getScrollOffset?: () => number;
 }
 
 interface PullState {
@@ -39,6 +44,7 @@ export default function PullToRefresh({
   children,
   onRefresh,
   className = "",
+  getScrollOffset,
 }: PullToRefreshProps) {
   // ========================================================================================
   // STATE & REFS
@@ -74,8 +80,9 @@ export default function PullToRefresh({
   }, [updatePullState]);
 
   const shouldStartPull = useCallback(() => {
-    return window.scrollY === 0 && !pullState.isRefreshing;
-  }, [pullState.isRefreshing]);
+    const offset = getScrollOffset ? getScrollOffset() : window.scrollY;
+    return offset === 0 && !pullState.isRefreshing;
+  }, [getScrollOffset, pullState.isRefreshing]);
 
   // ========================================================================================
   // ANIMATION FUNCTIONS
@@ -160,7 +167,8 @@ export default function PullToRefresh({
       const currentY = e.touches[0].clientY;
       const deltaY = currentY - pullState.startY;
 
-      if (deltaY > 0 && window.scrollY === 0) {
+      const offset = getScrollOffset ? getScrollOffset() : window.scrollY;
+      if (deltaY > 0 && offset === 0) {
         e.preventDefault();
         const newDistance = Math.min(deltaY * 0.6, MAX_PULL_DISTANCE);
 
@@ -178,6 +186,7 @@ export default function PullToRefresh({
       pullState.startY,
       pullState.showIcon,
       updatePullState,
+      getScrollOffset,
     ]
   );
 
@@ -329,7 +338,7 @@ export default function PullToRefresh({
             <ArrowPathIcon
               className={`w-6 h-6 transition-colors duration-300 ${
                 pullState.distance >= PULL_THRESHOLD
-                  ? "text-violet-600 dark:text-violet-500"
+                  ? "text-neutral-900 dark:text-white"
                   : "text-neutral-400 dark:text-neutral-600"
               }`}
             />

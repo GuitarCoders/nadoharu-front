@@ -8,46 +8,37 @@ import Spinner from "@/components/shared/layouts/spinner";
 import { Post } from "@/graphql/generated/graphql";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
-import { useState, useRef, useLayoutEffect, forwardRef } from "react";
-import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
+import { useState, forwardRef, useRef } from "react";
+import { VList, VListHandle } from "virtua";
 
-interface PostsWithRefreshProps {
+interface PostWithPtrProps {
   initialItemCount: number;
   initialPosts: Post[];
   initialStartCursor?: string | null;
   initialEndCursor?: string | null;
+  initialHasOverStart?: boolean;
+  initialHasOverEnd?: boolean;
   userAccountId: string | undefined;
 }
 
 const DEFAULT_LIMIT = 10;
 
-const DividedList = forwardRef<HTMLDivElement, any>(
-  ({ style, children, ...props }, ref) => (
-    <div
-      ref={ref}
-      {...props}
-      style={style}
-      className="divide-y divide-neutral-200 dark:divide-neutral-600"
-    >
-      {children}
-    </div>
-  )
-);
-DividedList.displayName = "DividedList";
-
-export default function PostsWithPtr({
+export default function PostWithPtr({
   initialItemCount,
   initialPosts,
   initialStartCursor,
   initialEndCursor,
+  initialHasOverStart,
+  initialHasOverEnd,
   userAccountId,
-}: PostsWithRefreshProps) {
+}: PostWithPtrProps) {
   const [posts, setPosts] = useState(initialPosts);
   const [currentStartCursor, setCurrentStartCursor] =
     useState(initialStartCursor);
   const [currentEndCursor, setCurrentEndCursor] = useState(initialEndCursor);
   const [isLoadingOlder, setIsLoadingOlder] = useState(false);
-  const [prependedCount, setPrependedCount] = useState(0);
+  const [hasOverStart, setHasOverStart] = useState(initialHasOverStart);
+  const [hasOverEnd, setHasOverEnd] = useState(initialHasOverEnd);
 
   const setToast = useSetAtom(toastAtom);
 
@@ -63,6 +54,7 @@ export default function PostsWithPtr({
         postsForTimeline: { posts: olderPosts, pageInfo },
       } = data;
 
+      setHasOverEnd(pageInfo.hasOverEnd);
       if (olderPosts.length > 0) {
         setPosts((prev) => [...prev, ...olderPosts]);
       }
@@ -92,12 +84,12 @@ export default function PostsWithPtr({
         postsForTimeline: { posts: newPosts, pageInfo },
       } = data;
 
+      setHasOverStart(pageInfo.hasOverStart);
       if (pageInfo.startCursor && pageInfo.startCursor !== currentStartCursor) {
         setCurrentStartCursor(pageInfo.startCursor);
       }
 
       if (newPosts.length > 0) {
-        setPrependedCount(newPosts.length);
         setPosts((prev) => [...newPosts, ...prev]);
       }
     } catch {
@@ -109,45 +101,51 @@ export default function PostsWithPtr({
     }
   };
 
-  const virtuosoRef = useRef<VirtuosoHandle | null>(null);
+  const scrollContainerRef = useRef<VListHandle>(null);
+  const [shift, setShift] = useState(false);
 
-  useLayoutEffect(() => {
-    if (prependedCount > 0 && virtuosoRef.current) {
-      virtuosoRef.current.scrollToIndex({
-        index: prependedCount,
-        align: "start",
-      });
-      setPrependedCount(0);
+  const onScroll = () => {
+    if (!scrollContainerRef.current) return;
+    if (hasOverStart && scrollContainerRef.current.findStartIndex() < 2) {
+      setShift(true);
     }
-  }, [posts]);
+    if (
+      hasOverEnd &&
+      scrollContainerRef.current.findEndIndex() >= posts.length - 2
+    ) {
+      fetchOlderPosts();
+      setShift(false);
+    }
+  };
 
   return (
     <PullToRefresh
       onRefresh={handleRefresh}
-      className="flex flex-col ptr-posts"
+      className="flex-1 ptr-posts"
+      getScrollOffset={() =>
+        scrollContainerRef.current ? scrollContainerRef.current.scrollOffset : 0
+      }
     >
-      <Virtuoso
-        ref={virtuosoRef}
-        useWindowScroll
-        data={posts}
-        initialItemCount={initialItemCount - 1}
-        increaseViewportBy={400}
-        defaultItemHeight={178}
-        endReached={fetchOlderPosts}
-        itemContent={(_, post) => (
+      <VList
+        ref={scrollContainerRef}
+        onScroll={onScroll}
+        shift={shift}
+        style={{ height: "calc(100vh - 152px)" }}
+        className="relative h-full"
+      >
+        {posts.map((post, i) => (
           <PostPreview
             key={post._id + post.nadoer?._id}
             isUserPost={post.author.account_id === userAccountId}
+            className={
+              i ? "border-t border-neutral-200 dark:border-neutral-800" : ""
+            }
             {...post}
           />
-        )}
-        computeItemKey={(_, post) => post._id + post.nadoer?._id}
-        components={{
-          List: DividedList,
-        }}
-      />
-      {isLoadingOlder && <Spinner className="mx-auto my-6" />}
-      {posts.length === 0 && <EmptyState text="조금 허전한데요" />}
+        ))}
+        {isLoadingOlder && <Spinner className="mx-auto my-6" />}
+        {posts.length === 0 && <EmptyState text="조금 허전한데요" />}
+      </VList>
     </PullToRefresh>
   );
 }

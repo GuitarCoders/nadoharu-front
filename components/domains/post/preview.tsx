@@ -10,6 +10,7 @@ import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
 
 interface PostPreviewProps extends Post {
   isUserPost: boolean;
+  className?: string;
 }
 
 export default function PostPreview({
@@ -24,6 +25,7 @@ export default function PostPreview({
   isNadoPost,
   isNadoed,
   nadoer,
+  className,
 }: PostPreviewProps) {
   const router = useRouter();
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,7 +36,7 @@ export default function PostPreview({
 
   return (
     <Link href={`/posts/${_id}`}>
-      <div className="w-full p-4 text-left flex flex-col gap-3">
+      <div className={`w-full p-4 text-left flex flex-col gap-3 ${className}`}>
         {/* TODO: '나도' 누른 글을 표시하는 경우에 대한 기능 구현 */}
         {isNadoPost ? (
           <div className="flex items-center gap-2 text-neutral-400">

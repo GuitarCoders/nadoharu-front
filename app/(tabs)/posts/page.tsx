@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import getSession from "@/libs/session";
 import { getNewerPosts } from "./data";
-import PostsWithPtr from "@/components/domains/post/posts-with-ptr";
-import { PaginationFrom } from "@/graphql/generated/graphql";
+import PostWithPtr from "@/components/domains/post/posts-with-ptr";
 
 export const metadata = {
   title: "모아보는",
@@ -23,11 +22,13 @@ export default async function Posts() {
   } = data;
 
   return (
-    <PostsWithPtr
+    <PostWithPtr
       initialItemCount={INITIAL_LIMIT}
       initialPosts={posts}
       initialStartCursor={data.postsForTimeline.pageInfo.startCursor}
       initialEndCursor={data.postsForTimeline.pageInfo.endCursor}
+      initialHasOverStart={data.postsForTimeline.pageInfo.hasOverStart}
+      initialHasOverEnd={data.postsForTimeline.pageInfo.hasOverEnd}
       userAccountId={userAccountId}
     />
   );
