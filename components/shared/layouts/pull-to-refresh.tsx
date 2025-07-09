@@ -29,7 +29,7 @@ interface PullState {
 
 const PULL_THRESHOLD = 80;
 const MAX_PULL_DISTANCE = 80;
-const REFRESH_OFFSET = 60;
+const REFRESH_OFFSET = 80;
 const ANIMATION_DURATION = {
   iconFadeOut: 200,
   returnToPosition: 400,
@@ -216,7 +216,9 @@ export default function PullToRefresh({
       updatePullState({
         isRefreshing: true,
         isDragging: false,
+        distance: REFRESH_OFFSET,
       });
+      controls.set({ y: REFRESH_OFFSET });
 
       try {
         await onRefresh();
@@ -237,6 +239,7 @@ export default function PullToRefresh({
     onRefresh,
     returnToInitialPosition,
     updatePullState,
+    controls,
   ]);
 
   // ========================================================================================
