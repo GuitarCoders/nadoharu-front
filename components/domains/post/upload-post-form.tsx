@@ -21,7 +21,6 @@ export default function UploadPostForm() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<CreatePostInput>();
   const setToast = useSetAtom(toastAtom);
@@ -38,7 +37,6 @@ export default function UploadPostForm() {
     });
 
     if (response.success) {
-      reset();
       setPreviews([]);
       setToast({
         visible: true,
@@ -51,9 +49,8 @@ export default function UploadPostForm() {
         title: response.errorMessage,
         isError: true,
       });
+      setPending(false);
     }
-
-    setPending(false);
   };
 
   return (
@@ -65,11 +62,13 @@ export default function UploadPostForm() {
         placeholder="무슨 일이 일어나고 있나요?"
         required={true}
         errorMessage={errors.content?.message}
+        disabled={pending}
         {...register("content")}
       />
       <TextInput
         placeholder="태그 작성.."
         errorMessage={errors.tags?.message}
+        disabled={pending}
         {...register("tags")}
       />
       <div className="flex gap-2">
