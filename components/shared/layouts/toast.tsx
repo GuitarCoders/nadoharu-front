@@ -98,7 +98,7 @@ export default function GlobalToast() {
           </Toast.Root>
         )}
       </AnimatePresence>
-      <Toast.Viewport className="fixed bottom-24 sm:bottom-12 left-1/2 sm:left-auto sm:right-0 -translate-x-1/2 sm:translate-x-0 z-50 m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-6 outline-none" />
+      <Toast.Viewport className="fixed bottom-24 sm:bottom-12 left-1/2 sm:left-auto sm:right-0 -translate-x-1/2 sm:translate-x-0 z-10 m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-6 outline-none" />
     </Toast.Provider>
   );
 }
