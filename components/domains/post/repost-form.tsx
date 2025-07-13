@@ -10,12 +10,14 @@ interface RepostFormProps {
   postId: string;
   isReposted: boolean;
   nadoCount: number;
+  className?: string;
 }
 
 export default function RepostForm({
   postId,
   isReposted,
   nadoCount,
+  className,
 }: RepostFormProps) {
   const setToast = useSetAtom(toastAtom);
   const [state, reducerFn] = useOptimistic(
@@ -49,7 +51,7 @@ export default function RepostForm({
   };
 
   return (
-    <form onSubmit={onRepostSubmit}>
+    <form onSubmit={onRepostSubmit} className={className}>
       <button
         className={`flex items-center gap-1 border shadow-sm rounded-md px-3 py-2 text-sm cursor-pointer ${
           state.isReposted

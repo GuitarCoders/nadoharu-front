@@ -1,5 +1,5 @@
-query Post($postId: String!) {
-  post(postId: $postId) {
+query Post($postId: String!, $nadoUsersPagination: PaginationInput!) {
+  post(postId: $postId, nadoUsersPagination: $nadoUsersPagination) {
     ...Post
   }
 }
@@ -8,6 +8,14 @@ query PostUser($postId: String!) {
   post(postId: $postId) {
     author {
       ...User
+    }
+  }
+}
+
+query NadoUsers($postId: String!, $pagination: PaginationInput!) {
+  post(postId: $postId, nadoUsersPagination: $pagination) {
+    nadoUsers {
+      ...NadoUsers
     }
   }
 }

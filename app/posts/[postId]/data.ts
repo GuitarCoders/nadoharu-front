@@ -16,15 +16,26 @@ import {
   PostQueryVariables,
   PostUserQueryVariables,
   CommentsQueryVariables,
+  NadoUsersQuery,
+  NadoUsersDocument,
+  NadoUsersQueryVariables,
 } from "./(graphql)";
 
-export async function getPostDetail(
-  variables: PostQueryVariables
-): Promise<PostQuery> {
+export async function getPostDetail(variables: {
+  postId: string;
+}): Promise<PostQuery> {
   const client = await getClient();
   const { data } = await client.query<PostQuery, PostQueryVariables>({
     query: PostDocument,
-    variables,
+    variables: {
+      ...variables,
+      nadoUsersPagination: {
+        limit: 10,
+        cursor: undefined,
+        from: PaginationFrom.End,
+        sort: PaginationSort.Desc,
+      },
+    },
   });
 
   return data;
@@ -64,4 +75,30 @@ export async function getPostUser(variables: PostUserQueryVariables) {
   });
 
   return data.post;
+}
+
+export async function getNadoUsers({
+  postId,
+  limit,
+  cursor,
+}: {
+  postId: string;
+  limit: number;
+  cursor?: string;
+}): Promise<NadoUsersQuery> {
+  const client = await getClient();
+  const { data } = await client.query<NadoUsersQuery, NadoUsersQueryVariables>({
+    query: NadoUsersDocument,
+    variables: {
+      postId,
+      pagination: {
+        limit,
+        cursor,
+        from: PaginationFrom.End,
+        sort: PaginationSort.Desc,
+      },
+    },
+  });
+
+  return data;
 }
