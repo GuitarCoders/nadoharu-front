@@ -2,6 +2,7 @@
   "name": "nadoharu-front",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "yarn",
   "scripts": {
     "dev": "next dev",
     "dev:beta": "cross-env APP_ENV=beta next dev",
@@ -47,6 +48,7 @@
     "@types/react-dom": "^19",
     "cross-env": "^7.0.3",
     "tailwindcss": "^4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "yarn": "^1.22.22"
   }
 }
