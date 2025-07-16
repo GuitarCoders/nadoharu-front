@@ -2,7 +2,7 @@
   "name": "nadoharu-front",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "yarn",
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "dev": "next dev",
     "dev:beta": "cross-env APP_ENV=beta next dev",
