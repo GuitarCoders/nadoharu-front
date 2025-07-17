@@ -14,7 +14,7 @@ export default async function NadoUsersListPage({
   } = await getNadoUsers({ postId, limit: 10 });
 
   return (
-    <section className="flex flex-col gap-2 divide-y divide-neutral-400 dark:divide-neutral-800">
+    <section className="flex flex-col divide-y divide-neutral-400 dark:divide-neutral-800">
       {nadoUsers?.users.map((user) => (
         <Link
           href={`/users/${user.account_id}`}
