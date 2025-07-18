@@ -8,7 +8,7 @@ import {
   DeleteFriendRequestDocument,
   DeleteFriendRequestMutation,
   DeleteFriendRequestMutationVariables,
-} from "./(graphql)";
+} from "./_graphql";
 import { ActionResponse } from "@/app/types/action";
 
 export async function acceptFriendRequest(variables: {

@@ -6,10 +6,10 @@ import {
   SignUpDocument,
   SignUpMutation,
   SignUpMutationVariables,
-} from "./(graphql)";
+} from "./_graphql";
 
 export async function signUp(
-  variables: SignUpMutationVariables
+  variables: SignUpMutationVariables,
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();

@@ -5,10 +5,10 @@ import {
   UserByAccountIdDocument,
   UserByAccountIdQuery,
   UserByAccountIdQueryVariables,
-} from "./(graphql)";
+} from "./_graphql";
 
 export async function getUserByAccountId(
-  variables: UserByAccountIdQueryVariables
+  variables: UserByAccountIdQueryVariables,
 ): Promise<UserByAccountIdQuery> {
   const client = await getClient();
   const { data } = await client.query<

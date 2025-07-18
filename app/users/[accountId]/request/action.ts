@@ -5,11 +5,11 @@ import {
   CreateFriendRequestDocument,
   CreateFriendRequestMutation,
   CreateFriendRequestMutationVariables,
-} from "./(graphql)";
+} from "./_graphql";
 import { ActionResponse } from "@/app/types/action";
 
 export async function sendFriendRequest(
-  variables: CreateFriendRequestMutationVariables
+  variables: CreateFriendRequestMutationVariables,
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();

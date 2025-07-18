@@ -1,11 +1,7 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import {
-  PaginationFrom,
-  PaginationInput,
-  PaginationSort,
-} from "@/graphql/generated/graphql";
+import { PaginationFrom, PaginationSort } from "@/graphql/generated/graphql";
 import {
   PostDocument,
   PostQuery,
@@ -19,7 +15,7 @@ import {
   NadoUsersQuery,
   NadoUsersDocument,
   NadoUsersQueryVariables,
-} from "./(graphql)";
+} from "./_graphql";
 
 export async function getPostDetail(variables: {
   postId: string;

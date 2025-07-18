@@ -9,10 +9,10 @@ import {
   GetUserIdDocument,
   GetUserIdQuery,
   GetUserIdQueryVariables,
-} from "./(graphql)";
+} from "./_graphql";
 
 export async function getUserId(
-  variables: GetUserIdQueryVariables
+  variables: GetUserIdQueryVariables,
 ): Promise<GetUserIdQuery> {
   try {
     const client = await getClient();
