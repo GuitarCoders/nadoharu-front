@@ -1,7 +1,7 @@
 import type * as Types from '@/graphql/generated/graphql';
 
 import { gql } from '@apollo/client';
-import { PostFragmentDoc, UserFragmentDoc, PageInfoFragmentDoc } from '../../../../graphql/fragments/global.generated';
+import { PostFragmentDoc, UserFragmentDoc, NadoUsersFragmentDoc, PageInfoFragmentDoc } from '../../../../graphql/fragments/global.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type PostsForTimelineQueryVariables = Types.Exact<{
@@ -9,7 +9,7 @@ export type PostsForTimelineQueryVariables = Types.Exact<{
 }>;
 
 
-export type PostsForTimelineQuery = { __typename?: 'Query', postsForTimeline: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, commentCount: number, nadoCount: number, isNadoed: boolean, isNadoPost: boolean, createdAt: string, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } | null, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type PostsForTimelineQuery = { __typename?: 'Query', postsForTimeline: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, commentCount: number, nadoCount: number, isNadoed: boolean, isNadoPost: boolean, createdAt: string, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } | null, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }, nadoUsers?: { __typename?: 'NadoUsers', users: Array<{ __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } | null }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
 export const PostsForTimelineDocument = gql`
@@ -31,6 +31,7 @@ export const PostsForTimelineDocument = gql`
 }
     ${PostFragmentDoc}
 ${UserFragmentDoc}
+${NadoUsersFragmentDoc}
 ${PageInfoFragmentDoc}`;
 
 /**

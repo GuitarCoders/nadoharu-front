@@ -16,7 +16,7 @@ import {
   DeletePostDocument,
   DeletePostMutation,
   DeletePostMutationVariables,
-} from "./(graphql)";
+} from "./_graphql";
 import { ActionResponse } from "@/app/types/action";
 import { revalidatePath } from "next/cache";
 
@@ -87,7 +87,7 @@ export async function deleteCommentById({
 }
 
 export async function deletePost(
-  variables: DeletePostMutationVariables
+  variables: DeletePostMutationVariables,
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();
@@ -119,7 +119,7 @@ export async function deletePost(
 }
 
 export async function addNado(
-  variables: AddNadoMutationVariables
+  variables: AddNadoMutationVariables,
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();
@@ -152,7 +152,7 @@ export async function addNado(
 }
 
 export async function cancelNado(
-  variables: CancelNadoMutationVariables
+  variables: CancelNadoMutationVariables,
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();

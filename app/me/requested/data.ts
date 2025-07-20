@@ -4,7 +4,7 @@ import {
   ReceivedFriendRequestsDocument,
   ReceivedFriendRequestsQuery,
   ReceivedFriendRequestsQueryVariables,
-} from "./(graphql)";
+} from "./_graphql";
 
 export async function getReceivedFriendRequests({
   limit,

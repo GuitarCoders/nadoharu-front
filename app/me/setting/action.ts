@@ -5,11 +5,11 @@ import {
   UpdateUserDocument,
   UpdateUserMutation,
   UpdateUserMutationVariables,
-} from "./(graphql)";
+} from "./_graphql";
 import { ActionResponse } from "@/app/types/action";
 
 export async function updateUser(
-  variables: UpdateUserMutationVariables
+  variables: UpdateUserMutationVariables,
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();

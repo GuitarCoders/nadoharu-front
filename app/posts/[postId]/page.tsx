@@ -4,11 +4,14 @@ import { formatRelativeTime } from "@/libs/utils";
 import {
   ArrowPathRoundedSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import { notFound } from "next/navigation";
 import CommentForm from "@/components/domains/comment/form";
 import RepostForm from "@/components/domains/post/repost-form";
 import { getPostDetail, getComments } from "./data";
+import ProfileImage from "@/components/domains/profile/image";
+import Link from "next/link";
 
 export default async function PostDetail({
   params,
@@ -25,6 +28,8 @@ export default async function PostDetail({
 
   const session = await getSession();
   const isUserPost = session.accountId === post.author.account_id;
+
+  console.log(post.nadoUsers);
 
   // const isReposted = await getIsReposted(postId, session.id);
   // const isUserPost = await getIsUserPost(post.userId);
@@ -77,8 +82,30 @@ export default async function PostDetail({
               postId={postId}
               isReposted={post.isNadoed}
               nadoCount={post.nadoCount}
+              className="shrink-0"
             />
-            <p className="text-sm text-neutral-400">이 글에 공감한다면 나도!</p>
+            {post.nadoUsers && post.nadoUsers.users.length ? (
+              <section className="flex items-center justify-between w-full">
+                <div className="flex gap-2">
+                  {post.nadoUsers.users.map((user) => (
+                    <Link href={`/users/${user.account_id}`} key={user._id}>
+                      <ProfileImage
+                        key={user._id}
+                        avatar={null}
+                        name={user.name}
+                      />
+                    </Link>
+                  ))}
+                </div>
+                <Link href={`/posts/${postId}/nado-users`} className="ml-auto">
+                  <ChevronRightIcon className="size-5" />
+                </Link>
+              </section>
+            ) : (
+              <p className="text-sm text-neutral-400">
+                이 글에 공감한다면 나도!
+              </p>
+            )}
           </div>
           <div className="flex flex-col divide-y divide-neutral-400 dark:divide-neutral-800">
             {comments.comments.map((comment) => (

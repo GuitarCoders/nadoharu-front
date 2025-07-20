@@ -6,7 +6,7 @@ import {
   MeQuery,
   PostsByMeDocument,
   PostsByMeQuery,
-} from "./(graphql)";
+} from "./_graphql";
 import {
   MeQueryVariables,
   PaginationFrom,

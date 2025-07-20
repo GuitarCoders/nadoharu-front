@@ -7,10 +7,10 @@ import {
   CreatePostDocument,
   CreatePostMutation,
   CreatePostMutationVariables,
-} from "./(graphql)";
+} from "./_graphql";
 
 export async function createPost(
-  variables: CreatePostMutationVariables
+  variables: CreatePostMutationVariables,
 ): Promise<ActionResponse> {
   try {
     const client = await getClient();

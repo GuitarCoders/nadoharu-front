@@ -8,11 +8,11 @@ import {
   PostsByUserIdDocument,
   PostsByUserIdQuery,
   PostsByUserIdQueryVariables,
-} from "./(graphql)";
+} from "./_graphql";
 import { PaginationFrom, PaginationSort } from "@/graphql/generated/graphql";
 
 export async function getUserByAccountId(
-  variables: UserByAccountIdQueryVariables
+  variables: UserByAccountIdQueryVariables,
 ): Promise<UserByAccountIdQuery> {
   try {
     const client = await getClient();

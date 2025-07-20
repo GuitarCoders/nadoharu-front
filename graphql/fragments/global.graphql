@@ -6,6 +6,23 @@ fragment User on User {
   about_me
 }
 
+fragment PageInfo on PageInfo {
+  hasOverStart
+  hasOverEnd
+  hasNext
+  startCursor
+  endCursor
+}
+
+fragment NadoUsers on NadoUsers {
+  users {
+    ...User
+  }
+  pageInfo {
+    ...PageInfo
+  }
+}
+
 fragment Post on Post {
   _id
   content
@@ -22,6 +39,9 @@ fragment Post on Post {
   nadoer {
     ...User
   }
+  nadoUsers {
+    ...NadoUsers
+  }
 }
 
 fragment Comment on Comment {
@@ -32,12 +52,4 @@ fragment Comment on Comment {
   commenter {
     ...User
   }
-}
-
-fragment PageInfo on PageInfo {
-  hasOverStart
-  hasOverEnd
-  hasNext
-  startCursor
-  endCursor
 }

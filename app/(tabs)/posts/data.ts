@@ -1,7 +1,7 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import { PostsForTimelineDocument, PostsForTimelineQuery } from "./(graphql)";
+import { PostsForTimelineDocument, PostsForTimelineQuery } from "./_graphql";
 import {
   PaginationFrom,
   PaginationSort,
