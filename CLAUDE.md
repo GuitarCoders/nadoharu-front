@@ -30,15 +30,25 @@
 ## 개발 명령어
 
 ```bash
-# 개발
-npm run dev                 # 핫 리로드와 함께 개발 서버 시작
-npm run build              # 배포 전 필수 프로덕션 빌드
-npm run start              # 프로덕션 서버 시작
-npm run lint               # Next.js 규칙과 함께 ESLint 실행
+# 개발 (환경별)
+yarn dev                   # 개발 환경 (dev) 서버 시작
+yarn dev:beta              # 베타 환경 서버 시작
+yarn dev:prod              # 프로덕션 환경 서버 시작
 
-# GraphQL 개발
-npm run codegen            # GraphQL 스키마에서 TypeScript 타입 생성
-npm run codegen:watch      # 활성 개발을 위한 감시 모드
+# 빌드 (환경별)
+yarn build                 # 개발 환경 빌드 (codegen:dev + next build)
+yarn build:beta            # 베타 환경 빌드 (codegen:beta + next build)
+yarn build:prod            # 프로덕션 환경 빌드 (codegen:prod + next build)
+
+# 기본 명령어
+yarn start                 # 프로덕션 서버 시작
+yarn lint                  # Next.js 규칙과 함께 ESLint 실행
+
+# GraphQL 개발 (환경별)
+yarn codegen               # 개발 환경 GraphQL 타입 생성
+yarn codegen:beta          # 베타 환경 GraphQL 타입 생성
+yarn codegen:prod          # 프로덕션 환경 GraphQL 타입 생성
+yarn codegen:watch         # 감시 모드로 타입 생성
 
 # Docker (프로덕션)
 docker build --build-arg NEXT_PUBLIC_GRAPHQL_API={API_URL} --build-arg COOKIE_PASSWORD={PASSWORD} -t nadoharu-front .
@@ -91,7 +101,13 @@ docker build --build-arg NEXT_PUBLIC_GRAPHQL_API={API_URL} --build-arg COOKIE_PA
 NEXT_PUBLIC_GRAPHQL_API=    # GraphQL API 엔드포인트
 COOKIE_PASSWORD=            # Iron Session 암호화 키 (32자 이상)
 NODE_ENV=                   # development/production
+APP_ENV=                    # dev/beta/prod (환경별 설정 파일 선택)
 ```
+
+### 환경별 설정 파일
+- `.env.dev`: 개발 환경 설정
+- `.env.beta`: 베타 환경 설정  
+- `.env`: 프로덕션 환경 설정
 
 ### 구성 파일
 - `next.config.ts`: PWA 설정, 독립 실행형 출력, React 엄격 모드
@@ -145,9 +161,10 @@ feature/
 - 암묵적 any 없이 엄격한 TypeScript 구성
 
 ### 코드 생성
-- `.graphql` 파일을 수정한 후 항상 `npm run codegen` 실행
+- `.graphql` 파일을 수정한 후 항상 환경에 맞는 `yarn codegen` 명령어 실행
 - GraphQL 작업에 대해 생성된 훅과 타입 사용
 - GraphQL 작업을 소비 컴포넌트 가까이에 유지
+- 환경별 스키마가 다른 경우 적절한 codegen 명령어 사용 (dev/beta/prod)
 
 ### 모바일 우선 개발
 - 먼저 모바일 디바이스/뷰포트에서 테스트
