@@ -17,7 +17,7 @@ export type FriendsQueryVariables = Types.Exact<{
 }>;
 
 
-export type FriendsQuery = { __typename?: 'Query', friends: { __typename?: 'FriendsQueryResult', friends: Array<{ __typename?: 'Friend', _id: string, createdAt: string, user: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type FriendsQuery = { __typename?: 'Query', friends: { __typename?: 'FriendsQueryResult', friends: Array<{ __typename?: 'Friend', _id: string, createdAt: string, user: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null } }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
 export const GetUserIdDocument = gql`

@@ -17,6 +17,7 @@ interface EditProfileFormProps {
   name: string;
   aboutMe: string;
   accountId: string;
+  profile_image_url?: string | null;
 }
 
 interface EditProfileForm {
@@ -30,6 +31,7 @@ export default function EditProfileForm({
   name,
   aboutMe,
   accountId,
+  profile_image_url,
 }: EditProfileFormProps) {
   const [pending, setPending] = useState(false);
   const { register, handleSubmit } = useForm<EditProfileForm>();
@@ -63,7 +65,7 @@ export default function EditProfileForm({
         <div className="flex gap-5 items-center">
           <div className="size-20 rounded-md relative overflow-hidden">
             <label
-              htmlFor="avatar"
+              htmlFor="profile_image"
               className="flex items-center justify-center absolute top-0 left-0 size-20 group cursor-pointer"
             >
               <PencilIcon className="size-6 opacity-40 group-hover:opacity-100" />
@@ -71,10 +73,14 @@ export default function EditProfileForm({
                 type="file"
                 className="hidden"
                 accept="image/*"
-                id="avatar"
+                id="profile_image"
               /> */}
             </label>
-            <ProfileImage avatar={null} name={name} size={20} />
+            <ProfileImage
+              profile_image_url={profile_image_url}
+              name={name}
+              size={20}
+            />
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-3">

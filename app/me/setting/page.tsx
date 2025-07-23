@@ -33,6 +33,7 @@ export default async function EditProfile() {
         name={user.userByAccountId.name}
         aboutMe={user.userByAccountId.about_me}
         accountId={user.userByAccountId.account_id}
+        profile_image_url={user.userByAccountId.profile_image_url}
       />
       <form action={logout} className="flex flex-col gap-4 p-4">
         <Link

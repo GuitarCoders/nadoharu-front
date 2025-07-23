@@ -23,7 +23,7 @@ export default async function Notification() {
   //         className="flex gap-4 p-4 rounded-md shadow-sm dark:bg-neutral-800"
   //       >
   //         <ProfileImage
-  //           avatar={noti.initiator.avatar}
+  //           profile_image={noti.initiator.avatar}
   //           username={noti.initiator.username}
   //         />
   //         <div className="flex flex-col gap-1 text-sm">

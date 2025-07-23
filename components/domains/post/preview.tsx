@@ -18,6 +18,7 @@ export default function PostPreview({
   author,
   content,
   tags,
+  imageUrls,
   createdAt,
   isUserPost,
   commentCount,
@@ -48,7 +49,10 @@ export default function PostPreview({
         {/* 프로필 */}
         <section className="flex justify-between items-center">
           <button onClick={goToUserPage} className="flex items-center gap-3">
-            <ProfileImage avatar={null} name={author.name} />
+            <ProfileImage
+              profile_image_url={author.profile_image_url}
+              name={author.name}
+            />
             <div className="flex flex-col">
               <h2 className="font-semibold text-sm">{author.name}</h2>
             </div>

@@ -55,7 +55,10 @@ export default async function Friends({
             href={`/users/${friend.user.account_id}`}
             className="flex items-center gap-4"
           >
-            <ProfileImage avatar={null} name={friend.user.name} />
+            <ProfileImage
+              profile_image_url={friend.user.profile_image_url}
+              name={friend.user.name}
+            />
             <div className="flex flex-col">
               <span className="font-medium text-sm">{friend.user.name}</span>
               <span className="text-xs text-neutral-500">

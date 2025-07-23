@@ -9,7 +9,7 @@ export type UserByAccountIdQueryVariables = Types.Exact<{
 }>;
 
 
-export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } };
+export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null } };
 
 
 export const UserByAccountIdDocument = gql`

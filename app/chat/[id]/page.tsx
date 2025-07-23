@@ -18,12 +18,12 @@ export default async function ChatDetail({
       <div className="flex flex-col gap-4 p-4">
         <ChatBubble
           message="lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
-          avatar={null}
+          profile_image_url={null}
           name="test"
         />
         <ChatBubble
           message="lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
-          avatar={null}
+          profile_image_url={null}
           name="test2"
           reversed={true}
         />

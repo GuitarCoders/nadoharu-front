@@ -8,6 +8,7 @@ interface CommentProps {
   commenter: {
     account_id: string;
     name: string;
+    profile_image_url?: string | null;
   };
   postId: string;
   isUserComment: boolean;
@@ -24,7 +25,10 @@ export default function Comment({
     <div className="flex p-4 justify-between">
       <div className="flex gap-4 align-start">
         <Link href={`/users/${commenter.account_id}`} className="flex-shrink-0">
-          <ProfileImage avatar={null} name={commenter.name} />
+          <ProfileImage
+            profile_image_url={commenter.profile_image_url}
+            name={commenter.name}
+          />
         </Link>
         <div className="flex flex-col text-sm gap-1">
           <Link

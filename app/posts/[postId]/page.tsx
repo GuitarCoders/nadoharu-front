@@ -44,7 +44,7 @@ export default async function PostDetail({
                {post.photos.map((photo) => ( 
                  <Link href={`${photo}/public`} key={photo}> 
                    <Image 
-                     src={photo + "/avatar"} 
+                     src={photo} 
                      alt="post-photo" 
                      className="rounded-md aspect-video object-cover" 
                      width={1600} 
@@ -91,7 +91,7 @@ export default async function PostDetail({
                     <Link href={`/users/${user.account_id}`} key={user._id}>
                       <ProfileImage
                         key={user._id}
-                        avatar={null}
+                        profile_image_url={user.profile_image_url}
                         name={user.name}
                       />
                     </Link>

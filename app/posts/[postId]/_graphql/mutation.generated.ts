@@ -10,7 +10,7 @@ export type AddCommentToPostMutationVariables = Types.Exact<{
 }>;
 
 
-export type AddCommentToPostMutation = { __typename?: 'Mutation', addCommentToPost: { __typename?: 'Comment', _id: string, content: string, postId: string, createdAt: string, commenter: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } } };
+export type AddCommentToPostMutation = { __typename?: 'Mutation', addCommentToPost: { __typename?: 'Comment', _id: string, content: string, postId: string, createdAt: string, commenter: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null } } };
 
 export type DeleteCommentByIdMutationVariables = Types.Exact<{
   targetCommentId: Types.Scalars['String']['input'];

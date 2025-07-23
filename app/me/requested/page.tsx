@@ -24,7 +24,10 @@ export default async function Requested() {
               href={`/users/${request.requester.account_id}`}
               className="flex items-center gap-4"
             >
-              <ProfileImage avatar={null} name={request.requester.name} />
+              <ProfileImage
+                profile_image_url={request.requester.profile_image_url}
+                name={request.requester.name}
+              />
               <div className="flex flex-col">
                 <span className="font-medium">{request.requester.name}</span>
                 <span className="text-xs text-neutral-500">

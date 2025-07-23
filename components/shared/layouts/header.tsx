@@ -12,6 +12,7 @@ interface HeaderProps {
     _id: string;
     name: string;
     account_id: string;
+    profile_image_url?: string | null;
   } | null;
   children?: React.ReactNode;
 }
@@ -41,7 +42,10 @@ export default function Header({
             href={`/users/${author.account_id}`}
             className="flex items-center gap-3"
           >
-            <ProfileImage avatar={null} name={author.name} />
+            <ProfileImage
+              profile_image_url={author.profile_image_url}
+              name={author.name}
+            />
             <div className="flex flex-col items-start">
               <h3 className="font-semibold text-sm">{author.name}</h3>
               <p className="text-gray-400 text-xs">@{author.account_id}</p>

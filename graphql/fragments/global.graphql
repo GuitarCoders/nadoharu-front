@@ -4,6 +4,7 @@ fragment User on User {
   email
   account_id
   about_me
+  profile_image_url
 }
 
 fragment PageInfo on PageInfo {
@@ -28,6 +29,7 @@ fragment Post on Post {
   content
   tags
   category
+  imageUrls
   commentCount
   nadoCount
   isNadoed

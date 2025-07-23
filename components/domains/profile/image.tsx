@@ -1,22 +1,22 @@
 import Image from "next/image";
 
-export default function ProfileImage({
-  avatar,
-  name,
-  size = 10,
-}: {
-  avatar: string | null;
+interface ProfileImageProps {
+  profile_image_url?: string | null;
   name: string;
   size?: number;
-}) {
+}
+
+export default function ProfileImage({
+  profile_image_url,
+  name,
+  size = 10,
+}: ProfileImageProps) {
   const width = size * 4;
   const height = size * 4;
-  const imageUrl =
-    avatar && avatar.startsWith("blob") ? avatar : avatar + "/avatar";
 
-  return avatar ? (
+  return profile_image_url ? (
     <Image
-      src={imageUrl}
+      src={profile_image_url}
       alt={name}
       width={width}
       height={height}

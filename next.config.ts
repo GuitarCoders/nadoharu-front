@@ -4,8 +4,8 @@ const envFile =
   process.env.APP_ENV === "beta"
     ? ".env.beta"
     : process.env.APP_ENV === "prod"
-    ? ".env"
-    : ".env.dev";
+      ? ".env"
+      : ".env.dev";
 
 require("dotenv").config({
   path: envFile,
@@ -22,6 +22,14 @@ const withPWA = require("next-pwa")({
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "nadoharu-bucket.s3.ap-northeast-2.amazonaws.com",
+      },
+    ],
+  },
 };
 
 export default withPWA(nextConfig);
