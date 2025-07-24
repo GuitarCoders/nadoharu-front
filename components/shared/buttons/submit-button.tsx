@@ -36,7 +36,7 @@ const SubmitButton: NextPage<SubmitButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={pending}
-      className={`px-4 py-2 rounded-md outline-none focus:ring-2 ${buttonColor(
+      className={`px-4 py-2 rounded-md cursor-pointer outline-none focus:ring-2 ${buttonColor(
         pending ? "gray" : color
       )} ${pending ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
     >

@@ -6,9 +6,14 @@ import {
   UserByAccountIdQuery,
   UserByAccountIdQueryVariables,
 } from "./_graphql";
+import {
+  RequestImageUploadUrlDocument,
+  RequestImageUploadUrlQuery,
+  RequestImageUploadUrlQueryVariables,
+} from "@/graphql/generated/graphql";
 
 export async function getUserByAccountId(
-  variables: UserByAccountIdQueryVariables,
+  variables: UserByAccountIdQueryVariables
 ): Promise<UserByAccountIdQuery> {
   const client = await getClient();
   const { data } = await client.query<
@@ -17,6 +22,18 @@ export async function getUserByAccountId(
   >({
     query: UserByAccountIdDocument,
     variables,
+  });
+
+  return data;
+}
+
+export async function getImageUploadUrl(): Promise<RequestImageUploadUrlQuery> {
+  const client = await getClient();
+  const { data } = await client.query<
+    RequestImageUploadUrlQuery,
+    RequestImageUploadUrlQueryVariables
+  >({
+    query: RequestImageUploadUrlDocument,
   });
 
   return data;

@@ -3,3 +3,10 @@ query UserByAccountId($account_id: String!) {
     ...User
   }
 }
+
+query RequestImageUploadUrl {
+  requestImageUploadUrl {
+    uploadUrl
+    publicUrl
+  }
+}

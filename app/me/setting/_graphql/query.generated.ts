@@ -11,6 +11,11 @@ export type UserByAccountIdQueryVariables = Types.Exact<{
 
 export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null } };
 
+export type RequestImageUploadUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type RequestImageUploadUrlQuery = { __typename?: 'Query', requestImageUploadUrl: { __typename?: 'imageUploadInfo', uploadUrl: string, publicUrl: string } };
+
 
 export const UserByAccountIdDocument = gql`
     query UserByAccountId($account_id: String!) {
@@ -52,3 +57,43 @@ export type UserByAccountIdQueryHookResult = ReturnType<typeof useUserByAccountI
 export type UserByAccountIdLazyQueryHookResult = ReturnType<typeof useUserByAccountIdLazyQuery>;
 export type UserByAccountIdSuspenseQueryHookResult = ReturnType<typeof useUserByAccountIdSuspenseQuery>;
 export type UserByAccountIdQueryResult = Apollo.QueryResult<UserByAccountIdQuery, UserByAccountIdQueryVariables>;
+export const RequestImageUploadUrlDocument = gql`
+    query RequestImageUploadUrl {
+  requestImageUploadUrl {
+    uploadUrl
+    publicUrl
+  }
+}
+    `;
+
+/**
+ * __useRequestImageUploadUrlQuery__
+ *
+ * To run a query within a React component, call `useRequestImageUploadUrlQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRequestImageUploadUrlQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRequestImageUploadUrlQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRequestImageUploadUrlQuery(baseOptions?: Apollo.QueryHookOptions<RequestImageUploadUrlQuery, RequestImageUploadUrlQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RequestImageUploadUrlQuery, RequestImageUploadUrlQueryVariables>(RequestImageUploadUrlDocument, options);
+      }
+export function useRequestImageUploadUrlLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RequestImageUploadUrlQuery, RequestImageUploadUrlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RequestImageUploadUrlQuery, RequestImageUploadUrlQueryVariables>(RequestImageUploadUrlDocument, options);
+        }
+export function useRequestImageUploadUrlSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<RequestImageUploadUrlQuery, RequestImageUploadUrlQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<RequestImageUploadUrlQuery, RequestImageUploadUrlQueryVariables>(RequestImageUploadUrlDocument, options);
+        }
+export type RequestImageUploadUrlQueryHookResult = ReturnType<typeof useRequestImageUploadUrlQuery>;
+export type RequestImageUploadUrlLazyQueryHookResult = ReturnType<typeof useRequestImageUploadUrlLazyQuery>;
+export type RequestImageUploadUrlSuspenseQueryHookResult = ReturnType<typeof useRequestImageUploadUrlSuspenseQuery>;
+export type RequestImageUploadUrlQueryResult = Apollo.QueryResult<RequestImageUploadUrlQuery, RequestImageUploadUrlQueryVariables>;

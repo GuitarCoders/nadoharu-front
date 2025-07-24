@@ -12,12 +12,16 @@ import TextInput from "@/components/shared/inputs/text-input";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
 import { UserUpdate } from "@/graphql/generated/graphql";
+import { uploadProfileImage } from "@/app/me/setting/_api/upload-profile-image";
+import { compressImageInBrowser } from "@/libs/browser-image-compressor";
 
 interface EditProfileFormProps {
   name: string;
   aboutMe: string;
   accountId: string;
   profileImageUrl?: string | null;
+  uploadUrl: string;
+  publicUrl: string;
 }
 
 interface EditProfileForm {
@@ -25,6 +29,7 @@ interface EditProfileForm {
   about_me: string;
   password: string;
   confirm_password: string;
+  profile_image: FileList | null;
 }
 
 export default function EditProfileForm({
@@ -32,16 +37,65 @@ export default function EditProfileForm({
   aboutMe,
   accountId,
   profileImageUrl,
+  uploadUrl,
+  publicUrl,
 }: EditProfileFormProps) {
   const [pending, setPending] = useState(false);
   const { register, handleSubmit } = useForm<EditProfileForm>();
   const setToast = useSetAtom(toastAtom);
   const router = useRouter();
 
-  const onEditProfileSubmit = async (updateUserData: UserUpdate) => {
+  const [profileImagePreview, setProfileImagePreview] = useState<
+    string | null | undefined
+  >(profileImageUrl);
+
+  const onProfileImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setProfileImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const onEditProfileSubmit = async (updateUserData: {
+    name: string;
+    about_me: string;
+    profile_image: FileList | null;
+  }) => {
     setPending(true);
 
-    const response = await updateUser({ updateUserData });
+    let uploadedFileUrl = profileImageUrl;
+
+    if (updateUserData.profile_image) {
+      // 브라우저에서 1MB 이하로 압축
+      const compressed = await compressImageInBrowser(
+        updateUserData.profile_image[0]
+      );
+
+      const response = await uploadProfileImage({
+        file: compressed,
+        uploadUrl,
+      });
+      if (response.success) {
+        uploadedFileUrl = publicUrl;
+      } else {
+        setToast({
+          visible: true,
+          isError: true,
+          title: response.errorMessage,
+        });
+        setPending(false);
+        return;
+      }
+    }
+
+    const response = await updateUser({
+      updateUserData: {
+        name: updateUserData.name,
+        about_me: updateUserData.about_me,
+        profile_image_url: uploadedFileUrl,
+      },
+    });
+
     if (response.success) {
       setToast({
         visible: true,
@@ -65,19 +119,22 @@ export default function EditProfileForm({
         <div className="flex gap-5 items-center">
           <div className="size-20 rounded-md relative overflow-hidden">
             <label
-              htmlFor="profile_image_url"
-              className="flex items-center justify-center absolute top-0 left-0 size-20 group cursor-pointer"
+              htmlFor="profileImageUrl"
+              className="flex items-center justify-center absolute top-0 left-0 size-20 group cursor-pointer bg-neutral-800/50 hover:bg-neutral-800/70"
             >
               <PencilIcon className="size-6 opacity-40 group-hover:opacity-100" />
-              {/* <input
+              <input
+                id="profileImageUrl"
                 type="file"
                 className="hidden"
                 accept="image/*"
-                id="profile_image_url"
-              /> */}
+                {...register("profile_image", {
+                  onChange: onProfileImageChange,
+                })}
+              />
             </label>
             <ProfileImage
-              profileImageUrl={profileImageUrl}
+              profileImageUrl={profileImagePreview}
               name={name}
               size={20}
             />
