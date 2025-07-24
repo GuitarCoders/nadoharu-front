@@ -32,7 +32,7 @@ export default function PostPreview({
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    router.push(`/users/${author._id}`);
+    router.push(`/users/${author.account_id}`);
   };
 
   return (
