@@ -62,7 +62,7 @@ export default function UserInfo({
             ) : null}
           </div>
           <ProfileImage
-            profile_image_url={profile.profile_image_url}
+            profileImageUrl={profile.profile_image_url}
             name={profile.name}
             size={20}
           />

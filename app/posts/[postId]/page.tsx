@@ -91,7 +91,7 @@ export default async function PostDetail({
                     <Link href={`/users/${user.account_id}`} key={user._id}>
                       <ProfileImage
                         key={user._id}
-                        profile_image_url={user.profile_image_url}
+                        profileImageUrl={user.profile_image_url}
                         name={user.name}
                       />
                     </Link>

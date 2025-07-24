@@ -25,7 +25,7 @@ export default async function Requested() {
               className="flex items-center gap-4"
             >
               <ProfileImage
-                profile_image_url={request.requester.profile_image_url}
+                profileImageUrl={request.requester.profile_image_url}
                 name={request.requester.name}
               />
               <div className="flex flex-col">

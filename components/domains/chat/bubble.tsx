@@ -16,11 +16,12 @@ export default function ChatBubble({
   return (
     <div className={`flex gap-3 ${reversed ? "justify-end" : "justify-start"}`}>
       {!reversed ? (
-        <ProfileImage profile_image_url={profile_image_url} name={name} />
+        <ProfileImage profileImageUrl={profile_image_url} name={name} />
       ) : null}
       <div
-        className={`flex items-center p-3 rounded-lg max-w-[70%] ${reversed ? "bg-violet-500" : "bg-neutral-800"
-          }`}
+        className={`flex items-center p-3 rounded-lg max-w-[70%] ${
+          reversed ? "bg-violet-500" : "bg-neutral-800"
+        }`}
       >
         <p>{message}</p>
       </div>

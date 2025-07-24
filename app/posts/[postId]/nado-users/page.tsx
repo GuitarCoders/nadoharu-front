@@ -23,7 +23,7 @@ export default async function NadoUsersListPage({
         >
           <ProfileImage
             key={user._id}
-            profile_image_url={user.profile_image_url}
+            profileImageUrl={user.profile_image_url}
             name={user.name}
           />
           <div className="flex flex-col">

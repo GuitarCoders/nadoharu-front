@@ -26,7 +26,7 @@ export default function Comment({
       <div className="flex gap-4 align-start">
         <Link href={`/users/${commenter.account_id}`} className="flex-shrink-0">
           <ProfileImage
-            profile_image_url={commenter.profile_image_url}
+            profileImageUrl={commenter.profile_image_url}
             name={commenter.name}
           />
         </Link>

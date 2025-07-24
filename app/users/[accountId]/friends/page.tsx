@@ -56,7 +56,7 @@ export default async function Friends({
             className="flex items-center gap-4"
           >
             <ProfileImage
-              profile_image_url={friend.user.profile_image_url}
+              profileImageUrl={friend.user.profile_image_url}
               name={friend.user.name}
             />
             <div className="flex flex-col">

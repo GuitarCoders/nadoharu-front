@@ -50,7 +50,7 @@ export default function PostPreview({
         <section className="flex justify-between items-center">
           <button onClick={goToUserPage} className="flex items-center gap-3">
             <ProfileImage
-              profile_image_url={author.profile_image_url}
+              profileImageUrl={author.profile_image_url}
               name={author.name}
             />
             <div className="flex flex-col">

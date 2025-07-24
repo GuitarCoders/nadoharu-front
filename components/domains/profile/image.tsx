@@ -1,22 +1,22 @@
 import Image from "next/image";
 
 interface ProfileImageProps {
-  profile_image_url?: string | null;
+  profileImageUrl?: string | null;
   name: string;
   size?: number;
 }
 
 export default function ProfileImage({
-  profile_image_url,
+  profileImageUrl,
   name,
   size = 10,
 }: ProfileImageProps) {
   const width = size * 4;
   const height = size * 4;
 
-  return profile_image_url ? (
+  return profileImageUrl ? (
     <Image
-      src={profile_image_url}
+      src={profileImageUrl}
       alt={name}
       width={width}
       height={height}
