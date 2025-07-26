@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import ProfileImage from "@/components/domains/profile/image";
 import { Post } from "@/graphql/generated/graphql";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import PostPreviewImages from "./preview-images";
 
 interface PostPreviewProps extends Post {
   isUserPost: boolean;
@@ -62,27 +64,12 @@ export default function PostPreview({
           </p>
         </section>
 
+        {/* 이미지 */}
+        <PostPreviewImages imageUrls={imageUrls} />
+
         {/* 본문 & 태그 */}
         <p>{content}</p>
         <p className="text-sm text-neutral-400">{tags}</p>
-
-        {/* 이미지 */}
-        {/* TODO: 이미지가 있는 경우에 대한 기능 구현 */}
-        {/* {photos.length ? ( */}
-        {/*   <div className="grid grid-cols-2 gap-2"> */}
-        {/*     {photos.map((photo) => ( */}
-        {/*       <Image */}
-        {/*         key={photo} */}
-        {/*         priority={true} */}
-        {/*         src={photo + "/avatar"} */}
-        {/*         alt="post-photo" */}
-        {/*         className="rounded-md aspect-video object-cover shadow-sm" */}
-        {/*         width={1600} */}
-        {/*         height={1000} */}
-        {/*       /> */}
-        {/*     ))} */}
-        {/*   </div> */}
-        {/* ) : null} */}
 
         {/* 버튼부 */}
         <PostPreviewButtons

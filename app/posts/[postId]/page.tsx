@@ -9,9 +9,10 @@ import {
 import { notFound } from "next/navigation";
 import CommentForm from "@/components/domains/comment/form";
 import RepostForm from "@/components/domains/post/repost-form";
-import { getPostDetail, getComments } from "./data";
+import { getPostDetail, getComments, getRequestImageUploadUrl } from "./data";
 import ProfileImage from "@/components/domains/profile/image";
 import Link from "next/link";
+import PostPreviewImages from "@/components/domains/post/preview-images";
 
 export default async function PostDetail({
   params,
@@ -29,31 +30,12 @@ export default async function PostDetail({
   const session = await getSession();
   const isUserPost = session.accountId === post.author.account_id;
 
-  console.log(post.nadoUsers);
-
-  // const isReposted = await getIsReposted(postId, session.id);
-  // const isUserPost = await getIsUserPost(post.userId);
-
   return (
     <>
       <section className="divide-y divide-neutral-400 dark:divide-neutral-800 pb-16">
         {/* 본문 */}
         <div className="flex flex-col p-4 gap-2">
-          {/* {post.photos.length ? (
-             <div className="grid grid-cols-2 gap-2 mb-4"> 
-               {post.photos.map((photo) => ( 
-                 <Link href={`${photo}/public`} key={photo}> 
-                   <Image 
-                     src={photo} 
-                     alt="post-photo" 
-                     className="rounded-md aspect-video object-cover" 
-                     width={1600} 
-                     height={1000} 
-                   /> 
-                 </Link> 
-               ))} 
-             </div> 
-           ) : null}  */}
+          <PostPreviewImages imageUrls={post.imageUrls} />
           <h5>{post.content}</h5>
           <p className="text-sm text-neutral-400">{post.tags}</p>
           <div className="flex justify-between pt-6 items-center">

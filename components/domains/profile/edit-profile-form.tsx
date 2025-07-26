@@ -14,6 +14,8 @@ import { useSetAtom } from "jotai";
 import { uploadProfileImage } from "@/app/me/setting/_api/upload-profile-image";
 import { compressImageInBrowser } from "@/libs/browser-image-compressor";
 
+const MAX_FILE_SIZE = 1024 * 1024; // 1MB
+
 interface EditProfileFormProps {
   name: string;
   aboutMe: string;
@@ -40,7 +42,8 @@ export default function EditProfileForm({
   publicUrl,
 }: EditProfileFormProps) {
   const [pending, setPending] = useState(false);
-  const { register, handleSubmit } = useForm<EditProfileForm>();
+  const { register, handleSubmit, setValue, resetField } =
+    useForm<EditProfileForm>();
   const setToast = useSetAtom(toastAtom);
   const router = useRouter();
 
@@ -48,10 +51,44 @@ export default function EditProfileForm({
     string | null | undefined
   >(profileImageUrl);
 
-  const onProfileImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onProfileImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
-    if (file) {
-      setProfileImagePreview(URL.createObjectURL(file));
+    if (!file) return;
+
+    try {
+      // 파일 압축
+      const compressedFile = await compressImageInBrowser(file);
+
+      // 압축 후 크기 검증
+      if (compressedFile.size > MAX_FILE_SIZE) {
+        setToast({
+          visible: true,
+          title: "이미지가 너무 커서 첨부할 수 없어요!",
+          isError: true,
+        });
+
+        // input 초기화
+        resetField("profile_image");
+        return;
+      }
+
+      // FileList 생성 (DataTransfer를 사용)
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(compressedFile);
+
+      // react-hook-form의 setValue로 압축된 파일 설정
+      setValue("profile_image", dataTransfer.files);
+
+      // 미리보기 업데이트
+      setProfileImagePreview(URL.createObjectURL(compressedFile));
+    } catch (error) {
+      setToast({
+        visible: true,
+        title: "이미지 처리 중 오류가 발생했습니다.",
+        isError: true,
+      });
     }
   };
 
@@ -65,13 +102,8 @@ export default function EditProfileForm({
     let uploadedFileUrl = profileImageUrl;
 
     if (updateUserData.profile_image) {
-      // 브라우저에서 1MB 이하로 압축
-      const compressed = await compressImageInBrowser(
-        updateUserData.profile_image[0]
-      );
-
       const response = await uploadProfileImage({
-        file: compressed,
+        file: updateUserData.profile_image[0], // 이미 압축된 파일 사용
         uploadUrl,
       });
       if (response.success) {

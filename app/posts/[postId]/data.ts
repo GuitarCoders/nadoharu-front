@@ -1,7 +1,12 @@
 "use server";
 
 import { getClient } from "@/libs/apollo-client";
-import { PaginationFrom, PaginationSort } from "@/graphql/generated/graphql";
+import {
+  PaginationFrom,
+  PaginationSort,
+  RequestImageUploadUrlQuery,
+  RequestImageUploadUrlDocument,
+} from "@/graphql/generated/graphql";
 import {
   PostDocument,
   PostQuery,
@@ -15,6 +20,7 @@ import {
   NadoUsersQuery,
   NadoUsersDocument,
   NadoUsersQueryVariables,
+  RequestImageUploadUrlQueryVariables,
 } from "./_graphql";
 
 export async function getPostDetail(variables: {
@@ -94,6 +100,18 @@ export async function getNadoUsers({
         sort: PaginationSort.Desc,
       },
     },
+  });
+
+  return data;
+}
+
+export async function getRequestImageUploadUrl(): Promise<RequestImageUploadUrlQuery> {
+  const client = await getClient();
+  const { data } = await client.query<
+    RequestImageUploadUrlQuery,
+    RequestImageUploadUrlQueryVariables
+  >({
+    query: RequestImageUploadUrlDocument,
   });
 
   return data;
