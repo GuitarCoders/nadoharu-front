@@ -11,7 +11,6 @@ import { updateUser } from "@/app/me/setting/action";
 import TextInput from "@/components/shared/inputs/text-input";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
-import { UserUpdate } from "@/graphql/generated/graphql";
 import { uploadProfileImage } from "@/app/me/setting/_api/upload-profile-image";
 import { compressImageInBrowser } from "@/libs/browser-image-compressor";
 
