@@ -1,22 +1,27 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function PostPreviewImages({
   imageUrls,
+  postId,
 }: {
   imageUrls?: string[] | null;
+  postId: string;
 }) {
+  const router = useRouter();
+
   if (!imageUrls?.length) return null;
 
   const onImageClick = (
     event: React.MouseEvent<HTMLImageElement>,
-    imageUrl: string
+    index: number
   ) => {
     event.preventDefault();
     event.stopPropagation();
 
-    window.open(imageUrl, "_blank");
+    router.push(`/posts/${postId}/images?page=${index + 1}`);
   };
 
   return imageUrls.length === 1 ? (
@@ -29,7 +34,7 @@ export default function PostPreviewImages({
       className="rounded-md object-cover shadow-sm w-full aspect-video cursor-pointer"
       width={1600}
       height={1000}
-      onClick={(event) => onImageClick(event, imageUrls[0])}
+      onClick={(event) => onImageClick(event, 0)}
     />
   ) : (
     // 사진이 2, 3, 4장 이상일 때 그리드 레이아웃 적용
@@ -51,7 +56,7 @@ export default function PostPreviewImages({
           }`}
           width={1600}
           height={1000}
-          onClick={(event) => onImageClick(event, imageUrl)}
+          onClick={(event) => onImageClick(event, index)}
         />
       ))}
     </div>

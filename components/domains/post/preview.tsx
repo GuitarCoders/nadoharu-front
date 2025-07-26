@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import ProfileImage from "@/components/domains/profile/image";
 import { Post } from "@/graphql/generated/graphql";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
 import PostPreviewImages from "./preview-images";
 
 interface PostPreviewProps extends Post {
@@ -65,7 +64,7 @@ export default function PostPreview({
         </section>
 
         {/* 이미지 */}
-        <PostPreviewImages imageUrls={imageUrls} />
+        <PostPreviewImages imageUrls={imageUrls} postId={_id} />
 
         {/* 본문 & 태그 */}
         <p>{content}</p>

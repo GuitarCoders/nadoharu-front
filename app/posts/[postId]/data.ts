@@ -21,6 +21,9 @@ import {
   NadoUsersDocument,
   NadoUsersQueryVariables,
   RequestImageUploadUrlQueryVariables,
+  PostImagesDocument,
+  PostImagesQuery,
+  PostImagesQueryVariables,
 } from "./_graphql";
 
 export async function getPostDetail(variables: {
@@ -112,6 +115,19 @@ export async function getRequestImageUploadUrl(): Promise<RequestImageUploadUrlQ
     RequestImageUploadUrlQueryVariables
   >({
     query: RequestImageUploadUrlDocument,
+  });
+
+  return data;
+}
+
+export async function getPostImages(variables: PostImagesQueryVariables) {
+  const client = await getClient();
+  const { data } = await client.query<
+    PostImagesQuery,
+    PostImagesQueryVariables
+  >({
+    query: PostImagesDocument,
+    variables,
   });
 
   return data;

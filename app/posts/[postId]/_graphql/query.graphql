@@ -37,3 +37,9 @@ query RequestImageUploadUrl {
     publicUrl
   }
 }
+
+query PostImages($postId: String!) {
+  post(postId: $postId) {
+    imageUrls
+  }
+}

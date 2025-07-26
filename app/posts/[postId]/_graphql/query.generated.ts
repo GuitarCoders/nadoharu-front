@@ -40,6 +40,13 @@ export type RequestImageUploadUrlQueryVariables = Types.Exact<{ [key: string]: n
 
 export type RequestImageUploadUrlQuery = { __typename?: 'Query', requestImageUploadUrl: { __typename?: 'imageUploadInfo', uploadUrl: string, publicUrl: string } };
 
+export type PostImagesQueryVariables = Types.Exact<{
+  postId: Types.Scalars['String']['input'];
+}>;
+
+
+export type PostImagesQuery = { __typename?: 'Query', post: { __typename?: 'Post', imageUrls?: Array<string> | null } };
+
 
 export const PostDocument = gql`
     query Post($postId: String!, $nadoUsersPagination: PaginationInput!) {
@@ -260,3 +267,43 @@ export type RequestImageUploadUrlQueryHookResult = ReturnType<typeof useRequestI
 export type RequestImageUploadUrlLazyQueryHookResult = ReturnType<typeof useRequestImageUploadUrlLazyQuery>;
 export type RequestImageUploadUrlSuspenseQueryHookResult = ReturnType<typeof useRequestImageUploadUrlSuspenseQuery>;
 export type RequestImageUploadUrlQueryResult = Apollo.QueryResult<RequestImageUploadUrlQuery, RequestImageUploadUrlQueryVariables>;
+export const PostImagesDocument = gql`
+    query PostImages($postId: String!) {
+  post(postId: $postId) {
+    imageUrls
+  }
+}
+    `;
+
+/**
+ * __usePostImagesQuery__
+ *
+ * To run a query within a React component, call `usePostImagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostImagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostImagesQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostImagesQuery(baseOptions: Apollo.QueryHookOptions<PostImagesQuery, PostImagesQueryVariables> & ({ variables: PostImagesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostImagesQuery, PostImagesQueryVariables>(PostImagesDocument, options);
+      }
+export function usePostImagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostImagesQuery, PostImagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostImagesQuery, PostImagesQueryVariables>(PostImagesDocument, options);
+        }
+export function usePostImagesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostImagesQuery, PostImagesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostImagesQuery, PostImagesQueryVariables>(PostImagesDocument, options);
+        }
+export type PostImagesQueryHookResult = ReturnType<typeof usePostImagesQuery>;
+export type PostImagesLazyQueryHookResult = ReturnType<typeof usePostImagesLazyQuery>;
+export type PostImagesSuspenseQueryHookResult = ReturnType<typeof usePostImagesSuspenseQuery>;
+export type PostImagesQueryResult = Apollo.QueryResult<PostImagesQuery, PostImagesQueryVariables>;
