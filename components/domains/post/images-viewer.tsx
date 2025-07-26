@@ -31,13 +31,20 @@ export default function ImagesViewer({
   // 최소 스와이프 거리 (픽셀)
   const minSwipeDistance = 50;
 
+  const canGoPrevious = currentIndex > 0;
+  const canGoNext = currentIndex < imageUrls.length - 1;
+
   const goToPrevious = useCallback(() => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : imageUrls.length - 1));
-  }, [imageUrls.length]);
+    if (canGoPrevious) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  }, [canGoPrevious]);
 
   const goToNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev < imageUrls.length - 1 ? prev + 1 : 0));
-  }, [imageUrls.length]);
+    if (canGoNext) {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  }, [canGoNext]);
 
   const handleClose = useCallback(() => {
     router.back();
@@ -62,11 +69,11 @@ export default function ImagesViewer({
       switch (e.key) {
         case "ArrowLeft":
           e.preventDefault();
-          goToPrevious();
+          if (canGoPrevious) goToPrevious();
           break;
         case "ArrowRight":
           e.preventDefault();
-          goToNext();
+          if (canGoNext) goToNext();
           break;
         case "Escape":
           e.preventDefault();
@@ -77,7 +84,7 @@ export default function ImagesViewer({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [goToPrevious, goToNext, handleClose]);
+  }, [goToPrevious, goToNext, handleClose, canGoPrevious, canGoNext]);
 
   // 터치 이벤트 핸들러
   const onTouchStart = (e: React.TouchEvent) => {
@@ -106,9 +113,9 @@ export default function ImagesViewer({
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
 
-    if (isLeftSwipe) {
+    if (isLeftSwipe && canGoNext) {
       goToNext();
-    } else if (isRightSwipe) {
+    } else if (isRightSwipe && canGoPrevious) {
       goToPrevious();
     }
 
@@ -190,7 +197,12 @@ export default function ImagesViewer({
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors cursor-pointer"
+              disabled={!canGoPrevious}
+              className={`absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors ${
+                canGoPrevious
+                  ? "bg-black/50 hover:bg-black/70 cursor-pointer"
+                  : "bg-black/20 cursor-not-allowed opacity-50"
+              }`}
               aria-label="이전 이미지"
             >
               <ChevronLeftIcon className="w-6 h-6 text-white" />
@@ -198,7 +210,12 @@ export default function ImagesViewer({
 
             <button
               onClick={goToNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors cursor-pointer"
+              disabled={!canGoNext}
+              className={`absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors ${
+                canGoNext
+                  ? "bg-black/50 hover:bg-black/70 cursor-pointer"
+                  : "bg-black/20 cursor-not-allowed opacity-50"
+              }`}
               aria-label="다음 이미지"
             >
               <ChevronRightIcon className="w-6 h-6 text-white" />
