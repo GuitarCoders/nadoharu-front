@@ -1,6 +1,6 @@
 import Comment from "@/components/domains/comment";
 import getSession from "@/libs/session";
-import { formatRelativeTime } from "@/libs/utils";
+import { formatRelativeTime } from "@/libs/format-relative-time";
 import {
   ArrowPathRoundedSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,

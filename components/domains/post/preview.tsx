@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { formatRelativeTime } from "@/libs/utils";
+import { formatRelativeTime } from "@/libs/format-relative-time";
 import PostPreviewButtons from "@/components/domains/post/preview-buttons";
 import { useRouter } from "next/navigation";
 import ProfileImage from "@/components/domains/profile/image";
