@@ -7,7 +7,7 @@
     "dev": "next dev",
     "dev:beta": "cross-env APP_ENV=beta next dev",
     "dev:prod": "cross-env APP_ENV=prod next dev",
-    "build": "yarn codegen:dev && next build",
+    "build": "yarn codegen && next build",
     "build:beta": "cross-env APP_ENV=beta yarn codegen:beta && next build",
     "build:prod": "cross-env APP_ENV=prod yarn codegen:prod && next build",
     "start": "next start",
