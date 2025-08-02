@@ -1,7 +1,7 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 
-interface SessionContent {
+export interface SessionContent {
   _id?: string;
   accountId?: string;
   jwt?: string;

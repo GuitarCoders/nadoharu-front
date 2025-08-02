@@ -1,3 +1,4 @@
+import { Post } from "@/graphql/generated/graphql";
 import { atom } from "jotai";
 
 export interface Alert {
@@ -31,4 +32,27 @@ export interface Toast {
 export const toastAtom = atom<Toast>({
   visible: false,
   isError: false,
+});
+
+export interface Timeline {
+  scrollPosition: number;
+  posts: Post[];
+  startCursor?: string | null;
+  endCursor?: string | null;
+  hasOverEnd?: boolean;
+  isLoadingOlder?: boolean;
+  newPostLoaded?: boolean;
+  newPostCount?: number;
+  userAccountId?: string;
+}
+
+export const timelineScrollStateAtom = atom<Timeline>({
+  scrollPosition: 0,
+  posts: [],
+  startCursor: null,
+  endCursor: null,
+  hasOverEnd: false,
+  isLoadingOlder: false,
+  newPostLoaded: false,
+  newPostCount: 0,
 });
