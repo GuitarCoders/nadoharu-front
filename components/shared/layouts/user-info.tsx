@@ -35,7 +35,7 @@ export default function UserInfo({
               className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1 relative"
             >
               {pendedCount ? (
-                <div className="flex items-center justify-center size-4 bg-red-600 rounded-full absolute -top-2 -right-2">
+                <div className="flex items-center justify-center bg-red-600 rounded-full absolute -top-2 -right-2 p-[2px] py-[1px]">
                   <span className="text-xs text-white">{pendedCount}</span>
                 </div>
               ) : null}
