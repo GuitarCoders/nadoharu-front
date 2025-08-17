@@ -16,10 +16,11 @@ export default function CommentInput({ pending, ...attrs }: CommentInputProps) {
           initialRows={1}
           disabled={pending}
           hasButton
+          maxRows={5}
           {...attrs}
         />
         <button
-          className="absolute right-2 bottom-[11px] text-md p-1 bg-violet-400 rounded-md text-white disabled:bg-neutral-400 disabled:text-neutral-800 disabled:cursor-not-allowed"
+          className="absolute right-2 bottom-[9px] text-md p-1 bg-violet-400 rounded-md text-white disabled:bg-neutral-400 disabled:text-neutral-800 disabled:cursor-not-allowed"
           disabled={pending}
         >
           <ArrowUpIcon className="size-5" />

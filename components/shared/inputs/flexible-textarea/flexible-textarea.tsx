@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, TextareaHTMLAttributes } from "react";
 interface FlexibleTextareaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   initialRows?: number; // 초기 행 수
+  maxRows?: number; // 최대 행 수 (설정 시 해당 행 수를 초과하면 스크롤 표시)
   hasButton?: boolean; // 버튼 포함 여부
   submitOnModEnter?: boolean; // Cmd/Ctrl + Enter로 제출 기능 사용 여부
 }
@@ -15,6 +16,7 @@ interface FlexibleTextareaProps
  */
 export default function FlexibleTextarea({
   initialRows = 1,
+  maxRows,
   hasButton = false,
   onInput,
   onKeyDown,
@@ -25,9 +27,10 @@ export default function FlexibleTextarea({
   const textareaRef = useRef<HTMLTextAreaElement | null>(null); // textarea 엘리먼트 참조
   const baseLineHeightRef = useRef<number | null>(null); // 기본 라인 높이 저장
   const minHeightRef = useRef<number | null>(null); // 최소 높이 저장
+  const maxHeightRef = useRef<number | null>(null); // 최대 높이 저장
 
-  // 최소 높이를 보장하는 함수 - padding과 border를 포함한 정확한 계산
-  const ensureMinHeight = useCallback(
+  // 최소/최대 높이를 설정하는 함수 - padding과 border를 포함한 정확한 계산
+  const ensureHeightLimits = useCallback(
     (element?: HTMLTextAreaElement) => {
       const el = element ?? textareaRef.current;
       if (!el) return;
@@ -42,16 +45,26 @@ export default function FlexibleTextarea({
         baseLineHeightRef.current =
           Number.isFinite(lineHeight) && lineHeight > 0 ? lineHeight : 0;
         if (baseLineHeightRef.current) {
-          // 정확한 높이 계산: 라인 높이 * 행 수 + 패딩 + 테두리
-          const contentHeight = baseLineHeightRef.current * initialRows;
           const totalPadding = paddingTop + paddingBottom;
           const totalBorder = borderTop + borderBottom;
-          minHeightRef.current = contentHeight + totalPadding + totalBorder;
+
+          // 최소 높이 계산: 라인 높이 * 초기 행 수 + 패딩 + 테두리
+          const minContentHeight = baseLineHeightRef.current * initialRows;
+          minHeightRef.current = minContentHeight + totalPadding + totalBorder;
           el.style.minHeight = `${minHeightRef.current}px`;
+
+          // 최대 높이 계산 (maxRows가 설정된 경우)
+          if (maxRows && maxRows > initialRows) {
+            const maxContentHeight = baseLineHeightRef.current * maxRows;
+            maxHeightRef.current =
+              maxContentHeight + totalPadding + totalBorder;
+          } else {
+            maxHeightRef.current = null;
+          }
         }
       }
     },
-    [initialRows]
+    [initialRows, maxRows]
   );
 
   // textarea 높이를 내용에 맞게 조절하는 함수
@@ -59,11 +72,22 @@ export default function FlexibleTextarea({
     (element?: HTMLTextAreaElement) => {
       const el = element ?? textareaRef.current;
       if (!el) return;
-      ensureMinHeight(el);
+      ensureHeightLimits(el);
       el.style.height = "auto";
-      el.style.height = `${el.scrollHeight}px`;
+
+      // 최대 높이 제한이 있는 경우
+      if (
+        maxHeightRef.current !== null &&
+        el.scrollHeight > maxHeightRef.current
+      ) {
+        el.style.height = `${maxHeightRef.current}px`;
+        el.style.overflowY = "auto";
+      } else {
+        el.style.height = `${el.scrollHeight}px`;
+        el.style.overflowY = "hidden";
+      }
     },
-    [ensureMinHeight]
+    [ensureHeightLimits]
   );
 
   // textarea 높이를 초기 상태로 리셋하는 함수
@@ -71,20 +95,21 @@ export default function FlexibleTextarea({
     (element?: HTMLTextAreaElement) => {
       const el = element ?? textareaRef.current;
       if (!el) return;
-      ensureMinHeight(el);
+      ensureHeightLimits(el);
       // 명시적 높이를 제거하여 CSS min-height(initialRows 기반)가 적용되도록 함
       el.style.height = "";
+      el.style.overflowY = "hidden";
     },
-    [ensureMinHeight]
+    [ensureHeightLimits]
   );
 
   // 초기 마운트 시 높이 통일
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
-    // 먼저 정확한 최소 높이를 설정
-    ensureMinHeight(el);
-  }, [ensureMinHeight]);
+    // 먼저 정확한 최소/최대 높이를 설정
+    ensureHeightLimits(el);
+  }, [ensureHeightLimits]);
 
   useEffect(() => {
     const el = textareaRef.current;
@@ -152,7 +177,7 @@ export default function FlexibleTextarea({
     onKeyDown?.(event);
   };
 
-  const mergedClassName = `w-full px-4 py-2 border rounded-md outline-none resize-none overflow-y-hidden border-neutral-300 focus:ring-1 focus:ring-violet-600 focus:ring-inset focus:border-violet-600 dark:bg-neutral-700 dark:text-white ${
+  const mergedClassName = `w-full px-4 py-2 border rounded-md outline-none resize-none border-neutral-300 focus:ring-1 focus:ring-violet-600 focus:ring-inset focus:border-violet-600 dark:bg-neutral-700 dark:text-white ${
     hasButton ? "pr-10" : ""
   } ${className ?? ""}`;
 
