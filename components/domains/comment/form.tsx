@@ -3,9 +3,9 @@
 import { addCommentToPost } from "@/app/posts/[postId]/action";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import ChatInput from "@/components/domains/chat/input";
 import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
+import CommentInput from "./input";
 
 export interface CommentForm {
   content: string;
@@ -43,7 +43,7 @@ export default function CommentForm({ postId }: { postId: string }) {
 
   return (
     <form onSubmit={handleSubmit(onCommentSubmit)}>
-      <ChatInput
+      <CommentInput
         pending={pending}
         placeholder={pending ? "댓글을 업로드하는 중.." : "댓글 입력.."}
         {...register("content")}

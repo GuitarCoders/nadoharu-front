@@ -37,10 +37,10 @@ export default function Comment({
           >
             {commenter.name}
           </Link>
-          <p>{content}</p>
+          <p className="whitespace-pre-line">{content}</p>
         </div>
       </div>
-      <div className="flex gap-2 justify-end w-6 flex-shrink-0">
+      <div className="flex gap-2 items-center justify-end w-6 h-[44px] flex-shrink-0">
         <CommentMenu
           isUserComment={isUserComment}
           targetCommentId={_id}
