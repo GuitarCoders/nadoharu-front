@@ -20,7 +20,6 @@ export default async function Friends({
     accountId,
   });
 
-  // TODO: 백엔드에서 친구수 0일 경우 error 반환하는 오류 있으므로 고쳐지면 재확인
   const { friends } = await getFriends({
     targetUserId,
     limit: 20,
