@@ -2,8 +2,6 @@
 
 import { PlusIcon } from "@heroicons/react/24/solid";
 import SubmitButton from "@/components/shared/buttons/submit-button";
-import TextInput from "@/components/shared/inputs/text-input";
-import Textarea from "@/components/shared/inputs/textarea";
 import { useState } from "react";
 import { useSetAtom } from "jotai";
 import { toastAtom } from "@/libs/atoms";
@@ -15,6 +13,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { uploadPostImages } from "@/app/posts/new/_api/upload-images";
 import { compressImageInBrowser } from "@/libs/browser-image-compressor";
 import { useEffect } from "react";
+import { FlexibleTextarea } from "@/components/shared/inputs";
 
 const MAX_IMAGES = 1;
 const MAX_FILE_SIZE = 1024 * 1024; // 1MB
@@ -43,12 +42,12 @@ export default function UploadPostForm({
 
   // attachedFiles 변경 시 previews 동기화
   useEffect(() => {
-    const newPreviews = attachedFiles.map(file => URL.createObjectURL(file));
+    const newPreviews = attachedFiles.map((file) => URL.createObjectURL(file));
     setPreviews(newPreviews);
 
     // cleanup: 이전 preview URL들 해제 (메모리 누수 방지)
     return () => {
-      newPreviews.forEach(url => URL.revokeObjectURL(url));
+      newPreviews.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [attachedFiles]);
 
@@ -145,7 +144,7 @@ export default function UploadPostForm({
         }
 
         newCompressedFiles.push(compressedFile);
-      } catch (error) {
+      } catch {
         setToast({
           visible: true,
           title: "이미지 처리 중 오류가 발생했습니다.",
@@ -173,17 +172,21 @@ export default function UploadPostForm({
       onSubmit={handleSubmit(onNewPostFormSubmit)}
       className="flex flex-col gap-3"
     >
-      <Textarea
+      <FlexibleTextarea
         placeholder="무슨 일이 일어나고 있나요?"
         required={true}
         errorMessage={errors.content?.message}
         disabled={pending}
+        initialRows={3}
+        maxRows={10}
         {...register("content")}
       />
-      <TextInput
+      <FlexibleTextarea
         placeholder="태그 작성.."
         errorMessage={errors.tags?.message}
         disabled={pending}
+        initialRows={1}
+        maxRows={3}
         {...register("tags")}
       />
       <div className="flex gap-2">

@@ -1,13 +1,13 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSetAtom } from "jotai";
 import { toastAtom } from "@/libs/atoms";
 import { sendFriendRequest } from "@/app/users/[accountId]/request/action";
 import SubmitButton from "@/components/shared/buttons/submit-button";
-import Textarea from "@/components/shared/inputs/textarea";
 import { useForm } from "react-hook-form";
+import { FlexibleTextarea } from "@/components/shared/inputs";
 
 interface FriendshipSendFormProps {
   receiveUserName: string;
@@ -67,10 +67,12 @@ export default function FriendshipSendForm({
       className="flex flex-col gap-4 p-4"
       onSubmit={handleSubmit(onSendFriendRequestSubmit)}
     >
-      <Textarea
+      <FlexibleTextarea
         placeholder={`${receiveUserName}님, 저랑 친구해요!`}
-        {...register("requestMessage")}
         errorMessage={errors.requestMessage?.message}
+        initialRows={3}
+        maxRows={5}
+        {...register("requestMessage")}
       />
       <SubmitButton
         text="친구 신청 보내기"

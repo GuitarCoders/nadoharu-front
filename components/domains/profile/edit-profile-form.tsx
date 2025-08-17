@@ -3,7 +3,6 @@
 import { PencilIcon } from "@heroicons/react/24/solid";
 import ProfileImage from "./image";
 import { useState } from "react";
-import Textarea from "../../shared/inputs/textarea";
 import SubmitButton from "../../shared/buttons/submit-button";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -13,6 +12,7 @@ import { toastAtom } from "@/libs/atoms";
 import { useSetAtom } from "jotai";
 import { uploadProfileImage } from "@/app/me/setting/_api/upload-profile-image";
 import { compressImageInBrowser } from "@/libs/browser-image-compressor";
+import { FlexibleTextarea } from "@/components/shared/inputs";
 
 const MAX_FILE_SIZE = 1024 * 1024; // 1MB
 
@@ -83,7 +83,7 @@ export default function EditProfileForm({
 
       // 미리보기 업데이트
       setProfileImagePreview(URL.createObjectURL(compressedFile));
-    } catch (error) {
+    } catch {
       setToast({
         visible: true,
         title: "이미지 처리 중 오류가 발생했습니다.",
@@ -182,9 +182,11 @@ export default function EditProfileForm({
           placeholder="닉네임"
           {...register("name", { value: name })}
         />
-        <Textarea
+        <FlexibleTextarea
           showLabel
           placeholder="자기 소개"
+          initialRows={3}
+          maxRows={5}
           {...register("about_me", { value: aboutMe })}
         />
         <SubmitButton text="프로필 업데이트" pending={pending} />

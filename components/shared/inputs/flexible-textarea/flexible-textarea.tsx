@@ -1,9 +1,12 @@
 "use client";
 
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useCallback, useEffect, useRef, TextareaHTMLAttributes } from "react";
 
 interface FlexibleTextareaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  showLabel?: boolean; // 라벨 표시 여부
+  errorMessage?: string; // 에러 메시지
   initialRows?: number; // 초기 행 수
   maxRows?: number; // 최대 행 수 (설정 시 해당 행 수를 초과하면 스크롤 표시)
   hasButton?: boolean; // 버튼 포함 여부
@@ -15,6 +18,8 @@ interface FlexibleTextareaProps
  * 초기 높이와 포커스 시 높이의 일관성을 보장합니다.
  */
 export default function FlexibleTextarea({
+  showLabel = false,
+  errorMessage,
   initialRows = 1,
   maxRows,
   hasButton = false,
@@ -182,13 +187,28 @@ export default function FlexibleTextarea({
   } ${className ?? ""}`;
 
   return (
-    <textarea
-      ref={textareaRef}
-      rows={initialRows}
-      className={mergedClassName}
-      onInput={handleInput}
-      onKeyDown={handleKeyDown}
-      {...rest}
-    />
+    <div className="flex flex-col gap-2">
+      {showLabel ? (
+        <label className="text-sm font-semibold" htmlFor={rest.id}>
+          {rest.placeholder}
+        </label>
+      ) : null}
+      <textarea
+        ref={textareaRef}
+        rows={initialRows}
+        className={mergedClassName}
+        onInput={handleInput}
+        onKeyDown={handleKeyDown}
+        {...rest}
+      />
+      {errorMessage ? (
+        <div className="flex flex-col gap-2">
+          <p className="text-red-500 font-medium flex items-center gap-2 text-sm">
+            <ExclamationTriangleIcon className="size-4" />
+            {errorMessage}
+          </p>
+        </div>
+      ) : null}
+    </div>
   );
 }

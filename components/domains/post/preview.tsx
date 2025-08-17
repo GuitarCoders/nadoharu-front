@@ -39,7 +39,7 @@ export default function PostPreview({
   return (
     <Link href={`/posts/${_id}`}>
       <div className={`w-full p-4 text-left flex flex-col gap-3 ${className}`}>
-        {/* TODO: '나도' 누른 글을 표시하는 경우에 대한 기능 구현 */}
+        {/* 나도 */}
         {isNadoPost ? (
           <div className="flex items-center gap-2 text-neutral-400">
             <ArrowPathRoundedSquareIcon className="size-3" />
@@ -67,7 +67,7 @@ export default function PostPreview({
         <PostPreviewImages imageUrls={imageUrls} postId={_id} />
 
         {/* 본문 & 태그 */}
-        <p>{content}</p>
+        <p className="whitespace-pre-line break-all">{content}</p>
         <p className="text-sm text-neutral-400">{tags}</p>
 
         {/* 버튼부 */}
