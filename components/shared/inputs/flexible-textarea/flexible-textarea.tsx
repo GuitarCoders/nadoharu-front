@@ -4,8 +4,6 @@ import { useCallback, useEffect, useRef, TextareaHTMLAttributes } from "react";
 
 interface FlexibleTextareaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  errorMessage?: string; // 에러 메시지
-  showLabel?: boolean; // 라벨 표시 여부
   initialRows?: number; // 초기 행 수
   hasButton?: boolean; // 버튼 포함 여부
   submitOnModEnter?: boolean; // Cmd/Ctrl + Enter로 제출 기능 사용 여부
@@ -123,14 +121,18 @@ export default function FlexibleTextarea({
   const handleKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (
     event
   ) => {
-    onKeyDown?.(event);
-    if (!submitOnModEnter) return;
     // IME 입력 조합 중에는 무시
     // @ts-expect-error: nativeEvent.isComposing은 React SyntheticEvent에서 사용 가능
-    if (event.isComposing || event.nativeEvent?.isComposing) return;
+    if (event.isComposing || event.nativeEvent?.isComposing) {
+      onKeyDown?.(event);
+      return;
+    }
+
     const isEnter = event.key === "Enter";
     const isMod = event.metaKey || event.ctrlKey;
-    if (isEnter && isMod) {
+
+    // Command/Ctrl + Enter 조합인 경우에만 폼 제출 처리
+    if (submitOnModEnter && isEnter && isMod) {
       event.preventDefault();
       const form = (event.currentTarget as HTMLTextAreaElement).closest("form");
       if (form) {
@@ -143,10 +145,14 @@ export default function FlexibleTextarea({
         // 즉시 높이를 리셋; 내용 삭제는 부모 폼에서 처리됨
         resetHeight(event.currentTarget);
       }
+      return; // Command+Enter 처리 후 부모 핸들러는 호출하지 않고 종료
     }
+
+    // 다른 모든 키 이벤트는 부모 핸들러로 전달하여 기본 동작 보장
+    onKeyDown?.(event);
   };
 
-  const mergedClassName = `w-full px-4 py-2 border rounded-md outline-none resize-none border-neutral-300 focus:ring-1 focus:ring-violet-600 focus:ring-inset focus:border-violet-600 dark:bg-neutral-700 dark:text-white ${
+  const mergedClassName = `w-full px-4 py-2 border rounded-md outline-none resize-none overflow-y-hidden border-neutral-300 focus:ring-1 focus:ring-violet-600 focus:ring-inset focus:border-violet-600 dark:bg-neutral-700 dark:text-white ${
     hasButton ? "pr-10" : ""
   } ${className ?? ""}`;
 

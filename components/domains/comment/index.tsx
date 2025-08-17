@@ -22,7 +22,7 @@ export default function Comment({
   isUserComment,
 }: CommentProps) {
   return (
-    <div className="flex p-4 justify-between">
+    <div className="flex p-4 justify-between max-w-screen">
       <div className="flex gap-4 align-start">
         <Link href={`/users/${commenter.account_id}`} className="flex-shrink-0">
           <ProfileImage
@@ -37,7 +37,7 @@ export default function Comment({
           >
             {commenter.name}
           </Link>
-          <p className="whitespace-pre-line">{content}</p>
+          <p className="whitespace-pre-line break-all">{content}</p>
         </div>
       </div>
       <div className="flex gap-2 items-center justify-end w-6 h-[44px] flex-shrink-0">
