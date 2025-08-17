@@ -99,15 +99,41 @@ export default function EditProfileForm({
   }) => {
     setPending(true);
 
-    let uploadedFileUrl = profileImageUrl;
+    try {
+      const hasFile = Boolean(updateUserData.profile_image?.length);
 
-    if (updateUserData.profile_image) {
-      const response = await uploadProfileImage({
-        file: updateUserData.profile_image[0], // 이미 압축된 파일 사용
-        uploadUrl,
+      const uploadedFileUrl = await (async () => {
+        if (!hasFile || !updateUserData.profile_image) {
+          return profileImageUrl;
+        }
+
+        const response = await uploadProfileImage({
+          file: updateUserData.profile_image[0], // 이미 압축된 파일 사용
+          uploadUrl,
+        });
+
+        if (response.success) {
+          return publicUrl;
+        } else {
+          throw new Error(response.errorMessage);
+        }
+      })();
+
+      const response = await updateUser({
+        updateUserData: {
+          name: updateUserData.name,
+          about_me: updateUserData.about_me,
+          profile_image_url: uploadedFileUrl,
+        },
       });
+
       if (response.success) {
-        uploadedFileUrl = publicUrl;
+        setToast({
+          visible: true,
+          isError: false,
+          title: "프로필이 성공적으로 업데이트 되었습니다.",
+        });
+        router.push("/me");
       } else {
         setToast({
           visible: true,
@@ -115,30 +141,16 @@ export default function EditProfileForm({
           title: response.errorMessage,
         });
         setPending(false);
-        return;
       }
-    }
-
-    const response = await updateUser({
-      updateUserData: {
-        name: updateUserData.name,
-        about_me: updateUserData.about_me,
-        profile_image_url: uploadedFileUrl,
-      },
-    });
-
-    if (response.success) {
-      setToast({
-        visible: true,
-        isError: false,
-        title: "프로필이 성공적으로 업데이트 되었습니다.",
-      });
-      router.push("/me");
-    } else {
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "프로필 업데이트 중 오류가 발생했습니다.";
       setToast({
         visible: true,
         isError: true,
-        title: response.errorMessage,
+        title: errorMessage,
       });
       setPending(false);
     }

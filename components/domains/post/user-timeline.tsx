@@ -7,8 +7,6 @@ import { Post } from "@/graphql/generated/graphql";
 
 interface UserTimelineProps {
   posts: Post[];
-  reposts: [];
-  accountId: string;
 }
 
 type Tab = "posts" | "media" | "reposts";
@@ -28,11 +26,7 @@ const tabs: { name: Tab; label: string }[] = [
   },
 ];
 
-export default function UserTimeline({
-  posts,
-  reposts,
-  accountId,
-}: UserTimelineProps) {
+export default function UserTimeline({ posts }: UserTimelineProps) {
   const [currentTab, setCurrentTab] = useState<Tab>("posts");
 
   // // 원본 포스트의 ID 목록

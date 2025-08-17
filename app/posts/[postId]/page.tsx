@@ -33,7 +33,7 @@ export default async function PostDetail({
         {/* 본문 */}
         <div className="flex flex-col p-4 gap-2">
           <PostPreviewImages imageUrls={post.imageUrls} postId={postId} />
-          <h5>{post.content}</h5>
+          <h5 className="whitespace-pre-line break-all">{post.content}</h5>
           <p className="text-sm text-neutral-400">{post.tags}</p>
           <div className="flex justify-between pt-6 items-center">
             <div>

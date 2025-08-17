@@ -94,7 +94,7 @@ export default function UserInfo({
           </div>
         </div>
         {profile?.about_me ? (
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 whitespace-pre-line break-all">
             {profile?.about_me}
           </p>
         ) : null}

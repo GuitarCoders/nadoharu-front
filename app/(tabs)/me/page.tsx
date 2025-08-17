@@ -22,11 +22,7 @@ export default async function Me() {
         friendsCount={user.me.friendCount}
         pendedCount={user.me.receivedFriendRequestCount}
       />
-      <UserTimeline
-        posts={posts.postsByMe.posts}
-        reposts={[]}
-        accountId={user.me.user._id}
-      />
+      <UserTimeline posts={posts.postsByMe.posts} />
     </>
   );
 }
