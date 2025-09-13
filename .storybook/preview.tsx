@@ -1,3 +1,4 @@
+import React from "react";
 import type { Preview } from "@storybook/nextjs-vite";
 import "../app/globals.css";
 import ClientApolloProvider from "../components/providers/apollo-provider";
