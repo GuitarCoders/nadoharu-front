@@ -1,4 +1,4 @@
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getPostImages } from "../data";
 import ImagesViewer from "@/components/domains/post/images-viewer";
 
@@ -6,11 +6,11 @@ export default async function PostImagesPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ postId: string }>;
-  searchParams: Promise<{ page?: string }>;
+  params: { postId: string };
+  searchParams?: { page?: string };
 }) {
-  const { postId } = await params;
-  const { page } = await searchParams;
+  const { postId } = params;
+  const { page } = searchParams ?? {};
 
   const {
     post: { imageUrls },

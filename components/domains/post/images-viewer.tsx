@@ -21,6 +21,7 @@ export default function ImagesViewer({
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isLoading, setIsLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -49,6 +50,11 @@ export default function ImagesViewer({
   const handleClose = useCallback(() => {
     router.back();
   }, [router]);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setIsVisible(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   // 컨테이너 너비 측정
   useEffect(() => {
@@ -126,7 +132,11 @@ export default function ImagesViewer({
   const slideWidthPercent = 100 / imageUrls.length;
 
   return (
-    <div className="fixed inset-0 bg-black z-50 flex flex-col">
+    <div
+      className={`fixed inset-0 bg-black z-50 flex flex-col transition-transform transition-opacity duration-200 ease-out ${
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+      }`}
+    >
       {/* 헤더 - 뒤로가기 버튼 */}
       <div className="absolute top-0 left-0 right-0 z-10 p-4 flex justify-between items-center">
         <button
