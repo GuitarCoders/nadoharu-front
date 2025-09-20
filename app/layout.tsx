@@ -5,7 +5,6 @@ import JotaiProvider from "@/components/providers/jotai-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import GlobalAlertDialog from "@/components/shared/layouts/alert-dialog";
 import GlobalToast from "@/components/shared/layouts/toast";
-import ClientApolloProvider from "@/components/providers/apollo-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,19 +55,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <ClientApolloProvider>
-        <JotaiProvider>
-          <ThemeProvider>
-            <body
-              className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-              {children}
-              <GlobalAlertDialog />
-              <GlobalToast />
-            </body>
-          </ThemeProvider>
-        </JotaiProvider>
-      </ClientApolloProvider>
+      <JotaiProvider>
+        <ThemeProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+            <GlobalAlertDialog />
+            <GlobalToast />
+          </body>
+        </ThemeProvider>
+      </JotaiProvider>
     </html>
   );
 }
