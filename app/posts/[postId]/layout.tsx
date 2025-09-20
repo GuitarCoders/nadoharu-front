@@ -5,11 +5,11 @@ import { getPostUser } from "./data";
 
 interface LayoutProps {
   children: React.ReactNode;
-  params: Promise<{ postId: string }>;
+  params: { postId: string };
 }
 
 export default async function PostLayout({ children, params }: LayoutProps) {
-  const { postId } = await params;
+  const { postId } = params;
   const session = await getSession();
   const userAccountId = session?.accountId;
 

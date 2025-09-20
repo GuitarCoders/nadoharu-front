@@ -17,9 +17,9 @@ import PostPreviewImages from "@/components/domains/post/preview-images";
 export default async function PostDetail({
   params,
 }: {
-  params: Promise<{ postId: string }>;
+  params: { postId: string };
 }) {
-  const { postId } = await params;
+  const { postId } = params;
   const { post } = await getPostDetail({ postId });
   if (!post) {
     return notFound();
