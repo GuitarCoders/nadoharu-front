@@ -1,8 +1,8 @@
-import getSession from "@/libs/session";
+// import getSession from "@/libs/session";
 import EmptyState from "@/components/shared/layouts/empty-state";
 
 async function getNotifications() {
-  const session = await getSession();
+  // const session = await getSession();
 
   return [];
 }

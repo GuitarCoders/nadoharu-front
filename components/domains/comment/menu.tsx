@@ -5,7 +5,7 @@ import ContextualMenu, {
   ContextualBtn,
 } from "@/components/shared/buttons/contextual-menu";
 import { useSetAtom } from "jotai";
-import { alertAtom, toastAtom } from "@/libs/atoms";
+import { toastAtom } from "@/libs/atoms";
 import { deleteCommentById } from "@/app/posts/[postId]/action";
 
 export default function CommentMenu({
