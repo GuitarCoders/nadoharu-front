@@ -1,11 +1,29 @@
-import PostImagesPage from "@/app/posts/[postId]/images/page";
+import { notFound } from "next/navigation";
+import ImagesViewer from "@/components/domains/post/images-viewer";
+import { getPostImages } from "@/app/posts/[postId]/data";
 
-export default function PostImagesModal({
+export default async function PostImagesModal({
   params,
   searchParams,
 }: {
-  params: { postId: string };
-  searchParams?: { page?: string };
+  params: Promise<{ postId: string }>;
+  searchParams?: Promise<{ page?: string }>;
 }) {
-  return <PostImagesPage params={params} searchParams={searchParams} />;
+  const { postId } = await params;
+  const s = (await searchParams) ?? {};
+  const { page } = s;
+
+  const {
+    post: { imageUrls },
+  } = await getPostImages({ postId });
+
+  if (!imageUrls || imageUrls.length === 0) {
+    return notFound();
+  }
+
+  const initialIndex = page
+    ? Math.max(0, Math.min(parseInt(page) - 1, imageUrls.length - 1))
+    : 0;
+
+  return <ImagesViewer imageUrls={imageUrls} initialIndex={initialIndex} />;
 }

@@ -6,11 +6,11 @@ export default async function PostImagesPage({
   params,
   searchParams,
 }: {
-  params: { postId: string };
-  searchParams?: { page?: string };
+  params: Promise<{ postId: string }>;
+  searchParams?: Promise<{ page?: string }>;
 }) {
-  const { postId } = params;
-  const { page } = searchParams ?? {};
+  const { postId } = await params;
+  const { page } = (await searchParams) ?? {};
 
   const {
     post: { imageUrls },
