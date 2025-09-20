@@ -9,7 +9,7 @@ export type UserByAccountIdQueryVariables = Types.Exact<{
 }>;
 
 
-export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } };
+export type UserByAccountIdQuery = { __typename?: 'Query', userByAccountId: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null } };
 
 export type PostsByUserIdQueryVariables = Types.Exact<{
   targetUserId: Types.Scalars['String']['input'];
@@ -18,7 +18,7 @@ export type PostsByUserIdQueryVariables = Types.Exact<{
 }>;
 
 
-export type PostsByUserIdQuery = { __typename?: 'Query', postsByUserId: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, commentCount: number, nadoCount: number, isNadoed: boolean, isNadoPost: boolean, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } | null, nadoUsers?: { __typename?: 'NadoUsers', users: Array<{ __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } | null }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type PostsByUserIdQuery = { __typename?: 'Query', postsByUserId: { __typename?: 'PostsQueryResult', posts: Array<{ __typename?: 'Post', _id: string, content: string, tags?: string | null, category?: string | null, imageUrls?: Array<string> | null, commentCount: number, nadoCount: number, isNadoed: boolean, isNadoPost: boolean, createdAt: string, author: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null }, nadoer?: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null } | null, nadoUsers?: { __typename?: 'NadoUsers', users: Array<{ __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } | null }>, pageInfo: { __typename?: 'PageInfo', hasOverStart: boolean, hasOverEnd: boolean, hasNext: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
 export const UserByAccountIdDocument = gql`

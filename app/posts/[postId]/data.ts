@@ -15,6 +15,12 @@ import {
   NadoUsersQuery,
   NadoUsersDocument,
   NadoUsersQueryVariables,
+  PostImagesDocument,
+  PostImagesQuery,
+  PostImagesQueryVariables,
+  RequestImageUploadUrlQuery,
+  RequestImageUploadUrlQueryVariables,
+  RequestImageUploadUrlDocument,
 } from "./_graphql";
 
 export async function getPostDetail(variables: {
@@ -94,6 +100,31 @@ export async function getNadoUsers({
         sort: PaginationSort.Desc,
       },
     },
+  });
+
+  return data;
+}
+
+export async function getRequestImageUploadUrl(): Promise<RequestImageUploadUrlQuery> {
+  const client = await getClient();
+  const { data } = await client.query<
+    RequestImageUploadUrlQuery,
+    RequestImageUploadUrlQueryVariables
+  >({
+    query: RequestImageUploadUrlDocument,
+  });
+
+  return data;
+}
+
+export async function getPostImages(variables: PostImagesQueryVariables) {
+  const client = await getClient();
+  const { data } = await client.query<
+    PostImagesQuery,
+    PostImagesQueryVariables
+  >({
+    query: PostImagesDocument,
+    variables,
   });
 
   return data;

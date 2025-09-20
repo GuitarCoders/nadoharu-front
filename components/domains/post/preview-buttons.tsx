@@ -7,7 +7,7 @@ import {
   ChatBubbleOvalLeftEllipsisIcon,
 } from "@heroicons/react/24/outline";
 import { useSetAtom } from "jotai";
-import { startTransition, useEffect, useOptimistic, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface PostPreviewButtonsProps {
   postId: string;
@@ -20,7 +20,6 @@ interface PostPreviewButtonsProps {
 export default function PostPreviewButtons({
   postId,
   isUserReposted,
-  isUserPost,
   nadoCount,
   commentCount,
 }: PostPreviewButtonsProps) {

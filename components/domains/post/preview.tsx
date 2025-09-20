@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { formatRelativeTime } from "@/libs/utils";
+import { formatRelativeTime } from "@/libs/format-relative-time";
 import PostPreviewButtons from "@/components/domains/post/preview-buttons";
 import { useRouter } from "next/navigation";
 import ProfileImage from "@/components/domains/profile/image";
 import { Post } from "@/graphql/generated/graphql";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
+import PostPreviewImages from "./preview-images";
 
 interface PostPreviewProps extends Post {
   isUserPost: boolean;
@@ -18,6 +19,7 @@ export default function PostPreview({
   author,
   content,
   tags,
+  imageUrls,
   createdAt,
   isUserPost,
   commentCount,
@@ -31,13 +33,13 @@ export default function PostPreview({
   const goToUserPage = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    router.push(`/users/${author._id}`);
+    router.push(`/users/${author.account_id}`);
   };
 
   return (
     <Link href={`/posts/${_id}`}>
       <div className={`w-full p-4 text-left flex flex-col gap-3 ${className}`}>
-        {/* TODO: '나도' 누른 글을 표시하는 경우에 대한 기능 구현 */}
+        {/* 나도 */}
         {isNadoPost ? (
           <div className="flex items-center gap-2 text-neutral-400">
             <ArrowPathRoundedSquareIcon className="size-3" />
@@ -48,7 +50,10 @@ export default function PostPreview({
         {/* 프로필 */}
         <section className="flex justify-between items-center">
           <button onClick={goToUserPage} className="flex items-center gap-3">
-            <ProfileImage avatar={null} name={author.name} />
+            <ProfileImage
+              profileImageUrl={author.profile_image_url}
+              name={author.name}
+            />
             <div className="flex flex-col">
               <h2 className="font-semibold text-sm">{author.name}</h2>
             </div>
@@ -58,27 +63,12 @@ export default function PostPreview({
           </p>
         </section>
 
-        {/* 본문 & 태그 */}
-        <p>{content}</p>
-        <p className="text-sm text-neutral-400">{tags}</p>
-
         {/* 이미지 */}
-        {/* TODO: 이미지가 있는 경우에 대한 기능 구현 */}
-        {/* {photos.length ? ( */}
-        {/*   <div className="grid grid-cols-2 gap-2"> */}
-        {/*     {photos.map((photo) => ( */}
-        {/*       <Image */}
-        {/*         key={photo} */}
-        {/*         priority={true} */}
-        {/*         src={photo + "/avatar"} */}
-        {/*         alt="post-photo" */}
-        {/*         className="rounded-md aspect-video object-cover shadow-sm" */}
-        {/*         width={1600} */}
-        {/*         height={1000} */}
-        {/*       /> */}
-        {/*     ))} */}
-        {/*   </div> */}
-        {/* ) : null} */}
+        <PostPreviewImages imageUrls={imageUrls} postId={_id} />
+
+        {/* 본문 & 태그 */}
+        <p className="whitespace-pre-line break-all">{content}</p>
+        <p className="text-sm text-neutral-400">{tags}</p>
 
         {/* 버튼부 */}
         <PostPreviewButtons

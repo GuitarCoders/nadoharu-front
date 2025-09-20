@@ -21,7 +21,11 @@ export default async function NadoUsersListPage({
           key={user._id}
           className="flex gap-3 items-center px-4 py-3"
         >
-          <ProfileImage key={user._id} avatar={null} name={user.name} />
+          <ProfileImage
+            key={user._id}
+            profileImageUrl={user.profile_image_url}
+            name={user.name}
+          />
           <div className="flex flex-col">
             <p className="font-semibold text-sm">{user.name}</p>
             <p className="text-neutral-400 text-xs">@{user.account_id}</p>

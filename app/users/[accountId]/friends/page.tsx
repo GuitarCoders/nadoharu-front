@@ -20,7 +20,6 @@ export default async function Friends({
     accountId,
   });
 
-  // TODO: 백엔드에서 친구수 0일 경우 error 반환하는 오류 있으므로 고쳐지면 재확인
   const { friends } = await getFriends({
     targetUserId,
     limit: 20,
@@ -55,7 +54,10 @@ export default async function Friends({
             href={`/users/${friend.user.account_id}`}
             className="flex items-center gap-4"
           >
-            <ProfileImage avatar={null} name={friend.user.name} />
+            <ProfileImage
+              profileImageUrl={friend.user.profile_image_url}
+              name={friend.user.name}
+            />
             <div className="flex flex-col">
               <span className="font-medium text-sm">{friend.user.name}</span>
               <span className="text-xs text-neutral-500">

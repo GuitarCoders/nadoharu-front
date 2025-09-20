@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface PostPreviewProfileProps {
-  avatar: string | null;
+  profile_image_url?: string | null;
   username: string;
   loginId: string;
 }
 
 export default function PostPreviewProfile({
-  avatar,
+  profile_image_url,
   username,
   loginId,
 }: PostPreviewProfileProps) {
@@ -20,9 +20,9 @@ export default function PostPreviewProfile({
       href={`/users/${loginId}`}
       className="flex items-center gap-3"
     >
-      {avatar ? (
+      {profile_image_url ? (
         <Image
-          src={avatar}
+          src={profile_image_url}
           alt={username}
           width={40}
           height={40}

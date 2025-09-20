@@ -1,8 +1,8 @@
-import getSession from "@/libs/session";
+// import getSession from "@/libs/session";
 import EmptyState from "@/components/shared/layouts/empty-state";
 
 async function getNotifications() {
-  const session = await getSession();
+  // const session = await getSession();
 
   return [];
 }
@@ -23,7 +23,7 @@ export default async function Notification() {
   //         className="flex gap-4 p-4 rounded-md shadow-sm dark:bg-neutral-800"
   //       >
   //         <ProfileImage
-  //           avatar={noti.initiator.avatar}
+  //           profile_image_url={noti.initiator.avatar}
   //           username={noti.initiator.username}
   //         />
   //         <div className="flex flex-col gap-1 text-sm">

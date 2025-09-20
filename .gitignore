@@ -49,3 +49,13 @@ graphql/generated
 **/public/workbox-*.js
 **/public/sw.js
 **/public/worker-*.js
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+*storybook.log
+storybook-static

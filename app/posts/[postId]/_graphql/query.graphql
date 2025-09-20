@@ -30,3 +30,16 @@ query Comments($postId: String!, $pagination: PaginationInput!) {
     }
   }
 }
+
+query RequestImageUploadUrl {
+  requestImageUploadUrl {
+    uploadUrl
+    publicUrl
+  }
+}
+
+query PostImages($postId: String!) {
+  post(postId: $postId) {
+    imageUrls
+  }
+}

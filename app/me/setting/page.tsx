@@ -1,5 +1,5 @@
 import EditProfileForm from "@/components/domains/profile/edit-profile-form";
-import { getUserByAccountId } from "./data";
+import { getImageUploadUrl, getUserByAccountId } from "./data";
 import getSession from "@/libs/session";
 import {
   ArrowLeftStartOnRectangleIcon,
@@ -27,12 +27,19 @@ export default async function EditProfile() {
     return notFound();
   }
 
+  const {
+    requestImageUploadUrl: { uploadUrl, publicUrl },
+  } = await getImageUploadUrl();
+
   return (
     <div className="flex flex-col">
       <EditProfileForm
         name={user.userByAccountId.name}
         aboutMe={user.userByAccountId.about_me}
         accountId={user.userByAccountId.account_id}
+        profileImageUrl={user.userByAccountId.profile_image_url}
+        uploadUrl={uploadUrl}
+        publicUrl={publicUrl}
       />
       <form action={logout} className="flex flex-col gap-4 p-4">
         <Link

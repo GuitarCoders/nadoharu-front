@@ -34,11 +34,7 @@ export default async function Users({
         isPended={false}
         friendsCount={0}
       />
-      <UserTimeline
-        posts={posts.postsByUserId.posts}
-        reposts={[]}
-        accountId={user.userByAccountId._id}
-      />
+      <UserTimeline posts={posts.postsByUserId.posts} />
     </>
   );
 }

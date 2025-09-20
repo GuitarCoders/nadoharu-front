@@ -1,14 +1,12 @@
 "use client";
 
 import { NextPage } from "next";
-import { JSX, ReactNode } from "react";
+import { ReactNode } from "react";
 import FooterItem from "@/components/shared/layouts/footer-item";
 import Link from "next/link";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   ChevronLeftIcon,
-  EllipsisVerticalIcon,
   PencilSquareIcon,
 } from "@heroicons/react/16/solid";
 import { useRouter } from "next/navigation";

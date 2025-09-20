@@ -77,7 +77,7 @@ export default function PostWithPtr({
     }
   };
 
-  const handleRefresh = async () => {
+  const fetchNewerPosts = async () => {
     setShift(true);
 
     try {
@@ -125,8 +125,8 @@ export default function PostWithPtr({
 
   return (
     <PullToRefresh
-      onRefresh={handleRefresh}
-      className="flex-1 ptr-posts"
+      onRefresh={fetchNewerPosts}
+      className="flex-1"
       getScrollOffset={() =>
         scrollContainerRef.current ? scrollContainerRef.current.scrollOffset : 0
       }

@@ -10,6 +10,7 @@ query ReceivedFriendRequests($pagination: PaginationInput!) {
         email
         account_id
         about_me
+        profile_image_url
       }
       receiver {
         _id
@@ -17,6 +18,7 @@ query ReceivedFriendRequests($pagination: PaginationInput!) {
         email
         account_id
         about_me
+        profile_image_url
       }
     }
   }

@@ -8,7 +8,7 @@ export type ReceivedFriendRequestsQueryVariables = Types.Exact<{
 }>;
 
 
-export type ReceivedFriendRequestsQuery = { __typename?: 'Query', receivedFriendRequests: { __typename?: 'FriendRequestsQueryResult', friendRequests: Array<{ __typename?: 'FriendRequest', _id: string, requestMessage: string, createdAt: string, requester: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string }, receiver: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string } }> } };
+export type ReceivedFriendRequestsQuery = { __typename?: 'Query', receivedFriendRequests: { __typename?: 'FriendRequestsQueryResult', friendRequests: Array<{ __typename?: 'FriendRequest', _id: string, requestMessage: string, createdAt: string, requester: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null }, receiver: { __typename?: 'User', _id: string, name: string, email: string, account_id: string, about_me: string, profile_image_url?: string | null } }> } };
 
 
 export const ReceivedFriendRequestsDocument = gql`
@@ -24,6 +24,7 @@ export const ReceivedFriendRequestsDocument = gql`
         email
         account_id
         about_me
+        profile_image_url
       }
       receiver {
         _id
@@ -31,6 +32,7 @@ export const ReceivedFriendRequestsDocument = gql`
         email
         account_id
         about_me
+        profile_image_url
       }
     }
   }

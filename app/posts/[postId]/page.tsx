@@ -1,6 +1,6 @@
 import Comment from "@/components/domains/comment";
 import getSession from "@/libs/session";
-import { formatRelativeTime } from "@/libs/utils";
+import { formatRelativeTime } from "@/libs/format-relative-time";
 import {
   ArrowPathRoundedSquareIcon,
   ChatBubbleOvalLeftEllipsisIcon,
@@ -12,49 +12,28 @@ import RepostForm from "@/components/domains/post/repost-form";
 import { getPostDetail, getComments } from "./data";
 import ProfileImage from "@/components/domains/profile/image";
 import Link from "next/link";
+import PostPreviewImages from "@/components/domains/post/preview-images";
 
 export default async function PostDetail({
   params,
 }: {
-  params: Promise<{ postId: string }>;
+  params: { postId: string };
 }) {
-  const { postId } = await params;
+  const { postId } = params;
   const { post } = await getPostDetail({ postId });
   if (!post) {
     return notFound();
   }
-
   const { comments } = await getComments({ postId, limit: 10 });
 
   const session = await getSession();
-  const isUserPost = session.accountId === post.author.account_id;
-
-  console.log(post.nadoUsers);
-
-  // const isReposted = await getIsReposted(postId, session.id);
-  // const isUserPost = await getIsUserPost(post.userId);
-
   return (
     <>
       <section className="divide-y divide-neutral-400 dark:divide-neutral-800 pb-16">
         {/* 본문 */}
         <div className="flex flex-col p-4 gap-2">
-          {/* {post.photos.length ? (
-             <div className="grid grid-cols-2 gap-2 mb-4"> 
-               {post.photos.map((photo) => ( 
-                 <Link href={`${photo}/public`} key={photo}> 
-                   <Image 
-                     src={photo + "/avatar"} 
-                     alt="post-photo" 
-                     className="rounded-md aspect-video object-cover" 
-                     width={1600} 
-                     height={1000} 
-                   /> 
-                 </Link> 
-               ))} 
-             </div> 
-           ) : null}  */}
-          <h5>{post.content}</h5>
+          <PostPreviewImages imageUrls={post.imageUrls} postId={postId} />
+          <h5 className="whitespace-pre-line break-all">{post.content}</h5>
           <p className="text-sm text-neutral-400">{post.tags}</p>
           <div className="flex justify-between pt-6 items-center">
             <div>
@@ -91,7 +70,7 @@ export default async function PostDetail({
                     <Link href={`/users/${user.account_id}`} key={user._id}>
                       <ProfileImage
                         key={user._id}
-                        avatar={null}
+                        profileImageUrl={user.profile_image_url}
                         name={user.name}
                       />
                     </Link>

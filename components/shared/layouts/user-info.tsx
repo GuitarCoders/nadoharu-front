@@ -35,7 +35,7 @@ export default function UserInfo({
               className="border border-violet-400 dark:border-white bg-white dark:bg-neutral-800 px-2 py-1 text-sm rounded-md text-violet-400 dark:text-white flex items-center gap-1 relative"
             >
               {pendedCount ? (
-                <div className="flex items-center justify-center size-4 bg-red-600 rounded-full absolute -top-2 -right-2">
+                <div className="flex items-center justify-center bg-red-600 rounded-full absolute -top-2 -right-2 p-[2px] py-[1px]">
                   <span className="text-xs text-white">{pendedCount}</span>
                 </div>
               ) : null}
@@ -61,7 +61,11 @@ export default function UserInfo({
               </Link>
             ) : null}
           </div>
-          <ProfileImage avatar={null} name={profile.name} size={20} />
+          <ProfileImage
+            profileImageUrl={profile.profile_image_url}
+            name={profile.name}
+            size={20}
+          />
           <div className="flex flex-col">
             <div className="flex items-center gap-3">
               <h5 className="font-semibold">{profile.name}</h5>
@@ -90,7 +94,7 @@ export default function UserInfo({
           </div>
         </div>
         {profile?.about_me ? (
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 whitespace-pre-line break-all">
             {profile?.about_me}
           </p>
         ) : null}
